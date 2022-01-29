@@ -16,17 +16,19 @@
 </head>
 <body class="theme-blue">
 <!-- Top Bar -->
-    @include('layouts.backend.partial.topbar')
+@include('layouts.backend.partial.topbar')
 <!-- #Top Bar -->
-<section>
-    <!-- Left Sidebar -->
+<div class="flex">
+    <section>
+        <!-- Left Sidebar -->
     @include('layouts.backend.partial.sidebar')
     <!-- #END# Left Sidebar -->
-</section>
+    </section>
 
-<section class="content">
-    @yield('content')
-</section>
+    <section class="content flex-grow">
+        @yield('content')
+    </section>
+</div>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 @stack('js')
 </body>
