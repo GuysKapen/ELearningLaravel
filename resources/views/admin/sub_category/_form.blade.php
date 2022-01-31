@@ -1,9 +1,9 @@
 <div xmlns:x-transition="http://www.w3.org/1999/xhtml">
     <form
-        action="{{ !isset($sub_category) ? route('admin.sub-category.store') :  route('admin.sub-category.update',  $category->id ) }}"
+        action="{{ !isset($subCategory) ? route('admin.sub-category.store') :  route('admin.sub-category.update',  $subCategory->id ) }}"
         method="{{ "POST" }}"
         enctype="multipart/form-data">
-        @isset($category->id)
+        @isset($subCategory->id)
             @method('PATCH')
         @endisset
         @csrf
@@ -13,7 +13,8 @@
             <div class="w-full max-w-xs">
                 <div class="space-y-1" x-data="Components.customSelect({ open: true, value: 4, selected: 4 })"
                      x-init="init()">
-                    <label id="id" class="block text-sm leading-5 font-semibold text-gray-700">Assigned to</label>
+                    <label class="block text-sm leading-5 font-semibold text-gray-700">Assigned to</label>
+                    <input x-ref="input" type="hidden" name="id" id="id">
                     <div class="relative">
                                 <span class="inline-block w-full rounded-md shadow-sm">
                                     <button x-ref="button" @click="onButtonClick()" type="button"
@@ -111,13 +112,14 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="mt-4">
-                <label id="id" class="block text-sm leading-5 font-semibold text-gray-700">Name</label>
+                <label class="block text-sm leading-5 font-semibold text-gray-700">Name</label>
                 <input id="name"
                        name="name"
-                       value="{{ old('name', isset($category) ? $category->name : "") }}"
+                       value="{{ old('name', isset($subCategory) ? $subCategory->name : "") }}"
                        required
                        class="w-full border px-4 py-2 rounded focus:border-blue-500 focus:shadow-outline outline-none"
                        type="text" autofocus placeholder="Category name..."/>
@@ -167,6 +169,7 @@
                     choose(option) {
                         this.value = option
                         this.open = false
+                        this.$refs.input.value = option;
                     },
                     onButtonClick() {
                         if (this.open) return

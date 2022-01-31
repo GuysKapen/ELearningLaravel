@@ -59,9 +59,12 @@
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
+                                        @php
+                                            $i = 1;
+                                        @endphp
                                         @foreach($categories as $key=>$category)
                                             <tr>
-                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $category->id}}</td>
+                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $i++ }}</td>
                                                 <td class="text-sm font-medium text-gray-900 px-6">{{ $category->name }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span
@@ -106,6 +109,7 @@
 
 
 @push('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         function deleteCategory(id) {
             Swal.fire({

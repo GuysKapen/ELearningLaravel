@@ -74,11 +74,11 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
@@ -86,21 +86,41 @@ class CategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:categories',
+        ]);
+
+        $slug = Str::slug($request->name);
+
+        $category->name = $request->name;
+        $category->slug = $slug;
+
+        if ($category->save()) {
+            Toastr::success('Save category successfully', 'Succeed');
+            return redirect()->route('admin.category.index');
+        }
+        Toastr::warning('Failed to save category', 'Failed');
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
     {
-        //
+        if ($category->delete()) {
+            Toastr::success('Delete category successfully', 'Succeed');
+            return redirect()->back();
+        }
+
+        Toastr::error('Failed to delete category', 'Failed');
+        return redirect()->back();
     }
 }

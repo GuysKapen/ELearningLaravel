@@ -16,13 +16,13 @@
                     <div class="flex justify-between">
                         <div class="flex items-center">
                             <h2 class="text-xl font-bold leading-7 text-gray-900 sm:text-2xl sm:truncate">
-                                All categories
+                                All sub categories
                             </h2>
                             <span
-                                class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{{ $categories->count() }}</span>
+                                class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{{ $sub_categories->count() }}</span>
                         </div>
 
-                        <a href="{{ route('admin.category.create') }}"
+                        <a href="{{ route('admin.sub-category.create') }}"
                            class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             New
                         </a>
@@ -46,6 +46,10 @@
                                             </th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Main
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Status
                                             </th>
                                             <th scope="col"
@@ -59,10 +63,14 @@
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach($categories as $key=>$category)
+                                        @php
+                                        $i = 1;
+                                        @endphp
+                                        @foreach($sub_categories as $key=>$category)
                                             <tr>
-                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $category->id}}</td>
+                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $i++  }}</td>
                                                 <td class="text-sm font-medium text-gray-900 px-6">{{ $category->name }}</td>
+                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $category->category->name }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span
                                                         class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -71,7 +79,7 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->created_at->format('d/m/Y') }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <a href="{{ route('admin.category.edit',$category->id) }}"
+                                                    <a href="{{ route('admin.sub-category.edit',$category->id) }}"
                                                        class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
 
                                                     <button class="text-indigo-600 hover:text-indigo-900" type="button"
@@ -79,7 +87,7 @@
                                                         Delete
                                                     </button>
                                                     <form id="delete-form-{{ $category->id }}"
-                                                          action="{{ route('admin.category.destroy',$category->id) }}"
+                                                          action="{{ route('admin.sub-category.destroy',$category->id) }}"
                                                           method="POST"
                                                           style="display: none;">
                                                         @csrf
