@@ -1,5 +1,6 @@
 <?php
 
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +26,5 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Co
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::resource('category', 'CategoryController');
     Route::resource('sub-category', 'SubCategoryController');
+    Route::resource('language', 'LanguageController');
 });
