@@ -16,6 +16,21 @@ body {
     font-size: 1.12rem;
 }
 
+.sticky-wrapper.is-sticky .site-navbar {
+    -webkit-box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+.sticky-wrapper .shrink {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.sticky-wrapper.is-sticky .site-navbar a {
+    color: #000;
+}
+
 .icon-wrap {
     display: inline-block;
     position: relative;
