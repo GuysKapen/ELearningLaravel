@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('author/course/course');
 });
 
 Auth::routes();
@@ -27,4 +27,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Co
     Route::resource('category', 'CategoryController');
     Route::resource('sub-category', 'SubCategoryController');
     Route::resource('language', 'LanguageController');
+});
+
+Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\Controllers\Author', 'middleware' => ['auth', 'author']], function () {
+    Route::resource('course', 'CourseController');
 });

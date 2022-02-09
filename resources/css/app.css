@@ -16,6 +16,21 @@ body {
     font-size: 1.12rem;
 }
 
+.collapse:not(.show) {
+    display: none;
+}
+
+.collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    transition: height .35s ease;
+}
+
+.child-link-blue > a {
+    color: #007bff;
+}
+
 .sticky-wrapper.is-sticky .site-navbar {
     -webkit-box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2);
     box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2);
