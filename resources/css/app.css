@@ -158,3 +158,28 @@ body {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
 }
+
+input[type="number"]:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="date"]:focus, textarea:focus {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --bg-opacity: 1;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, var(--bg-opacity));
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --border-opacity: 1;
+    border-color: #cbd5e0;
+    border-color: rgba(203, 213, 224, var(--border-opacity));
+}
+
+input,
+textarea {
+    border: 0.125rem solid #cccccc;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-size: 0.875rem;
+}
+
+.ui-widget {
+    padding: 0;
+}

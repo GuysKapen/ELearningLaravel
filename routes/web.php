@@ -30,5 +30,10 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Co
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\Controllers\Author', 'middleware' => ['auth', 'author']], function () {
+    Route::post('course/add-section', 'CourseController@addSection')->name('course.add-section');
+    Route::post('course/add-lesson', 'CourseController@addLesson')->name('course.add-lesson');
+    Route::get('course/new-lesson/{sectionId}', 'CourseController@newLesson')->name('course.new-lesson');
+    Route::get('course/lesson/{courseLesson}', 'LessonController@show')->name('course.lesson.show');
     Route::resource('course', 'CourseController');
+
 });

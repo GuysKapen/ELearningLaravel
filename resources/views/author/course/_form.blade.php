@@ -15,7 +15,7 @@
                    name="name"
                    value="{{ old('name', isset($course) ? $course->name : "") }}"
                    required
-                   class="w-full border px-4 py-2 rounded focus:border-blue-500 focus:shadow-outline outline-none"
+                   class="string required w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text" autofocus placeholder="Course name..."/>
         </div>
 

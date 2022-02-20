@@ -22,23 +22,6 @@
     <h3>Computer Science <span class="text-gray-500">&nbsp;/&nbsp;C++&nbsp;/&nbsp; Learn C++ Programming | Video Tutorial for Beginners</span></h3>
 </div>
 
-{{--<nav aria-label="breadcrumb">--}}
-{{--    <ol class="breadcrumb" style="background:linear-gradient(to right,rgba(100,150,150, 1),rgba(150, 150, 150, 1))">--}}
-{{--        <li class="breadcrumb-item"><a href="../../../loggedin.php" style="color:white;">Home</a></li>--}}
-{{--        <li class="breadcrumb-item active" aria-current="page"><a href="../../computer_science.php"--}}
-{{--                                                                  style="color:white;font-size:bold;">Computer--}}
-{{--                Science</a></li>--}}
-{{--        <li class="breadcrumb-item active" aria-current="page"><a href="../../computer_science_c++.php"--}}
-{{--                                                                  style="color:white;">C++</a></li>--}}
-{{--        <li class="breadcrumb-item active" aria-current="page" style="color:white;"> Learn C++ Programming | Video--}}
-{{--            Tutorial for Beginners--}}
-{{--        </li>--}}
-
-{{--    </ol>--}}
-{{--</nav>--}}
-<!-- the actual content of this course (  Learn C++ Programming | Video Tutorial for Beginners)
-     liste des chapitres-->
-
 <div class="accordion" id="accordionExample">
     <!-- Détails chapitre 0 -->
     <div class="overflow-hidden shadow-full mb-4 bg-transparent border-none relative flex flex-col rounded-md">
@@ -249,5 +232,4 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
 </html>

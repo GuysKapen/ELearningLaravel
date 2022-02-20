@@ -466,6 +466,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pointer-events-none{
   pointer-events: none;
 }
+.fixed{
+  position: fixed;
+}
 .absolute{
   position: absolute;
 }
@@ -503,6 +506,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .-right-32{
   right: -8rem;
+}
+.right-4{
+  right: 1rem;
+}
+.bottom-4{
+  bottom: 1rem;
 }
 .z-10{
   z-index: 10;
@@ -543,6 +552,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mx-2{
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+.my-2{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .mt-3{
   margin-top: 0.75rem;
@@ -595,6 +612,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-2{
   margin-top: 0.5rem;
 }
+.mt-16{
+  margin-top: 4rem;
+}
 .ml-1{
   margin-left: 0.25rem;
 }
@@ -640,11 +660,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-auto{
   height: auto;
 }
+.h-5{
+  height: 1.25rem;
+}
 .h-16{
   height: 4rem;
 }
-.h-5{
-  height: 1.25rem;
+.h-12{
+  height: 3rem;
 }
 .h-6{
   height: 1.5rem;
@@ -684,6 +707,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-5{
   width: 1.25rem;
+}
+.w-12{
+  width: 3rem;
 }
 .w-6{
   width: 1.5rem;
@@ -744,11 +770,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .transform{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.cursor-pointer{
-  cursor: pointer;
-}
 .cursor-default{
   cursor: default;
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 .select-none{
   -webkit-user-select: none;
@@ -767,6 +793,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .items-center{
   align-items: center;
+}
+.justify-end{
+  justify-content: flex-end;
 }
 .justify-center{
   justify-content: center;
@@ -880,13 +909,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
-.bg-transparent{
-  background-color: transparent;
-}
-.bg-gray-100{
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
 .bg-red-600{
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
@@ -898,6 +920,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-green-100{
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
+}
+.bg-gray-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+.bg-transparent{
+  background-color: transparent;
 }
 .bg-gray-200{
   --tw-bg-opacity: 1;
@@ -1079,11 +1108,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .font-light{
   font-weight: 300;
 }
-.font-bold{
-  font-weight: 700;
-}
 .font-semibold{
   font-weight: 600;
+}
+.font-bold{
+  font-weight: 700;
 }
 .font-normal{
   font-weight: 400;
@@ -1131,10 +1160,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
-.text-gray-500{
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
 .text-gray-900{
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -1142,6 +1167,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-red-100{
   --tw-text-opacity: 1;
   color: rgb(254 226 226 / var(--tw-text-opacity));
+}
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 .text-green-800{
   --tw-text-opacity: 1;
@@ -1158,6 +1187,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-teal-200{
   --tw-text-opacity: 1;
   color: rgb(153 246 228 / var(--tw-text-opacity));
+}
+.placeholder-gray-500::-moz-placeholder{
+  --tw-placeholder-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-placeholder-opacity));
+}
+.placeholder-gray-500:-ms-input-placeholder{
+  --tw-placeholder-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-placeholder-opacity));
+}
+.placeholder-gray-500::placeholder{
+  --tw-placeholder-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-placeholder-opacity));
 }
 .opacity-100{
   opacity: 1;
@@ -1216,14 +1257,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .duration-200{
   transition-duration: 200ms;
 }
-.duration-1000{
-  transition-duration: 1000ms;
-}
 .duration-150{
   transition-duration: 150ms;
 }
 .duration-100{
   transition-duration: 100ms;
+}
+.duration-1000{
+  transition-duration: 1000ms;
 }
 .duration-75{
   transition-duration: 75ms;
@@ -1381,6 +1422,31 @@ body {
     border-bottom-left-radius: 16px;
 }
 
+input[type="number"]:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="date"]:focus, textarea:focus {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --bg-opacity: 1;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, var(--bg-opacity));
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --border-opacity: 1;
+    border-color: #cbd5e0;
+    border-color: rgba(203, 213, 224, var(--border-opacity));
+}
+
+input,
+textarea {
+    border: 0.125rem solid #cccccc;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-size: 0.875rem;
+}
+
+.ui-widget {
+    padding: 0;
+}
+
 .hover\:border-white:hover{
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
@@ -1431,6 +1497,16 @@ body {
   border-color: rgb(147 197 253 / var(--tw-border-opacity));
 }
 
+.focus\:border-gray-400:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.focus\:bg-white:focus{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
 .focus\:bg-gray-200:focus{
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -1439,6 +1515,12 @@ body {
 .focus\:text-gray-900:focus{
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.focus\:shadow-md:focus{
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .focus\:outline-none:focus{
