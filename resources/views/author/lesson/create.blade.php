@@ -19,7 +19,10 @@
 <div class="card my-4 mx-auto shadow-lg rounded-md px-8">
     <div class="header">
         <h2 class="text-2xl font-black leading-7 text-gray-900 sm:text-3xl sm:truncate text-left">
-            Add new lesson
+            Add new lesson for course {{$courseSection->course->name}}
+        </h2>
+        <h2 class="text-xl font-bold mt-4 leading-7 text-gray-900 sm:text-3xl sm:truncate text-left">
+            Chapter {{$courseSection->index}} : {{$courseSection->name}}
         </h2>
     </div>
 

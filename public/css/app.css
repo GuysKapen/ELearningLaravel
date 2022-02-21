@@ -612,9 +612,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-2{
   margin-top: 0.5rem;
 }
-.mt-16{
-  margin-top: 4rem;
-}
 .ml-1{
   margin-left: 0.25rem;
 }
@@ -1302,7 +1299,7 @@ body {
     transition: height .35s ease;
 }
 
-.child-link-blue > a {
+a.link-blue {
     color: #007bff;
 }
 

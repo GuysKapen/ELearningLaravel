@@ -1,6 +1,6 @@
 <div class="bg-white shadow-full p-8">
     <form
-        action="{{ !isset($courseLesson) ? route('author.course.add-lesson') :  route('author.course.add-lesson',  $courseSection->id ) }}"
+        action="{{ !isset($courseLesson) ? route('author.course-lesson.store') :  route('author.course-lesson.update',  $courseSection->id ) }}"
         method="{{ "POST" }}"
         enctype="multipart/form-data">
         @isset($courseLesson->id)
@@ -10,6 +10,7 @@
         <label class="block mb-1 font-semibold" for="input1">Lesson name</label>
         <input id="title"
                name="title"
+               value="{{ old('name', isset($courseLesson) ? $courseLesson->title : "") }}"
                required
                class="string required w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                type="text" autofocus placeholder="Lesson name..."/>
@@ -17,13 +18,14 @@
         <label class="block mb-1 font-semibold" for="video">Video url</label>
         <input id="video"
                name="video"
+               value="{{ old('name', isset($courseLesson) ? $courseLesson->video : "") }}"
                required
                class="string required w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                type="text" autofocus placeholder="Video url ..."/>
 
         <label class="block mb-1 mt-2 font-semibold" for="body">Content</label>
         <textarea id="mce-instance" name="body" placeholder="Enter content here"></textarea>
-        <input type="hidden" name="section_id" value="{{$sectionId}}">
+        <input type="hidden" name="section_id" value="{{$courseSection->id}}">
 
         <div class="py-3 text-right px-2 flex justify-between">
             <a href="{{ route('author.course.index') }}"
@@ -53,6 +55,12 @@
         toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
         toolbar2: 'print preview media | forecolor backcolor emoticons',
         image_advtab: true,
-        height: "480"
+        height: "480",
+        setup: function (editor) {
+            editor.on('init', function () {
+                //this gets executed AFTER TinyMCE is fully initialized
+                editor.setContent('{!! $courseLesson->body !!}');
+            });
+        }
     });
 </script>

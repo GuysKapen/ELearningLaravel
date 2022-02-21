@@ -11,6 +11,8 @@ use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class CourseController extends Controller
@@ -160,35 +162,8 @@ class CourseController extends Controller
         return response()->json(['success' => 'Add course section successfully']);
     }
 
-    public function newLesson($sectionId) {
-        return view('author.lesson.create', compact('sectionId'));
-    }
-
-    /**
-     * Add a newly created lesson resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     */
-    public function addLesson(Request $request) {
-        $this->validate($request, [
-            'title' => 'required',
-            'section_id' => 'required',
-        ]);
-
-        $section_id = $request->section_id;
-        $slug = Str::slug($request->title);
-
-        $courseSection = new CourseLesson();
-        $courseSection->title = $request->title;
-        $courseSection->body = $request->body;
-        $courseSection->video = $request->video;
-        $courseSection->slug = $slug;
-        $courseSection->course_section_id = $section_id;
-
-        if ($courseSection->save()) {
-            Toastr::success('Add section successfully', 'Succeed');
-        }
-        Toastr::warning('Failed to add section', 'Failed');
-        return redirect()->back();
+    public function newLesson(CourseSection $courseSection) {
+        Session::put('url.intended', URL::previous());  // using the Facade
+        return view('author.lesson.create', compact('courseSection'));
     }
 }

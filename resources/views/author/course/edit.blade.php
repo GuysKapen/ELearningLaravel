@@ -52,8 +52,7 @@
                     </button>
                 </h2>
                 <a href="{{route('author.course.new-lesson', $section->id)}}">
-                    <button type="submit" class="px-6 py-2 bg-indigo-600 rounded-full text-white text-sm font-black"
-                            id="test-add-topic">
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 rounded-full text-white text-sm font-black">
                         Add topic
                     </button>
                 </a>
@@ -62,9 +61,16 @@
             <div id="collapse-{{$i}}" class="transition-all duration-1000 collapse"
                  aria-labelledby="heading-{{$i}}"
                  data-parent="#accordionExample">
-                <div class="bg-gray-100 p-4 child-link-blue">
+                <div class="bg-gray-100 p-4">
                     @foreach($section->lessons as $key=>$lesson)
-                        <a class="block" href="{{route('author.course.lesson.show', $lesson->id)}}">&#10170 {{$lesson->title}}</a>
+                        <div class="flex justify-between items-center">
+                            <a class="link-blue"
+                                href="{{route('author.course.lesson.show', $lesson->id)}}">&#10170 {{$lesson->title}}</a>
+                            <a href="{{route('author.course-lesson.edit', $lesson->id)}}"
+                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                <span class="material-icons text-sm mr-2">edit</span> Edit
+                            </a>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -73,67 +79,6 @@
             /** @noinspection PhpUndefinedVariableInspection */$i++;
         @endphp
     @endforeach
-
-
-<!-- Détails chapitre 0 -->
-    {{--    <div class="overflow-hidden shadow-full mb-4 bg-transparent border-none relative flex flex-col rounded-md">--}}
-    {{--        <div class="bg-transparent border-none py-2 px-4 flex items-center justify-between" id="heading-1">--}}
-    {{--            <h2 class="mb-0">--}}
-    {{--                <button--}}
-    {{--                    class="cursor-pointer w-full h-16 text-black font-bold text-left block bg-transparent border-0 px-4 py-2 text-base rounded-md outline-none"--}}
-    {{--                    type="button" data-toggle="collapse"--}}
-    {{--                    data-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">--}}
-    {{--                    Chapter 0 : Introduction--}}
-    {{--                </button>--}}
-    {{--            </h2>--}}
-    {{--            <a href="{{route('author.course.new-lesson', $course->id)}}">--}}
-    {{--                <button type="submit" class="px-6 py-2 bg-indigo-600 rounded-full text-white text-sm font-black"--}}
-    {{--                        id="test-add-topic">--}}
-    {{--                    Add topic--}}
-    {{--                </button>--}}
-    {{--            </a>--}}
-    {{--        </div>--}}
-
-    {{--        <div id="collapse-1" class="transition-all duration-1000 collapse show" aria-labelledby="heading-1"--}}
-    {{--             data-parent="#accordionExample">--}}
-    {{--            <div class="bg-gray-100 p-4 child-link-blue">--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=1">&#10170 What is C++, Its Introduction and--}}
-    {{--                    History</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=2">&#10170 Where CPP is Used, Why Learn C++--}}
-    {{--                    Programming Language</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=3">&#10170 C++ Source Code to Executable |--}}
-    {{--                    Compilation, Linking, Pre Processing | Build Process Explained</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=4">&#10170 Tool Set, Tool Chain and IDE </a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=5">&#10170 Installing Code Blocks IDE with Compiler--}}
-    {{--                    for C and C++</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=6">&#10170 C++ First Hello World Program</a><br>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-<!-- Détails chapitre 1 -->
-    {{--    <div class="overflow-hidden shadow-full mb-4 bg-transparent border-none relative flex flex-col rounded-md">--}}
-    {{--        <div class="bg-transparent border-none py-2 px-4" id="heading-2">--}}
-    {{--            <h2 class="mb-0">--}}
-    {{--                <button--}}
-    {{--                    class="cursor-pointer w-full h-16 text-black font-bold text-left block bg-transparent border-0 px-4 py-2 text-base rounded-md outline-none"--}}
-    {{--                    type="button" data-toggle="collapse"--}}
-    {{--                    data-target="#collapse-2" aria-expanded="false" aria-controls="collapse-2">--}}
-    {{--                    Chapter 1 : Manipulating Data types--}}
-    {{--                </button>--}}
-    {{--            </h2>--}}
-    {{--        </div>--}}
-    {{--        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordionExample">--}}
-    {{--            <div class="bg-gray-100 p-4 child-link-blue">--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=7">&#10170 C++ Constants, Variables, Data types,--}}
-    {{--                    Keywords</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=8">&#10170 Creating and Using C++ Variables</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=9">&#10170 C++ Console Output with Cout</a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=10">&#10170 Cin in C++ for Receiving User, Console--}}
-    {{--                    Input </a><br>--}}
-    {{--                <a href="actualvideocontent_learninglad.php?video=53">&#10170 Introduction to Strings in C++</a><br>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 
 </div>
 
@@ -209,28 +154,6 @@
             });
 
         });
-
-        $("#test-add-topic").click(function () {
-            console.log("sfsf")
-            $("#collapse-1").append('' +
-                '<form method="post">' +
-                '<textarea id="mce-instance">Hello, World!</textarea>' +
-                '</form>');
-
-            tinymce.init({
-                selector: 'textarea#mce-instance', // Replace this CSS selector to match the placeholder element for TinyMCE
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools'
-                ],
-                // toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
-                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'print preview media | forecolor backcolor emoticons',
-                image_advtab: true
-            });
-        })
     });
 </script>
 
