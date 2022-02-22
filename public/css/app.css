@@ -561,6 +561,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.mx-24{
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
 .mt-3{
   margin-top: 0.75rem;
 }
@@ -612,6 +616,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-2{
   margin-top: 0.5rem;
 }
+.ml-2{
+  margin-left: 0.5rem;
+}
 .ml-1{
   margin-left: 0.25rem;
 }
@@ -623,9 +630,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .-mr-1{
   margin-right: -0.25rem;
-}
-.ml-2{
-  margin-left: 0.5rem;
 }
 .block{
   display: block;
@@ -787,6 +791,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .flex-wrap{
   flex-wrap: wrap;
+}
+.items-start{
+  align-items: flex-start;
 }
 .items-center{
   align-items: center;
@@ -1046,6 +1053,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pr-4{
   padding-right: 1rem;
 }
+.pb-2{
+  padding-bottom: 0.5rem;
+}
 .pb-4{
   padding-bottom: 1rem;
 }
@@ -1181,6 +1191,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
+.text-indigo-400{
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity));
+}
 .text-teal-200{
   --tw-text-opacity: 1;
   color: rgb(153 246 228 / var(--tw-text-opacity));
@@ -1266,6 +1280,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .duration-75{
   transition-duration: 75ms;
 }
+.duration-300{
+  transition-duration: 300ms;
+}
 .ease-in-out{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1292,14 +1309,27 @@ body {
     display: none;
 }
 
-.collapsing {
+.collapse:not(.show).expand {
+    display: inherit;
+}
+
+.collapse.show.expand {
+    transform: rotate(180deg);
+}
+
+.collapsing:not(.expand) {
     position: relative;
     height: 0;
     overflow: hidden;
-    transition: height .35s ease;
+    transition: all .35s ease;
 }
 
-a.link-blue {
+.collapsing.expand {
+    transform: rotate(180deg);
+    transition: transform .35s ease;
+}
+
+.child-link-blue > a {
     color: #007bff;
 }
 
@@ -1325,6 +1355,11 @@ a.link-blue {
     border-radius: 50%;
     background: #7971ea;
     flex-shrink: 0;
+}
+
+.icon-wrap.small {
+    width: 24px;
+    height: 24px;
 }
 
 .icon-wrap .icon,
@@ -1442,6 +1477,10 @@ textarea {
 
 .ui-widget {
     padding: 0;
+}
+
+.expand ~ .title-expand {
+    color: red;
 }
 
 .hover\:border-white:hover{
@@ -1588,6 +1627,10 @@ textarea {
 
 @media (min-width: 768px){
 
+  .md\:mb-0{
+    margin-bottom: 0px;
+  }
+
   .md\:-mt-1{
     margin-top: -0.25rem;
   }
@@ -1640,6 +1683,10 @@ textarea {
     width: 25%;
   }
 
+  .md\:w-9\/12{
+    width: 75%;
+  }
+
   .md\:w-64{
     width: 16rem;
   }
@@ -1654,6 +1701,10 @@ textarea {
 
   .md\:pb-0{
     padding-bottom: 0px;
+  }
+
+  .md\:text-left{
+    text-align: left;
   }
 }
 

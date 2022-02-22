@@ -65,11 +65,11 @@ class CourseLessonController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\CourseLesson  $courseLesson
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(CourseLesson $courseLesson)
     {
-        //
+        return view('author.lesson.show', compact('courseLesson'));
     }
 
     /**

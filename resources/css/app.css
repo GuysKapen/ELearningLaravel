@@ -20,11 +20,24 @@ body {
     display: none;
 }
 
-.collapsing {
+.collapse:not(.show).expand {
+    display: inherit;
+}
+
+.collapse.show.expand {
+    transform: rotate(180deg);
+}
+
+.collapsing:not(.expand) {
     position: relative;
     height: 0;
     overflow: hidden;
-    transition: height .35s ease;
+    transition: all .35s ease;
+}
+
+.collapsing.expand {
+    transform: rotate(180deg);
+    transition: transform .35s ease;
 }
 
 .child-link-blue > a {
@@ -54,6 +67,11 @@ body {
     border-radius: 50%;
     background: #7971ea;
     flex-shrink: 0;
+}
+
+.icon-wrap.small {
+    width: 24px;
+    height: 24px;
 }
 
 .icon-wrap .icon,
@@ -182,4 +200,8 @@ textarea {
 
 .ui-widget {
     padding: 0;
+}
+
+.expand ~ .title-expand {
+    color: red;
 }

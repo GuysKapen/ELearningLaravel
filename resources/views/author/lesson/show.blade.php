@@ -24,49 +24,86 @@
 </div>
 
 
-<section class="px-8 mx-auto pb-8">
+<section class="pb-8">
     <div class="flex">
-        <div class="md:w-8/12 pr-4">
+        <div class="md:w-3/12">
+            <div class="px-4">
+                <div class="flex items-center text-sm font-black text-indigo-400">
+                    <h3>COURSE</h3>
+                    <span class="material-icons outlined text-sm">chevron_right</span>
+                    <h3>TECHNOLOGY</h3>
+                    <span class="material-icons outlined text-sm">chevron_right</span>
+                </div>
+                <p class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Learn C++ Programming</p>
+            </div>
+
+            @php
+                $i = 0;
+            @endphp
+            @foreach($courseLesson->section->course->sections as $key=>$section)
+                @php
+                    $i++;
+                @endphp
+                <div
+                    class="overflow-hidden shadow-full my-4 bg-transparent border-none relative flex flex-col rounded-md" id="accordionExample-{{$i}}">
+                    <div class="bg-transparent border-none py-2 px-4 flex items-center justify-between" id="heading-{{$i}}">
+                        <div class="flex items-center">
+                            <span id="indicator-{{$i}}" aria-labelledby="heading-{{$i}}"
+                                  data-parent="#accordionExample-{{$i}}"
+                                  class="mul-collapse-{{$i}} transition-all duration-300 material-icons outlined text-xl expand collapse">expand_more</span>
+                            <h2 class="mb-0 ml-2 title-expand">
+                                <button
+                                    class="cursor-pointer w-full h-16 text-black font-bold text-left block bg-transparent border-0 py-2 text-base rounded-md outline-none"
+                                    type="button" data-toggle="collapse"
+                                    data-target=".mul-collapse-{{$i}}" aria-expanded="false" aria-controls="collapse-{{$i}}">
+                                    Section {{$section->index}}: {{$section->name}}
+                                </button>
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div id="collapse-{{$i}}" class="transition-all duration-1000 collapse mul-collapse-{{$i}}"
+                         aria-labelledby="heading-{{$i}}"
+                         data-parent="#accordionExample-{{$i}}">
+                        <div class="bg-gray-100 px-4 py-2">
+                            @foreach($section->lessons as $key=>$lesson)
+                                <div class="pb-2 border-b mt-2">
+                                    <div class="flex items-start">
+                                        <div class="flex items-center w-12 flex-shrink-0">
+                                            <span class="material-icons outlined text-base">description</span>
+                                            <span class="ml-2 text-sm font-bold">1.1</span>
+                                        </div>
+                                        <span class="mx-2 text-sm font-bold text-black">{{$lesson->title}}</span>
+                                        <span class="icon-wrap small mr-3 flex-end ml-auto"><span
+                                                class="icon material-icons">visibility</span></span>
+                                    </div>
+                                    <div class="flex mt-1">
+                                        <div class="w-12"></div>
+                                        <p class="ml-2 text-gray-500 text-sm">50 mins</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+        <div class="md:w-9/12">
             <!-- The actual video content -->
             <div class="iframe-container flex justify-center items-center">
                 <iframe src="{{$courseLesson->video}}"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen="" width="950" height="550" frameborder="0"></iframe>
             </div>
-        </div>
-        <div class="md:w-4/12 pl-4">
-            <div class="overflow-hidden shadow-full mb-4 bg-transparent border-none relative flex flex-col rounded-md">
-                <div class="bg-transparent border-none py-2 px-4 flex items-center justify-between" id="heading">
-                    <h2 class="mb-0">
-                        <button
-                            class="cursor-pointer w-full h-16 text-black font-bold text-left block bg-transparent border-0 px-4 py-2 text-base rounded-md outline-none"
-                            type="button" data-toggle="collapse"
-                            data-target="#collapse" aria-expanded="true" aria-controls="collapse">
-                            Chapter {{$courseLesson->section->index}} : {{$courseLesson->section->name}}
-                        </button>
-                    </h2>
-                </div>
 
-                <div id="collapse" class="transition-all duration-1000 collapse show"
-                     aria-labelledby="heading"
-                     data-parent="#accordionExample">
-                    <div class="bg-gray-100 p-4 child-link-blue">
-                        @foreach($courseLesson->section->lessons as $key=>$lesson)
-                            <a class="block"
-                               href="actualvideocontent_learninglad.php?video=1">&#10170 {{$lesson->title}}</a>
-                        @endforeach
-                    </div>
-                </div>
+            <div class="mt-8 mx-24">
+                <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Description</h2>
+                {!! $courseLesson->body !!}
             </div>
-
         </div>
     </div>
 
-
-    <div class="mt-8">
-        <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Description</h2>
-        {!! $courseLesson->body !!}
-    </div>
 </section>
 
 </body>
