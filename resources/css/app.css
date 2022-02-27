@@ -205,3 +205,138 @@ textarea {
 .expand ~ .title-expand {
     color: red;
 }
+
+
+.tab-content > .tab-pane {
+    display: none;
+}
+
+.tab-content > .active {
+    display: block;
+}
+
+.nav-link.active {
+    --tw-text-opacity: 1;
+    color: rgba(37, 99, 235, var(--tw-text-opacity));
+    border-bottom-width: 2px;
+    --tw-border-opacity: 1;
+    border-color: rgba(37, 99, 235, var(--tw-border-opacity));
+}
+
+.nav-link.active svg {
+    --tw-text-opacity: 1;
+    color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.marker\:text-xxs ::marker {
+    font-size: 0.5rem;
+    line-height: 1rem;
+}
+
+
+.list-col-2 li {
+    width: calc(50% - (2.4rem / 2));
+}
+
+
+.bg-f {
+    background: #3b5998;
+}
+
+.bg-gp {
+    background: #db4a39;
+}
+
+.bg-tw {
+    background: #00acee;
+}
+
+.bg-wa {
+    background: #075e54;
+}
+
+
+.color-f {
+    color: #3b5998;
+}
+
+.color-gp {
+    color: #db4a39;
+}
+
+.color-tw {
+    color: #00acee;
+}
+
+.color-wa {
+    color: #075e54;
+}
+
+.border-f {
+    border-color: #3b5998;
+}
+
+.border-gp {
+    border-color: #db4a39;
+}
+
+.border-tw {
+    border-color: #00acee;
+}
+
+.border-wa {
+    border-color: #075e54;
+}
+
+
+.rating-input {
+    float: left;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: left;
+    position: relative;
+}
+
+.rating-input span label::before {
+    content: 'star_border';
+    font-family: 'Material Icons', serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+    transition: all 0.2s;
+}
+
+.rating-input span:hover ~ span label::before, .rating-input span:hover label::before, .rating-input span.checked label::before, .rating-input span.checked ~ span label::before {
+    color: #ff5000;
+    content: 'star';
+}
+
+.rating-input span input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+}
+
+.rating-input span {
+    float: right;
+    position: relative;
+    cursor: pointer !important;
+}
+
+
+.placeholder-gray-500::placeholder {
+    color: #a0aec0;
+}
