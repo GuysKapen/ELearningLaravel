@@ -1,83 +1,6 @@
 @extends('layouts.frontend.app')
 
 @section('content')
-    {{--    <div class="container">--}}
-    {{--        <div class="row justify-content-center">--}}
-    {{--            <div class="col-md-8">--}}
-    {{--                <div class="card">--}}
-    {{--                    <div class="card-header">{{ __('Login') }}</div>--}}
-
-    {{--                    <div class="card-body">--}}
-    {{--                        <form method="POST" action="{{ route('login') }}">--}}
-    {{--                            @csrf--}}
-
-    {{--                            <div class="row mb-3">--}}
-    {{--                                <label for="email"--}}
-    {{--                                       class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>--}}
-
-    {{--                                <div class="col-md-6">--}}
-    {{--                                    <input id="email" type="email"--}}
-    {{--                                           class="form-control @error('email') is-invalid @enderror" name="email"--}}
-    {{--                                           value="{{ old('email') }}" required autocomplete="email" autofocus>--}}
-
-    {{--                                    @error('email')--}}
-    {{--                                    <span class="invalid-feedback" role="alert">--}}
-    {{--                                            <strong>{{ $message }}</strong>--}}
-    {{--                                        </span>--}}
-    {{--                                    @enderror--}}
-    {{--                                </div>--}}
-    {{--                            </div>--}}
-
-    {{--                            <div class="row mb-3">--}}
-    {{--                                <label for="password"--}}
-    {{--                                       class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>--}}
-
-    {{--                                <div class="col-md-6">--}}
-    {{--                                    <input id="password" type="password"--}}
-    {{--                                           class="form-control @error('password') is-invalid @enderror" name="password"--}}
-    {{--                                           required autocomplete="current-password">--}}
-
-    {{--                                    @error('password')--}}
-    {{--                                    <span class="invalid-feedback" role="alert">--}}
-    {{--                                            <strong>{{ $message }}</strong>--}}
-    {{--                                        </span>--}}
-    {{--                                    @enderror--}}
-    {{--                                </div>--}}
-    {{--                            </div>--}}
-
-    {{--                            <div class="row mb-3">--}}
-    {{--                                <div class="col-md-6 offset-md-4">--}}
-    {{--                                    <div class="form-check">--}}
-    {{--                                        <input class="form-check-input" type="checkbox" name="remember"--}}
-    {{--                                               id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
-
-    {{--                                        <label class="form-check-label" for="remember">--}}
-    {{--                                            {{ __('Remember Me') }}--}}
-    {{--                                        </label>--}}
-    {{--                                    </div>--}}
-    {{--                                </div>--}}
-    {{--                            </div>--}}
-
-    {{--                            <div class="row mb-0">--}}
-    {{--                                <div class="col-md-8 offset-md-4">--}}
-    {{--                                    <button type="submit" class="btn btn-primary">--}}
-    {{--                                        {{ __('Login') }}--}}
-    {{--                                    </button>--}}
-
-    {{--                                    @if (Route::has('password.request'))--}}
-    {{--                                        <a class="btn btn-link" href="{{ route('password.request') }}">--}}
-    {{--                                            {{ __('Forgot Your Password?') }}--}}
-    {{--                                        </a>--}}
-    {{--                                    @endif--}}
-    {{--                                </div>--}}
-    {{--                            </div>--}}
-    {{--                        </form>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-
     <div
         class="min-h-screen bg-gray-100 text-gray-900 flex md:flex-wrap lg:flex-no-wrap justify-center py-16 lg:p-16 rounded-lg">
         <div class="xl:w-5/12 lg:w-6/12 w-9/12 m-0 bg-white shadow flex flex-col justify-center items-center py-12">
@@ -106,7 +29,7 @@
                     </a>
 
                     <a class="link-no-style w-full mb-3 max-w-xs font-bold text-sm shadow-sm rounded-lg py-4 link-no-style bg-indigo-100 hover:bg-indigo-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-2"
-                       href="/users/sign_up">
+                       href="{{route('register')}}">
                         <div class="w-full flex justify-center">
                             <button type="submit"
                                     class="flex inline-block f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
@@ -182,12 +105,6 @@
                         </div>
 
                         <div class="w-full d-flex justify-content-center">
-{{--                            <button type="submit"--}}
-{{--                                    class="d-flex d-inline-block text-sm font-roboto font-black outline-none-imp align-items-center duration-500 mt-2 tracking-wide bg-indigo-500 text-gray-100 w-full p-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"--}}
-{{--                                    data-dashlane-rid="56320db7fdd395c4" data-dashlane-label="true"--}}
-{{--                                    data-form-type="action,login,consent,rememberme">--}}
-{{--                                <i class="fa fa-sign-in mr-3 duration-500"></i> Sign In--}}
-{{--                            </button>--}}
 
                             <button type="submit" class="d-flex d-inline-block text-sm font-roboto font-black outline-none-imp align-items-center duration-500 mt-2 tracking-wide bg-indigo-500 text-gray-100 w-full p-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                 <i class="fa fa-sign-in mr-3 duration-500"></i>{{ __('Login') }}

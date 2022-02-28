@@ -340,3 +340,13 @@ textarea {
 .placeholder-gray-500::placeholder {
     color: #a0aec0;
 }
+
+.input {
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.invalid-feedback {
+    --tw-text-opacity: 1;
+    color: rgb(220 38 38 / var(--tw-text-opacity));
+}
