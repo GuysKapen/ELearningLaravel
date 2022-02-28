@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('course');
+    return view('profile');
 });
 
 Auth::routes();
