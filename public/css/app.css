@@ -702,11 +702,11 @@ select{
 .order-2{
   order: 2;
 }
-.col-span-3{
-  grid-column: span 3 / span 3;
-}
 .col-span-6{
   grid-column: span 6 / span 6;
+}
+.col-span-3{
+  grid-column: span 3 / span 3;
 }
 .float-right{
   float: right;
@@ -818,11 +818,11 @@ select{
 .mt-5{
   margin-top: 1.25rem;
 }
-.ml-5{
-  margin-left: 1.25rem;
-}
 .mt-10{
   margin-top: 2.5rem;
+}
+.ml-5{
+  margin-left: 1.25rem;
 }
 .mb-1{
   margin-bottom: 0.25rem;
@@ -1034,11 +1034,11 @@ select{
 .list-disc{
   list-style-type: disc;
 }
-.grid-cols-3{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
 .grid-cols-6{
   grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .flex-row{
   flex-direction: row;
@@ -1298,6 +1298,10 @@ select{
 }
 .fill-current{
   fill: currentColor;
+}
+.object-cover{
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .p-8{
   padding: 2rem;
@@ -1587,10 +1591,6 @@ select{
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
-.text-gray-300{
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
 .text-gray-400{
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -1598,10 +1598,6 @@ select{
 .text-gray-600{
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
-}
-.text-red-600{
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 .text-indigo-500{
   --tw-text-opacity: 1;
@@ -1622,6 +1618,10 @@ select{
 .text-indigo-400{
   --tw-text-opacity: 1;
   color: rgb(129 140 248 / var(--tw-text-opacity));
+}
+.text-gray-300{
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 .text-teal-200{
   --tw-text-opacity: 1;
@@ -2131,14 +2131,14 @@ textarea {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-gray-50:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-indigo-700:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(67 56 202 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-indigo-800:hover{
@@ -2349,10 +2349,6 @@ textarea {
     left: auto;
   }
 
-  .sm\:col-span-2{
-    grid-column: span 2 / span 2;
-  }
-
   .sm\:col-span-3{
     grid-column: span 3 / span 3;
   }
@@ -2363,6 +2359,10 @@ textarea {
 
   .sm\:col-span-6{
     grid-column: span 6 / span 6;
+  }
+
+  .sm\:col-span-2{
+    grid-column: span 2 / span 2;
   }
 
   .sm\:-mx-6{

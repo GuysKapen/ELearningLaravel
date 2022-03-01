@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('profile');
+    return view('home');
 });
 
 Auth::routes();
@@ -35,5 +35,6 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\
     Route::get('course/lesson/{courseLesson}', 'CourseLessonController@show')->name('course.lesson.show');
     Route::resource('course', 'CourseController');
     Route::resource('course-lesson', 'CourseLessonController');
-
+    Route::post('profile', 'ProfileController@updateProfile')->name("profile.update");
+    Route::get('profile', 'ProfileController@profile')->name("profile.show");
 });
