@@ -244,7 +244,7 @@
                                         <span
                                             class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> Instructor/ </span>
                                                 <input type="text" name="title" id="title"
-                                                       value="{{Auth::user()->authorDetail->title}}"
+                                                       value="{{Auth::user()->authorDetail->title ?? ""}}"
                                                        class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
                                                        placeholder="Title">
                                             </div>
@@ -256,7 +256,7 @@
                                             About </label>
                                         <div class="mt-1">
                                     <textarea id="about" name="about" rows="6"
-                                              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md">{{Auth::user()->authorDetail->about}}</textarea>
+                                              class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md">{{Auth::user()->authorDetail->about ?? ""}}</textarea>
                                         </div>
                                         <p class="mt-2 text-sm text-gray-500">Brief description for your profile. URLs
                                             are
@@ -269,7 +269,7 @@
                                             <span
                                                 class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
                                                 <img
-                                                    src="{{ asset("storage/profile/". Auth::user()->authorDetail->cover) }}"
+                                                    src="{{ asset("storage/profile/". (Auth::user()->authorDetail->cover ?? "default.png") ) }}"
                                                     alt="cover" class="object-cover h-full w-full">
                                             </span>
                                             <button type="button"

@@ -1,6 +1,6 @@
 @extends('layouts.frontend.app')
 
-@section('title','New category')
+@section('title','Course')
 
 @push('css')
 @endpush
@@ -11,27 +11,25 @@
 
         <div class="py-4 px-8 mb-8 flex bg-white shadow-full">
             <a class="text-indigo-600" href="{{url("home")}}">Home > &nbsp;</a>
-            <h3>Computer Science <span
-                    class="text-gray-500">&nbsp;Learn C++ Programming | Video Tutorial for Beginners Tool Set, Tool Chain and IDE </span>
+            <h3>Computer Science > &nbsp;<span
+                    class="text-gray-500">{{$course->name}} </span>
             </h3>
         </div>
     </section>
 
     <section class="w-8/12 mx-auto">
-        <h2 class="text-black fw-900 font-black text-2xl font-mul mb-8">
-            Video Tutorial for Beginners Tool Set, Tool Chain and IDE
-        </h2>
+        <h2 class="text-black fw-900 font-black text-2xl font-mul mb-8">{{$course->name}}</h2>
         <div class="flex justify-between">
             <div class="flex divide-x-2">
                 <div class="flex items-center pr-4">
                     <div class="flex-shrink-0 h-10 w-10">
-                        <img class="h-10 w-10 rounded-full"
-                             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+                        <img class="h-10 w-10 rounded-full object-cover"
+                             src="{{asset("storage/profile/" . $course->user->authorDetail->cover)}}"
                              alt="">
                     </div>
                     <div class="ml-4">
-                        <div class="text-sm text-gray-500">Instructor</div>
-                        <div class="text-sm font-medium text-gray-900 font-bold mt-1">Jane Cooper</div>
+                        <div class="text-sm text-gray-500">{{$course->user->authorDetail->title ?? "Instructor"}}</div>
+                        <div class="text-sm font-medium text-gray-900 font-bold mt-1">{{$course->user->username}}</div>
                     </div>
                 </div>
                 <div class="px-4 flex flex-col justify-center">
@@ -263,7 +261,7 @@
                             @php
                                 $i = 0;
                             @endphp
-                            @for($j =0; $j <= 5; $j++)
+                            @foreach($course->sections as $key=>$section)
                                 @php
                                     /** @noinspection PhpUndefinedVariableInspection */$i++;
                                 @endphp
@@ -282,7 +280,7 @@
                                                     type="button" data-toggle="collapse"
                                                     data-target=".mul-collapse-{{$i}}" aria-expanded="false"
                                                     aria-controls="collapse-{{$i}}">
-                                                    Section 1: Introduction
+                                                    Section {{$i}}: {{$section->name}}
                                                     {{--                                                Section {{$section->index}}: {{$section->name}}--}}
                                                 </button>
                                             </h2>
@@ -294,15 +292,23 @@
                                          aria-labelledby="heading-{{$i}}"
                                          data-parent="#accordionExample-{{$i}}">
                                         <div class="bg-gray-100 px-4 py-2">
-                                            @for($k =0; $k <= 5; $k++)
+                                            @php
+                                                $j = 0;
+                                            @endphp
+                                            @foreach($section->lessons as $key=>$lesson)
+                                                @php
+                                                    /** @noinspection PhpUndefinedVariableInspection */$j++;
+                                                @endphp
                                                 <div class="pb-2 border-b mt-2">
                                                     <div class="flex items-start">
                                                         <div class="flex items-center w-32 flex-shrink-0">
                                                             <span
                                                                 class="material-icons outlined text-base text-indigo-600">description</span>
-                                                            <span class="ml-2 text-sm font-bold">Lecture 1.1</span>
+                                                            <span
+                                                                class="ml-2 text-sm font-bold">Lecture {{$i}}.{{$j}}</span>
                                                         </div>
-                                                        <span class="mx-2 text-sm font-bold text-black">What is C++, Its Introduction and History</span>
+                                                        <span
+                                                            class="mx-2 text-sm font-bold text-black max-w-1/2">{{$lesson->title}}</span>
                                                         <span class="icon-wrap small mr-3 flex-end"><span
                                                                 class="icon material-icons">visibility</span></span>
 
@@ -311,11 +317,11 @@
 
                                                     </div>
                                                 </div>
-                                            @endfor
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
-                            @endfor
+                            @endforeach
 
 
                         </div>
@@ -326,13 +332,14 @@
                             <div>
                                 <div class="flex items-center pr-4">
                                     <div class="flex-shrink-0 h-32 w-32">
-                                        <img class="h-32 w-32 rounded-full"
-                                             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+                                        <img class="h-32 w-32 rounded-full object-cover"
+                                             src="{{asset("storage/profile/" . $course->user->authorDetail->cover)}}"
                                              alt="">
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm text-gray-500">Professor</div>
-                                        <div class="text-sm font-medium text-gray-900 font-bold mt-1">Jane Cooper</div>
+                                        <div class="text-sm text-gray-500">{{$course->user->authorDetail->title}}</div>
+                                        <div
+                                            class="text-sm font-medium text-gray-900 text-capitalize font-bold mt-1">{{$course->user->username}}</div>
                                         <div class="flex mt-4">
                                             <div class="border-2 rounded-full w-8 h-8 border-f mr-2">
                                                 <i class="fa-brands fa fa-facebook-f color-f w-full h-full text-center leading-7"></i>
@@ -350,12 +357,7 @@
                                     </div>
                                 </div>
                                 <p class="mt-8 text-sm">
-                                    With 14+ years of overall engineering experience, I have found my passion in
-                                    software test automation. In the process Python has become my favorite tool to work
-                                    with. I graduated with a MS degree in Mechanical Engineering from San Jose State
-                                    University, and got into the IT field of software test automation. I have as much
-                                    passion for teaching as I do for learning. I hope to help students grow fast and
-                                    advance in the field of software testing and automation.
+                                    {{$course->user->authorDetail->about}}
                                 </p>
                             </div>
                         </div>
@@ -367,39 +369,80 @@
                             <div id="comment-container">
                                 <div id="comment-form-container">
                                     <div class="border rounded-md p-8 my-8">
-                                        <form class="simple_form w-full" id="new-comment-form" novalidate="novalidate" accept-charset="UTF-8" data-remote="true" method="post" data-dashlane-rid="5f183d72891b1516" data-form-type="contact">
+                                        <form class="simple_form w-full" id="new-comment-form" novalidate="novalidate"
+                                              accept-charset="UTF-8" data-remote="true" method="post"
+                                              data-dashlane-rid="5f183d72891b1516" data-form-type="contact">
                                             <div>
                                                 <h2 class="text-black fw-900 font-bold text-base font-mul">Rating</h2>
                                                 <div class="w-full inline-block">
                                                     <div class="rating-input width-max">
                                                         <input type="hidden" name="comment[rating]" value="">
-                                                        <span class=""><input class="rating-input" type="radio" value="5" name="comment[rating]" id="comment_rating_5" data-dashlane-rid="3a463bf61ae0f97b" data-form-type="other"><label for="comment_rating_5"></label></span>
+                                                        <span class=""><input class="rating-input" type="radio"
+                                                                              value="5" name="comment[rating]"
+                                                                              id="comment_rating_5"
+                                                                              data-dashlane-rid="3a463bf61ae0f97b"
+                                                                              data-form-type="other"><label
+                                                                for="comment_rating_5"></label></span>
 
-                                                        <span class=""><input class="rating-input" type="radio" value="4" name="comment[rating]" id="comment_rating_4" data-dashlane-rid="497668f5cd6d19f4" data-form-type="other"><label for="comment_rating_4"></label></span>
+                                                        <span class=""><input class="rating-input" type="radio"
+                                                                              value="4" name="comment[rating]"
+                                                                              id="comment_rating_4"
+                                                                              data-dashlane-rid="497668f5cd6d19f4"
+                                                                              data-form-type="other"><label
+                                                                for="comment_rating_4"></label></span>
 
-                                                        <span class=""><input class="rating-input" type="radio" value="3" name="comment[rating]" id="comment_rating_3" data-dashlane-rid="76184e2a7ccbff16" data-form-type="other"><label for="comment_rating_3"></label></span>
+                                                        <span class=""><input class="rating-input" type="radio"
+                                                                              value="3" name="comment[rating]"
+                                                                              id="comment_rating_3"
+                                                                              data-dashlane-rid="76184e2a7ccbff16"
+                                                                              data-form-type="other"><label
+                                                                for="comment_rating_3"></label></span>
 
-                                                        <span class=""><input class="rating-input" type="radio" value="2" name="comment[rating]" id="comment_rating_2" data-dashlane-rid="d010ffde94ddce38" data-form-type="other"><label for="comment_rating_2"></label></span>
+                                                        <span class=""><input class="rating-input" type="radio"
+                                                                              value="2" name="comment[rating]"
+                                                                              id="comment_rating_2"
+                                                                              data-dashlane-rid="d010ffde94ddce38"
+                                                                              data-form-type="other"><label
+                                                                for="comment_rating_2"></label></span>
 
-                                                        <span class=""><input class="rating-input" type="radio" value="1" name="comment[rating]" id="comment_rating_1" data-dashlane-rid="1ad10248812cddac" data-form-type="other"><label for="comment_rating_1"></label></span>
+                                                        <span class=""><input class="rating-input" type="radio"
+                                                                              value="1" name="comment[rating]"
+                                                                              id="comment_rating_1"
+                                                                              data-dashlane-rid="1ad10248812cddac"
+                                                                              data-form-type="other"><label
+                                                                for="comment_rating_1"></label></span>
                                                     </div>
                                                 </div>
 
                                             </div>
 
                                             <div class="my-4">
-                                                <h2 class="text-black fw-900 font-bold text-base font-mul">Your review</h2>
-                                                <label class="text optional label text-left w-full hidden" for="comment_message">Description</label>
-                                                <textarea class="placeholder-gray-500 p-4 text optional input my-2 w-full rounded-lg font-medium bg placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white placeholder-gray-800" placeholder="Commenting publicly as Guys Developer" name="comment[message]" id="comment_message" data-dashlane-rid="b87d632607dec86a" data-form-type="other"></textarea>
+                                                <h2 class="text-black fw-900 font-bold text-base font-mul">Your
+                                                    review</h2>
+                                                <label class="text optional label text-left w-full hidden"
+                                                       for="comment_message">Description</label>
+                                                <textarea
+                                                    class="placeholder-gray-500 p-4 text optional input my-2 w-full rounded-lg font-medium bg placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white placeholder-gray-800"
+                                                    placeholder="Commenting publicly as Guys Developer"
+                                                    name="comment[message]" id="comment_message"
+                                                    data-dashlane-rid="b87d632607dec86a"
+                                                    data-form-type="other"></textarea>
                                             </div>
-                                            <div class="input hidden comment_product_id"><input value="99" class="hidden" type="hidden" name="comment[product_id]" id="comment_product_id"></div>
-                                            <input type="submit" name="commit" value="Submit" class="px-8 text-sm font-black py-2 bg-white shadow-md rounded-full mx-auto text-center f5 font-josesans color-fade cursor-pointer" data-disable-with="Submit" data-dashlane-rid="4a4871ca8a8a9eee" data-form-type="action">
+                                            <div class="input hidden comment_product_id"><input value="99"
+                                                                                                class="hidden"
+                                                                                                type="hidden"
+                                                                                                name="comment[product_id]"
+                                                                                                id="comment_product_id">
+                                            </div>
+                                            <input type="submit" name="commit" value="Submit"
+                                                   class="px-8 text-sm font-black py-2 bg-white shadow-md rounded-full mx-auto text-center f5 font-josesans color-fade cursor-pointer"
+                                                   data-disable-with="Submit" data-dashlane-rid="4a4871ca8a8a9eee"
+                                                   data-form-type="action">
                                         </form>
                                     </div>
 
                                 </div>
                             </div>
-
 
 
                         </div>

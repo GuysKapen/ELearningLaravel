@@ -16,22 +16,6 @@
 
                             <div class="input">
                                 <label class="required hidden"
-                                       for="name"><abbr
-                                        title="required">*</abbr>Name</label>
-
-                                <input id="name" type="text"
-                                       class="string email required w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 @error('name') is-invalid @enderror"
-                                       name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name">
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="input">
-                                <label class="required hidden"
                                        for="username"><abbr
                                         title="required">*</abbr>Name</label>
 
