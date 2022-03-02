@@ -354,3 +354,62 @@ textarea {
     --tw-text-opacity: 1;
     color: rgb(220 38 38 / var(--tw-text-opacity));
 }
+
+
+
+
+
+
+
+
+
+.tab-panel {
+    cursor: pointer;
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.tabs-content > div {
+    display: none;
+}
+
+.tabs-content > div.active {
+    top: 0;
+    display: inherit;
+
+}
+
+.tabs-content-vertical > div {
+    display: none;
+}
+
+.tabs-content-vertical > div.active {
+    bottom: inherit;
+    top: inherit;
+    display: inherit;
+}
+
+.tab-panel.active {
+    background: #fff !important;
+}
+
+
+.input-desc {
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+.child-mx-2 > * {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.child-mx-4 > * {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.m-0-imp {
+    margin: 0 !important;
+}
