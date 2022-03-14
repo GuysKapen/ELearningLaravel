@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Author;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\CourseDetail;
 use App\Models\CourseLesson;
 use App\Models\CourseSection;
 use App\Models\User;
@@ -36,7 +37,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('author.course.create');
+        $courseDetail = new CourseDetail();
+        return view('author.course.create', compact('courseDetail'));
     }
 
     /**
@@ -60,6 +62,19 @@ class CourseController extends Controller
         $course->user_id = Auth::user()->id;
 
         if ($course->save()) {
+            $courseDetail = new CourseDetail();
+
+            $courseDetail->duration = $request->duration ?? $courseDetail->duration;
+            $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
+            $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
+            $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
+            $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
+            $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
+            $courseDetail->language = $request->language ?? $courseDetail->language;
+            $courseDetail->course_id = $course->id;
+
+            $courseDetail->save();
+
             Toastr::success('Save course successfully', 'Succeed');
             return redirect()->route('author.course.index');
         }
@@ -86,7 +101,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('author.course.edit', compact('course'));
+        $courseDetail = $course->detail;
+        return view('author.course.edit', compact('course', 'courseDetail'));
     }
 
     /**
@@ -109,7 +125,20 @@ class CourseController extends Controller
         $course->user_id = Auth::user()->id;
 
         if ($course->save()) {
-            Toastr::success('Save course successfully', 'Succeed');
+            $courseDetail = $course->detail ?? new CourseDetail();
+
+            $courseDetail->duration = $request->duration ?? $courseDetail->duration;
+            $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
+            $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
+            $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
+            $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
+            $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
+            $courseDetail->language = $request->language ?? $courseDetail->language;
+            $courseDetail->course_id = $course->id;
+
+            $courseDetail->save();
+
+            Toastr::success('Update course successfully', 'Succeed');
             return redirect()->route('author.course.index');
         }
         Toastr::warning('Failed to save course', 'Failed');

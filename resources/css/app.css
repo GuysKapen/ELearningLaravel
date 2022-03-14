@@ -413,3 +413,8 @@ textarea {
 .m-0-imp {
     margin: 0 !important;
 }
+
+.child-my-2 > *:not(:first-child) {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}

@@ -975,9 +975,6 @@ select{
 .w-5{
   width: 1.25rem;
 }
-.w-2\/12{
-  width: 16.666667%;
-}
 .w-auto{
   width: auto;
 }
@@ -1483,12 +1480,6 @@ select{
 }
 .pb-4{
   padding-bottom: 1rem;
-}
-.pl-0{
-  padding-left: 0px;
-}
-.pr-0{
-  padding-right: 0px;
 }
 .pt-2{
   padding-top: 0.5rem;
@@ -2193,6 +2184,11 @@ textarea {
 
 .m-0-imp {
     margin: 0 !important;
+}
+
+.child-my-2 > *:not(:first-child) {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .marker\:text-indigo-400 *::marker{

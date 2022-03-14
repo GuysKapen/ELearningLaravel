@@ -25,7 +25,9 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-    <!-- Scripts Vue -->
+    <script src="{{ asset('js/tabs.js') }}" defer></script>
+
+<!-- Scripts Vue -->
 {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
 
 <!-- Fonts -->
