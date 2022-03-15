@@ -7,11 +7,13 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\CourseDetail;
 use App\Models\CourseLesson;
+use App\Models\CourseResult;
 use App\Models\CourseSection;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -53,33 +55,56 @@ class CourseController extends Controller
             'name' => 'required|unique:categories',
         ]);
 
-        $slug = Str::slug($request->name);
+        DB::beginTransaction();
 
-        $course = new Course();
-        $course->name = $request->name;
-        $course->slug = $slug;
-        /** @noinspection PhpUndefinedFieldInspection */
-        $course->user_id = Auth::user()->id;
+        try {
+            $slug = Str::slug($request->name);
 
-        if ($course->save()) {
-            $courseDetail = new CourseDetail();
+            $course = new Course();
+            $course->name = $request->name;
+            $course->slug = $slug;
+            $course->description = $request->description;
+            /** @noinspection PhpUndefinedFieldInspection */
+            $course->user_id = Auth::user()->id;
 
-            $courseDetail->duration = $request->duration ?? $courseDetail->duration;
-            $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
-            $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
-            $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
-            $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
-            $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
-            $courseDetail->language = $request->language ?? $courseDetail->language;
-            $courseDetail->course_id = $course->id;
+            if ($course->saveOrFail()) {
+                $courseDetail = new CourseDetail();
 
-            $courseDetail->save();
+                $courseDetail->duration = $request->duration ?? $courseDetail->duration;
+                $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
+                $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
+                $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
+                $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
+                $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
+                $courseDetail->language = $request->language ?? $courseDetail->language;
+                $courseDetail->course_id = $course->id;
 
+                $courseDetail->save();
+            }
+
+            if (isset($request->results)) {
+                $courseResults = [];
+                foreach ($request->results as $result) {
+                    $courseResult = new CourseResult();
+                    $courseResult->result = $result;
+                    $courseResults[] = $courseResult;
+                }
+
+                $course->results()->saveMany($courseResults);
+            }
+
+            DB::commit();
+            // all good
             Toastr::success('Save course successfully', 'Succeed');
             return redirect()->route('author.course.index');
+        } catch (\Throwable $e) {
+            DB::rollback();
+            // something went wrong
         }
+
         Toastr::warning('Failed to save course', 'Failed');
         return redirect()->back();
+
     }
 
     /**
@@ -118,31 +143,56 @@ class CourseController extends Controller
             'name' => 'required|unique:categories',
         ]);
 
-        $slug = Str::slug($request->name);
+        DB::beginTransaction();
 
-        $course->name = $request->name;
-        $course->slug = $slug;
-        $course->user_id = Auth::user()->id;
+        try {
+            $slug = Str::slug($request->name);
 
-        if ($course->save()) {
-            $courseDetail = $course->detail ?? new CourseDetail();
+            $course->name = $request->name;
+            $course->slug = $slug;
+            $course->description = $request->description;
+            /** @noinspection PhpUndefinedFieldInspection */
+            $course->user_id = Auth::user()->id;
 
-            $courseDetail->duration = $request->duration ?? $courseDetail->duration;
-            $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
-            $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
-            $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
-            $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
-            $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
-            $courseDetail->language = $request->language ?? $courseDetail->language;
-            $courseDetail->course_id = $course->id;
+            if ($course->saveOrFail()) {
+                $courseDetail = new CourseDetail();
 
-            $courseDetail->save();
+                $courseDetail->duration = $request->duration ?? $courseDetail->duration;
+                $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
+                $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
+                $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
+                $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
+                $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
+                $courseDetail->language = $request->language ?? $courseDetail->language;
+                $courseDetail->course_id = $course->id;
 
-            Toastr::success('Update course successfully', 'Succeed');
+                $courseDetail->save();
+            }
+
+            if (isset($request->results)) {
+                $courseResults = [];
+                foreach ($request->results as $result) {
+                    $courseResult = new CourseResult();
+                    $courseResult->result = $result;
+                    $courseResults[] = $courseResult;
+                }
+
+                $course->results()->delete();
+                $course->results()->saveMany($courseResults);
+            }
+
+            DB::commit();
+            // all good
+            Toastr::success('Save course successfully', 'Succeed');
             return redirect()->route('author.course.index');
+        } catch (\Throwable $e) {
+            DB::rollback();
+            // something went wrong
         }
+
         Toastr::warning('Failed to save course', 'Failed');
         return redirect()->back();
+
     }
 
     /**
@@ -191,7 +241,8 @@ class CourseController extends Controller
         return response()->json(['success' => 'Add course section successfully']);
     }
 
-    public function newLesson(CourseSection $courseSection) {
+    public function newLesson(CourseSection $courseSection)
+    {
         Session::put('url.intended', URL::previous());  // using the Facade
         return view('author.lesson.create', compact('courseSection'));
     }

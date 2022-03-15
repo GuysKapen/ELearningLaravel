@@ -31,7 +31,7 @@
                     <div class="field mt-5">
                         <div>
                             <label class="block font-semibold" for="input1">Description</label>
-                            <textarea id="mce-instance" name="body"
+                            <textarea id="mce-instance" name="description"
                                       placeholder="Enter content here"></textarea>
                         </div>
                     </div>
@@ -69,6 +69,11 @@
                                         <div
                                             class="flex mx-0 mt-1 flex cursor-pointer tab-panel py-2">
                                             <p class="ml-3 text-base">Author</p>
+                                        </div>
+
+                                        <div
+                                            class="flex mx-0 mt-1 flex cursor-pointer tab-panel py-2">
+                                            <p class="ml-3 text-base">Mores</p>
                                         </div>
 
                                     </div>
@@ -385,6 +390,49 @@
                                         </div>
                                         <!-- !Author -->
 
+                                        <!-- Mores -->
+                                        <div id="input-author" class="tab-content">
+                                            <div class="field">
+                                                <div class="control mt-2">
+                                                    <label class="block font-semibold text-sm mt-2"
+                                                           for="input1">What will students learn in your course?</label>
+
+                                                    <div class="">
+
+                                                        <div id="course-result">
+
+                                                            @for($i = 0; $i < 2; $i++)
+                                                                <input id="results"
+                                                                       name="results[]"
+                                                                       value="{{ old('result', isset($course->results) ? ($course->results[$i]->result ?? "") : "") }}"
+                                                                       class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                                       type="text"
+                                                                       placeholder="How to ..."/>
+                                                            @endfor
+                                                        </div>
+
+                                                        <div
+                                                            class="text-sm cursor-pointer text-indigo-600 flex items-center mt-2"
+                                                            id="add-result">
+                                                            <span class="text-base material-icons outlined">add</span>
+                                                            <span class="text-sm ml-2">
+                                                                Add answer
+                                                            </span>
+                                                        </div>
+
+                                                        <span
+                                                            class="input-desc">The results of the course after complete the course</span>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- !Mores -->
+
+
                                     </div>
 
                                 </div>
@@ -538,9 +586,19 @@
             setup: function (editor) {
                 editor.on('init', function () {
                     //this gets executed AFTER TinyMCE is fully initialized
-                    {{--editor.setContent('{!! $courseLesson->body !!}');--}}
+                    {{--editor.setContent('{!! $course->description !!}');--}}
+                    editor.setContent('{!! preg_replace("/[\n\r|\r\n|\r|\n]/m", "", $course->description) !!}');
                 });
             }
         });
+    </script>
+
+    <script>
+        $("#add-result").click(function () {
+            @php
+                $x = '<input id="results" name="results[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="How to ..."/>';
+            @endphp
+            $("#course-result").append('{!! $x !!}')
+        })
     </script>
 @endpush

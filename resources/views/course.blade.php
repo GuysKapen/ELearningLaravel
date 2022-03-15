@@ -91,172 +91,45 @@
             </div>
         </div>
 
-        <section class="my-8">
-            <div class="shadow-md p-8 border-t">
-                <h2 class="text-black fw-900 font-black text-xl font-mul">
-                    What you'll learn</h2>
-                <div class="mt-4">
-                    <ul class="flex flex-wrap list-col-2">
-                        <li>
-                            <div class="flex">
-                                <span class="material-icons text-sm outlined">check</span>
-                                <div class="text-sm ml-2">
+        @if(isset($course->results))
+            <section class="my-8">
+                <div class="shadow-md p-8 border-t">
+                    <h2 class="text-black fw-900 font-black text-xl font-mul">
+                        What you'll learn</h2>
+                    <div class="mt-4">
+                        <ul class="flex flex-wrap list-col-2">
+                            @foreach($course->results as $key=>$result)
+                                <li class="mt-2">
+                                    <div class="flex">
+                                        <span class="material-icons text-sm outlined">check</span>
+                                        <div class="text-sm ml-2">
                                 <span
-                                    class="text-sm">How to write API automation (backend automation) using Python 3</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex">
-                                <span class="material-icons text-sm outlined">check</span>
-                                <div class="text-sm ml-2">
-                                <span
-                                    class="text-sm">How to validate API response</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex">
-                                <span class="material-icons text-sm outlined">check</span>
-                                <div class="text-sm ml-2">
-                                <span
-                                    class="text-sm">How to build automation framework</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex">
-                                <span class="material-icons text-sm outlined">check</span>
-                                <div class="text-sm ml-2">
-                                <span
-                                    class="text-sm">How to generate reports for your tests (pytest-html, Allure, jUnit)</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex">
-                                <span class="material-icons text-sm outlined">check</span>
-                                <div class="text-sm ml-2">
-                                <span
-                                    class="text-sm">How to create a real eCommerce WordPress site locally</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex">
-                                <span class="material-icons text-sm outlined">check</span>
-                                <div class="text-sm ml-2">
-                                <span
-                                    class="text-sm">How to use PyTest (most popular unit testing framework)</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                                    class="text-sm">{{$result->result}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         <section class="my-8">
             <div>
                 <div class="">
                     <div class="tab-pane active" id="description">
-                        <div class="mt-8">
+
+                        <div class="mt-4">
                             <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
                                 Description
                             </h2>
-                            <p class="text-gray-500 text-base">
-                                Learn how to use Python to test the back-end of web services or APIs. We use industry
-                                standard real eCommerce RESTful API to practice testing using Python programming
-                                language.
-
-                            </p>
-                            <p class="text-gray-500 text-base mt-4">
-                                We will build a framework using one of the most popular testing tools PyTest. The
-                                framework
-                                we will build will be extendable and scalable to be able to include frontend (Selenium
-                                WebDriver) testing.
-                            </p>
-
-                            <p class="text-gray-500 text-base mt-4">
-                                The skills learned here are used in any Web Serivces testing.
-                            </p>
-                        </div>
-                        <div class="mt-4">
-                            <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
-                                Audience
-                            </h2>
-                            <p class="text-gray-500 text-base">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consequatur et
-                                exercitationem facere fugiat, harum laborum molestias necessitatibus nobis nostrum odit
-                                officiis omnis quae rem suscipit totam velit vero vitae?
-                            </p>
-
-                            <p class="text-gray-500 text-base mt-4">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur debitis
-                                enim
-                                quam qui quidem quod tenetur vero!
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid consectetur
-                                dignissimos eum fugiat in laborum nostrum nulla pariatur repudiandae vero, vitae
-                                voluptas
-                                voluptate. Cum inventore minus natus praesentium vitae.
-                            </p>
-                        </div>
-                        <div class="mt-4">
-                            <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
-                                Prerequisities
-                            </h2>
-                            <p class="text-gray-500 text-base">
-                                If you are getting into the QA world or you are looking to advance your career, having
-                                API
-                                testing skill will accelerate your success. Python is one of the most popular languages
-                                to
-                                use in software testing, and knowing how to use it for API/Backend testing will expand
-                                your
-                                pool of possibilities. </p>
-
-                            <p class="text-gray-500 text-base mt-4">
-                                In addition to using Python for API/Backend testing, the tools we will use are great
-                                addition to your resume. We will be using industry standard tools that can be applied to
-                                several tasks beyond API testing. </p>
-
-                            <p class="text-gray-500 text-base mt-4">
-                                After completion of this course you will be able to go through interview as if you have
-                                API
-                                testing experience. You will also have plenty of APIs to test and practice.
-                            </p>
-                        </div>
-
-                        <div class="mt-4">
-                            <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
-                                Outcome
-                            </h2>
-                            <ul class="list-disc pl-6 marker:text-indigo-400 marker:text-xxs">
-
-                                <li class="text-sm pb-1 pl-2">35 + lectures (continuously adding more examples)
-                                </li>
-                                <li class="text-sm pb-1 pl-2">
-                                    Plenty of APIs (endpoints) for you to practice with beyond this class
-                                </li>
-                                <li class="text-sm pb-1 pl-2">
-                                    Enough material and examples to be able to create a project and maintain a GitHub
-                                    repo
-                                </li>
-                                <li class="text-sm pb-1 pl-2">
-                                    Industry standard tools to add to your resume.
-                                </li>
-                                <li class="text-sm pb-1 pl-2">
-                                    Anyone looking to learn automation Backend/API testing
-                                </li>
-                                <li class="text-sm pb-1 pl-2">
-                                    Anyone looking to gain experience automating the backend test for real eCommerce
-                                    site
-                                </li>
-                            </ul>
+                            {!! $course->description !!}
                         </div>
 
                     </div>
                     <div class="tab-pane mt-8" id="cirriculum">
-                        <h2 class="text-black fw-900 font-black text-xl font-mul">Course content</h2>
+                        <h2 class="text-black fw-900 font-black text-2xl font-mul">Course content</h2>
                         <div class="mt-4">
                             @php
                                 $i = 0;
@@ -327,7 +200,7 @@
                         </div>
                     </div>
                     <div class="tab-pane mt-8" id="instructor">
-                        <h2 class="text-black fw-900 font-black text-xl font-mul">Instructor</h2>
+                        <h2 class="text-black fw-900 font-black text-2xl font-mul">Instructor</h2>
                         <div class="mt-4">
                             <div>
                                 <div class="flex items-center pr-4">
@@ -364,7 +237,7 @@
                     </div>
                     <div class="tab-pane mt-8" id="review">
                         <div class="mt-2">
-                            <h2 class="text-black fw-900 font-black text-xl font-mul">Review</h2>
+                            <h2 class="text-black fw-900 font-black text-2xl font-mul">Review</h2>
 
                             <div id="comment-container">
                                 <div id="comment-form-container">
