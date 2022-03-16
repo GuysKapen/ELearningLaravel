@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -50,5 +51,10 @@ class Course extends Model
     public function coursePrice(): HasOne
     {
         return $this->hasOne(CoursePrice::class);
+    }
+
+    public function lectures(): HasManyThrough
+    {
+        return $this->hasManyThrough(CourseLesson::class, CourseSection::class);
     }
 }

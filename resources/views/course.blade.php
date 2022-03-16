@@ -89,10 +89,12 @@
                     <h2 class="text-black fw-900 font-black text-2xl font-mul ">
                         $@convert($course->coursePrice->price)
                     </h2>
-                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Buy this course</button>
+                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Buy this course
+                    </button>
                 @else
                     <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
-                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Take this course</button>
+                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Take this course
+                    </button>
                 @endif
             </div>
         </div>
@@ -126,11 +128,198 @@
                 <div class="">
                     <div class="tab-pane active" id="description">
 
-                        <div class="mt-4">
-                            <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
-                                Description
-                            </h2>
-                            {!! $course->description !!}
+                        <div class="flex">
+                            <div class="mt-4 w-8/12">
+                                <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
+                                    Description
+                                </h2>
+                                {!! $course->description !!}
+                            </div>
+
+                            @php
+                                $courseDetail = $course->detail;
+                            @endphp
+
+                            @if(isset($courseDetail))
+                                <div class="pl-4">
+                                    <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
+                                        Course features
+                                    </h2>
+                                    <div class="p-8 rounded mt-8 bg-white shadow-full">
+
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                            <span class="icon material-icons outlined">school</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Lectures</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">{{$course->lectures()->count()}}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                            <span class="icon material-icons outlined">question_mark</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Quizzes</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">0</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                        <span
+                                                            class="icon material-icons outlined">hourglass_empty</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Duration</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">{{$courseDetail->duration_info}}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                            <span class="icon material-icons outlined">trending_up</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Skill level</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">{{$courseDetail->skill_level}}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                            <span class="icon material-icons outlined">translate</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Languages</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">{{$courseDetail->language}}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                            <span class="icon material-icons outlined">school</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Students</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">{{$courseDetail->student_enrolled}}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <div class="flex items-center">
+
+                                                        <div class="mr-3 icon-wrap">
+                                                            <span class="icon material-icons outlined">check_box</span>
+                                                        </div>
+                                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">
+                                                                Assessment</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-sm font-medium text-gray-900 px-6 py-4">
+                                                    <p class="text-sm text-gray-500 font-medium">Yes</p>
+                                                </td>
+                                            </tr>
+
+                                            <!-- More people... -->
+                                            </tbody>
+                                        </table>
+
+
+                                        {{--                                    <div class="flex items-center mb-4 justify-between">--}}
+                                        {{--                                        <div class="flex items-center">--}}
+                                        {{--                                            <div class="mr-3 icon-wrap"><span class="icon fa fa-university"></span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div><h3 class="m-0 text-base text-gray-800 font-medium">Lectures</h3>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <p class="text-sm text-gray-500 font-medium">12</p>--}}
+                                        {{--                                    </div>--}}
+
+                                        {{--                                    <div class="flex items-center mb-4">--}}
+                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">50 Universities--}}
+                                        {{--                                                Worldwide</h3>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    </div>--}}
+
+                                        {{--                                    <div class="flex items-center mb-4">--}}
+                                        {{--                                        <div class="mr-3 icon-wrap-big"><<span class="icon fa fa-graduation-cap"></span>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Top Professionals in--}}
+                                        {{--                                                The World</h3>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    </div>--}}
+
+                                        {{--                                    <div class="flex items-center mb-4">--}}
+                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Expand Your--}}
+                                        {{--                                                Knowledge</h3></div>--}}
+                                        {{--                                    </div>--}}
+
+                                        {{--                                    <div class="flex items-center mb-4">--}}
+                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-graduation-cap"></span>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Online Teaching--}}
+                                        {{--                                                Assistant--}}
+                                        {{--                                                Courses</h3></div>--}}
+                                        {{--                                    </div>--}}
+
+                                        {{--                                    <div class="flex items-center mb-4">--}}
+                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Teachers</h3>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    </div>--}}
+
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
 
                     </div>
