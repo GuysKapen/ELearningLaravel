@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\CourseAssessment;
 use App\Models\CourseDetail;
 use App\Models\CourseLesson;
+use App\Models\CoursePrice;
 use App\Models\CourseResult;
 use App\Models\CourseSection;
 use App\Models\EvaluateType;
@@ -102,7 +103,13 @@ class CourseController extends Controller
                 $courseAssessment = new CourseAssessment();
                 $courseAssessment->evaluate_type_id = $request->evaluate_type_id;
                 $courseAssessment->pass_condition = $request->pass_condition;
-                $courseAssessment->saveOrFail();
+                $course->courseAssessment()->save($courseAssessment);
+            }
+
+            if (isset($request->price)) {
+                $coursePrice = $course->coursePrice ?? new CoursePrice();
+                $coursePrice->price = $request->price;
+                $course->coursePrice()->save($coursePrice);
             }
 
             DB::commit();
@@ -128,6 +135,23 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Models\Course $course
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Course $course)
+    {
+        if ($course->delete()) {
+            Toastr::success('Delete course successfully', 'Succeed');
+            return redirect()->back();
+        }
+
+        Toastr::error('Failed to delete course', 'Failed');
+        return redirect()->back();
     }
 
     /**
@@ -183,16 +207,27 @@ class CourseController extends Controller
                 $courseDetail->save();
             }
 
-            if (isset($request->results)) {
-                $courseResults = [];
-                foreach ($request->results as $result) {
-                    $courseResult = new CourseResult();
-                    $courseResult->result = $result;
-                    $courseResults[] = $courseResult;
+            if (isset($request->results)
+                && !empty($request->results)) {
+                $results = $request->results;
+
+                foreach ($results as $key => $value) {
+                    if (empty($value)) {
+                        unset($results[$key]);
+                    }
                 }
 
-                $course->results()->delete();
-                $course->results()->saveMany($courseResults);
+                if (!empty($results)) {
+                    $courseResults = [];
+                    foreach ($request->results as $result) {
+                        $courseResult = new CourseResult();
+                        $courseResult->result = $result;
+                        $courseResults[] = $courseResult;
+                    }
+
+                    $course->results()->delete();
+                    $course->results()->saveMany($courseResults);
+                }
             }
 
             if (isset($request->evaluate_type_id)
@@ -204,35 +239,27 @@ class CourseController extends Controller
                 $courseAssessment->saveOrFail();
             }
 
+            if (isset($request->price)) {
+                $coursePrice = $course->coursePrice ?? new CoursePrice();
+                $coursePrice->price = $request->price;
+                $coursePrice->course_id = $course->id;
+                $coursePrice->saveOrFail();
+            }
+
+
             DB::commit();
             // all good
             Toastr::success('Save course successfully', 'Succeed');
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
+            dd($e);
             // something went wrong
         }
 
         Toastr::warning('Failed to save course', 'Failed');
         return redirect()->back();
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Course $course
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Course $course)
-    {
-        if ($course->delete()) {
-            Toastr::success('Delete course successfully', 'Succeed');
-            return redirect()->back();
-        }
-
-        Toastr::error('Failed to delete course', 'Failed');
-        return redirect()->back();
     }
 
     /**

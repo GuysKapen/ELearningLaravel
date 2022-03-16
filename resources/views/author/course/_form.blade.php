@@ -274,9 +274,9 @@
                                                            for="input1">Price</label>
                                                     <div class="w-8/12">
 
-                                                        <input id="duration"
-                                                               name="attr"
-                                                               value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
+                                                        <input id="price"
+                                                               name="price"
+                                                               value="{{ old('price', isset($coursePrice) ? $coursePrice->price : "") }}"
                                                                required
                                                                class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                                                type="number"

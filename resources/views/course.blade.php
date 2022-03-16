@@ -85,9 +85,15 @@
                 </div>
             </div>
             <div class="flex item-centers">
-                <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
-                <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Take this course
-                </button>
+                @if(isset($course->coursePrice) && $course->coursePrice->price != 0)
+                    <h2 class="text-black fw-900 font-black text-2xl font-mul ">
+                        $@convert($course->coursePrice->price)
+                    </h2>
+                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Buy this course</button>
+                @else
+                    <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
+                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Take this course</button>
+                @endif
             </div>
         </div>
 

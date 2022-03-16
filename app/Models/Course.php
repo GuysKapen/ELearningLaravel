@@ -46,4 +46,9 @@ class Course extends Model
     {
         return $this->hasOne(CourseAssessment::class);
     }
+
+    public function coursePrice(): HasOne
+    {
+        return $this->hasOne(CoursePrice::class);
+    }
 }
