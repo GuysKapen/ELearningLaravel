@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Author;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\CourseAssessment;
 use App\Models\CourseDetail;
 use App\Models\CourseLesson;
 use App\Models\CourseResult;
 use App\Models\CourseSection;
+use App\Models\EvaluateType;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -40,7 +42,9 @@ class CourseController extends Controller
     public function create()
     {
         $courseDetail = new CourseDetail();
-        return view('author.course.create', compact('courseDetail'));
+        $courseAssessment = new CourseAssessment();
+        $evaluateTypes = EvaluateType::all();
+        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment'));
     }
 
     /**
@@ -93,6 +97,14 @@ class CourseController extends Controller
                 $course->results()->saveMany($courseResults);
             }
 
+            if (isset($request->evaluate_type_id)
+                && isset($request->pass_condition)) {
+                $courseAssessment = new CourseAssessment();
+                $courseAssessment->evaluate_type_id = $request->evaluate_type_id;
+                $courseAssessment->pass_condition = $request->pass_condition;
+                $courseAssessment->saveOrFail();
+            }
+
             DB::commit();
             // all good
             Toastr::success('Save course successfully', 'Succeed');
@@ -126,8 +138,10 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $courseDetail = $course->detail;
-        return view('author.course.edit', compact('course', 'courseDetail'));
+        $evaluateTypes = EvaluateType::all();
+        $courseDetail = $course->detail ?? new CourseDetail();
+        $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
+        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes'));
     }
 
     /**
@@ -155,7 +169,7 @@ class CourseController extends Controller
             $course->user_id = Auth::user()->id;
 
             if ($course->saveOrFail()) {
-                $courseDetail = new CourseDetail();
+                $courseDetail = $course->detail ?? new CourseDetail();
 
                 $courseDetail->duration = $request->duration ?? $courseDetail->duration;
                 $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
@@ -179,6 +193,15 @@ class CourseController extends Controller
 
                 $course->results()->delete();
                 $course->results()->saveMany($courseResults);
+            }
+
+            if (isset($request->evaluate_type_id)
+                && isset($request->pass_condition)) {
+                $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
+                $courseAssessment->evaluate_type_id = $request->evaluate_type_id;
+                $courseAssessment->pass_condition = $request->pass_condition;
+                $courseAssessment->course_id = $course->id;
+                $courseAssessment->saveOrFail();
             }
 
             DB::commit();

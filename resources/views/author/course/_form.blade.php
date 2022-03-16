@@ -215,13 +215,22 @@
                                                            for="input1">Course Result</label>
                                                     <div class="w-8/12">
 
-                                                        <input id="duration"
-                                                               name="attr"
-                                                               value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                                               required
-                                                               class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
-                                                               type="number"
-                                                               placeholder="Evaluate via lessons"/>
+                                                        <div class="block">
+                                                            <div class="mt-2">
+                                                                @foreach($evaluateTypes as $key=>$type)
+                                                                    <div>
+                                                                        <label class="inline-flex text-sm items-center">
+                                                                            <input type="radio"
+                                                                                   class="form-radio w-4 h-4"
+                                                                                   name="evaluate_type_id"
+                                                                                   value="{{$type->id}}"
+                                                                                   {{ $type->id == $courseAssessment->evaluate_type_id ?? -1 ? 'checked' : '' }}>
+                                                                            <span class="ml-2">{{$type->name}}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
 
                                                         <span
                                                             class="input-desc">The method to assess the result of a student for a course</span>
@@ -236,13 +245,17 @@
                                                            for="input1">Passing condition (%)</label>
                                                     <div class="w-8/12">
 
-                                                        <input id="duration"
-                                                               name="attr"
-                                                               value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                                               required
-                                                               class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
-                                                               type="number"
-                                                               placeholder="80"/>
+                                                        <div class="flex items-center">
+                                                            <input id="pass_condition"
+                                                                   name="pass_condition"
+                                                                   value="{{ old('pass_condition', isset($course->courseAssessment) ? $courseAssessment->pass_condition : "75") }}"
+                                                                   required
+                                                                   class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                                                   type="number"
+                                                                   placeholder="80"/>
+
+                                                            <span class="ml-2">%</span>
+                                                        </div>
                                                         <span
                                                             class="input-desc">The percentage of quiz result or completed lesson required to finish the course</span>
                                                     </div>
@@ -585,9 +598,7 @@
             height: "480",
             setup: function (editor) {
                 editor.on('init', function () {
-                    //this gets executed AFTER TinyMCE is fully initialized
-                    {{--editor.setContent('{!! $course->description !!}');--}}
-                    editor.setContent('{!! preg_replace("/[\n\r|\r\n|\r|\n]/m", "", $course->description) !!}');
+                    editor.setContent('{!! preg_replace("/[\n\r|\r\n|\r|\n]/m", "", $course->description ?? "") !!}');
                 });
             }
         });

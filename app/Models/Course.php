@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property boolean $isApproved
  * @property CourseDetail $detail
  * @property string|null $description
+ * @property CourseAssessment $courseAssessment
  */
 class Course extends Model
 {
@@ -39,5 +40,10 @@ class Course extends Model
     public function results(): HasMany
     {
         return $this->hasMany(CourseResult::class, 'course_id', 'id');
+    }
+
+    public function courseAssessment(): HasOne
+    {
+        return $this->hasOne(CourseAssessment::class);
     }
 }
