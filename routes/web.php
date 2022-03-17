@@ -35,6 +35,7 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\
     Route::post('course/add-section', 'CourseController@addSection')->name('course.add-section');
     Route::get('course/new-lesson/{courseSection}', 'CourseController@newLesson')->name('course.new-lesson');
     Route::get('course/lesson/{courseLesson}', 'CourseLessonController@show')->name('course.lesson.show');
+    Route::get('course/curri/{course}', 'CourseController@editCourseCurriculum')->name('course.curri.edit');
     Route::resource('course', 'CourseController');
     Route::resource('course-lesson', 'CourseLessonController');
     Route::post('profile', 'ProfileController@updateProfile')->name("profile.update");

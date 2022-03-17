@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "brian2694/laravel-toastr": "^5.56",
         "doctrine/dbal": "^3.3",
+        "ducks-project/spl-types": "^1.1",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
@@ -29,7 +30,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/View/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

@@ -170,7 +170,8 @@
                                                     <div class="flex items-center">
 
                                                         <div class="mr-3 icon-wrap">
-                                                            <span class="icon material-icons outlined">question_mark</span>
+                                                            <span
+                                                                class="icon material-icons outlined">question_mark</span>
                                                         </div>
                                                         <div><h3 class="m-0 text-base text-gray-800 font-medium">
                                                                 Quizzes</h3>
@@ -203,7 +204,8 @@
                                                     <div class="flex items-center">
 
                                                         <div class="mr-3 icon-wrap">
-                                                            <span class="icon material-icons outlined">trending_up</span>
+                                                            <span
+                                                                class="icon material-icons outlined">trending_up</span>
                                                         </div>
                                                         <div><h3 class="m-0 text-base text-gray-800 font-medium">
                                                                 Skill level</h3>
@@ -267,55 +269,6 @@
                                             </tbody>
                                         </table>
 
-
-                                        {{--                                    <div class="flex items-center mb-4 justify-between">--}}
-                                        {{--                                        <div class="flex items-center">--}}
-                                        {{--                                            <div class="mr-3 icon-wrap"><span class="icon fa fa-university"></span>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                            <div><h3 class="m-0 text-base text-gray-800 font-medium">Lectures</h3>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <p class="text-sm text-gray-500 font-medium">12</p>--}}
-                                        {{--                                    </div>--}}
-
-                                        {{--                                    <div class="flex items-center mb-4">--}}
-                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">50 Universities--}}
-                                        {{--                                                Worldwide</h3>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    </div>--}}
-
-                                        {{--                                    <div class="flex items-center mb-4">--}}
-                                        {{--                                        <div class="mr-3 icon-wrap-big"><<span class="icon fa fa-graduation-cap"></span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Top Professionals in--}}
-                                        {{--                                                The World</h3>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    </div>--}}
-
-                                        {{--                                    <div class="flex items-center mb-4">--}}
-                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Expand Your--}}
-                                        {{--                                                Knowledge</h3></div>--}}
-                                        {{--                                    </div>--}}
-
-                                        {{--                                    <div class="flex items-center mb-4">--}}
-                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-graduation-cap"></span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Online Teaching--}}
-                                        {{--                                                Assistant--}}
-                                        {{--                                                Courses</h3></div>--}}
-                                        {{--                                    </div>--}}
-
-                                        {{--                                    <div class="flex items-center mb-4">--}}
-                                        {{--                                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Teachers</h3>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    </div>--}}
-
                                     </div>
                                 </div>
                             @endif
@@ -377,11 +330,16 @@
                                                         </div>
                                                         <span
                                                             class="mx-2 text-sm font-bold text-black max-w-1/2">{{$lesson->title}}</span>
-                                                        <span class="icon-wrap small mr-3 flex-end"><span
-                                                                class="icon material-icons">visibility</span></span>
+                                                        @if($lesson->detail->is_preview ?? false)
+                                                            <span class="icon-wrap small mr-3 flex-end"><span
+                                                                    class="icon material-icons">visibility</span></span>
+                                                        @endif
 
-                                                        <p class="ml-2 text-gray-500 text-sm ml-auto flex-end">50
-                                                            mins</p>
+                                                        @php
+                                                            $timeText = timeText($lesson->detail->duration ?? 0);
+                                                        @endphp
+
+                                                        <p class="ml-2 text-gray-500 text-sm ml-auto flex-end">{{ $timeText }}</p>
 
                                                     </div>
                                                 </div>

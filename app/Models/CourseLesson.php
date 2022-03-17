@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property mixed $name
@@ -24,5 +25,10 @@ class CourseLesson extends Model
     public function section(): BelongsTo
     {
         return $this->belongsTo(CourseSection::class, 'course_section_id', 'id');
+    }
+
+    public function detail(): HasOne
+    {
+        return $this->hasOne(LessonDetail::class);
     }
 }

@@ -45,8 +45,10 @@
                     $i++;
                 @endphp
                 <div
-                    class="overflow-hidden shadow-full my-4 bg-transparent border-none relative flex flex-col rounded-md" id="accordionExample-{{$i}}">
-                    <div class="bg-transparent border-none py-2 px-4 flex items-center justify-between" id="heading-{{$i}}">
+                    class="overflow-hidden shadow-full my-4 bg-transparent border-none relative flex flex-col rounded-md"
+                    id="accordionExample-{{$i}}">
+                    <div class="bg-transparent border-none py-2 px-4 flex items-center justify-between"
+                         id="heading-{{$i}}">
                         <div class="flex items-center">
                             <span id="indicator-{{$i}}" aria-labelledby="heading-{{$i}}"
                                   data-parent="#accordionExample-{{$i}}"
@@ -55,7 +57,8 @@
                                 <button
                                     class="cursor-pointer w-full h-16 text-black font-bold text-left block bg-transparent border-0 py-2 text-base rounded-md outline-none"
                                     type="button" data-toggle="collapse"
-                                    data-target=".mul-collapse-{{$i}}" aria-expanded="false" aria-controls="collapse-{{$i}}">
+                                    data-target=".mul-collapse-{{$i}}" aria-expanded="false"
+                                    aria-controls="collapse-{{$i}}">
                                     Section {{$section->index}}: {{$section->name}}
                                 </button>
                             </h2>
@@ -73,7 +76,9 @@
                                             <span class="material-icons outlined text-base">description</span>
                                             <span class="ml-2 text-sm font-bold">1.1</span>
                                         </div>
-                                        <span class="mx-2 text-sm font-bold text-black">{{$lesson->title}}</span>
+                                        <a href="{{route('author.course.lesson.show', $lesson->id)}}">
+                                            <span class="mx-2 text-sm font-bold text-black">{{$lesson->title}}</span>
+                                        </a>
                                         <span class="icon-wrap small mr-3 flex-end ml-auto"><span
                                                 class="icon material-icons">visibility</span></span>
                                     </div>
@@ -99,7 +104,9 @@
 
             <div class="mt-8 mx-24">
                 <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Description</h2>
-                {!! $courseLesson->body !!}
+                <div class="prose">
+                    {!! $courseLesson->body !!}
+                </div>
             </div>
         </div>
     </div>

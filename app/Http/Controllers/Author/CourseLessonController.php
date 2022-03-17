@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
+use App\Library\DurationType;
+use App\Models\Category;
 use App\Models\CourseLesson;
+use App\Models\LessonDetail;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use mysql_xdevapi\Exception;
 
 class CourseLessonController extends Controller
 {
@@ -34,29 +40,50 @@ class CourseLessonController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'section_id' => 'required',
-        ]);
 
-        $section_id = $request->section_id;
-        $slug = Str::slug($request->title);
+        DB::beginTransaction();
 
-        $courseSection = new CourseLesson();
-        $courseSection->title = $request->title;
-        $courseSection->body = $request->body;
-        $courseSection->video = $request->video;
-        $courseSection->slug = $slug;
-        $courseSection->course_section_id = $section_id;
+        try {
+            $this->validate($request, [
+                'title' => 'required',
+                'section_id' => 'required',
+            ]);
 
-        if ($courseSection->save()) {
-            Toastr::success('Add section successfully', 'Succeed');
+            $section_id = $request->section_id;
+            $slug = Str::slug($request->title);
+
+            $courseLesson = new CourseLesson();
+            $courseLesson->title = $request->title;
+            $courseLesson->body = $request->body;
+            $courseLesson->video = $request->video;
+            $courseLesson->slug = $slug;
+            $courseLesson->course_section_id = $section_id;
+
+            if ($courseLesson->saveOrFail()) {
+
+                if (isset($request->duration) && isset($request->is_preview)) {
+
+                    $lessonDetail = new LessonDetail();
+                    $lessonDetail->duration = $request->duration;
+                    $lessonDetail->is_preview = $request->is_preview;
+
+                    $courseLesson->detail()->save($lessonDetail);
+
+                }
+
+                Toastr::success('Add section successfully', 'Succeed');
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
         }
+
         Toastr::warning('Failed to add section', 'Failed');
         return Redirect::intended('/');
     }
@@ -64,7 +91,7 @@ class CourseLessonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CourseLesson  $courseLesson
+     * @param \App\Models\CourseLesson $courseLesson
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(CourseLesson $courseLesson)
@@ -75,31 +102,92 @@ class CourseLessonController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CourseLesson  $courseLesson
+     * @param \App\Models\CourseLesson $courseLesson
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(CourseLesson $courseLesson)
     {
         $courseSection = $courseLesson->section;
-        return view('author.lesson.edit', compact('courseLesson', 'courseSection'));
+        $items = (new DurationType)->getConstList();
+        $categories = new Collection();
+        foreach ($items as $item) {
+            $categories->push((object)['id' => $item,
+                'name' => DurationType::GetName($item)
+            ]);
+
+        }
+        return view('author.lesson.edit', compact('courseLesson', 'courseSection', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CourseLesson  $courseLesson
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\CourseLesson $courseLesson
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, CourseLesson $courseLesson)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $this->validate($request, [
+                'title' => 'required',
+                'section_id' => 'required',
+            ]);
+
+            $section_id = $request->section_id;
+            $slug = Str::slug($request->title);
+
+            $courseLesson->title = $request->title;
+            $courseLesson->body = $request->body;
+            $courseLesson->video = $request->video;
+            $courseLesson->slug = $slug;
+            $courseLesson->course_section_id = $section_id;
+
+            if ($courseLesson->saveOrFail()) {
+
+                if (isset($request->duration) && isset($request->duration_type)) {
+
+                    $lessonDetail = $courseLesson->detail ?? new LessonDetail();
+
+                    $factor = 1;
+                    switch ($request->duration_type) {
+                        case DurationType::Sec:
+                            $factor = 1;
+                            break;
+                        case DurationType::Min:
+                            $factor = 60;
+                            break;
+                        case DurationType::Hour:
+                            $factor = 3600;
+                            break;
+                    }
+
+                    $lessonDetail->duration = $request->duration * $factor;
+                    $lessonDetail->is_preview = $request->is_preview ?? $lessonDetail->is_preview;
+                    $lessonDetail->course_lesson_id = $courseLesson->id;
+
+                    $lessonDetail->saveOrFail();
+                }
+
+                Toastr::success('Add section successfully', 'Succeed');
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        Toastr::warning('Failed to add section', 'Failed');
+        return Redirect::intended('/');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CourseLesson  $courseLesson
+     * @param \App\Models\CourseLesson $courseLesson
      * @return \Illuminate\Http\Response
      */
     public function destroy(CourseLesson $courseLesson)

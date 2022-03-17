@@ -253,7 +253,6 @@ class CourseController extends Controller
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
-            dd($e);
             // something went wrong
         }
 
@@ -261,6 +260,7 @@ class CourseController extends Controller
         return redirect()->back();
 
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -295,5 +295,19 @@ class CourseController extends Controller
     {
         Session::put('url.intended', URL::previous());  // using the Facade
         return view('author.lesson.create', compact('courseSection'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param \App\Models\Course $course
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    public function editCourseCurriculum(Course $course)
+    {
+        $evaluateTypes = EvaluateType::all();
+        $courseDetail = $course->detail ?? new CourseDetail();
+        $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
+        return view('author.course.course_curri', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes'));
     }
 }

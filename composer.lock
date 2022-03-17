@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "183611576320dbe73973eb044fd85fae",
+    "content-hash": "2c573f4b0f41b345bfc3737183184cf4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -833,6 +833,71 @@
                 }
             ],
             "time": "2022-01-18T15:43:28+00:00"
+        },
+        {
+            "name": "ducks-project/spl-types",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ducks-project/spl-types.git",
+                "reference": "814f5b719fb39975321db0eaf66c4e0d2d93f53e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ducks-project/spl-types/zipball/814f5b719fb39975321db0eaf66c4e0d2d93f53e",
+                "reference": "814f5b719fb39975321db0eaf66c4e0d2d93f53e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Ducks\\Component\\SplTypes\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrien Loyant",
+                    "email": "donald_duck@team-df.org",
+                    "homepage": "http://adrien.loyant.net",
+                    "role": "Owner"
+                }
+            ],
+            "description": "Polyfill Module for SplType PHP extension. This extension aims at helping people making PHP a stronger typed language and can be a good alternative to scalar type hinting. It provides different typehandling classes as such as integer, float, bool, enum and string",
+            "homepage": "https://github.com/ducks-project/spl-types/",
+            "keywords": [
+                "SplBool",
+                "SplFloat",
+                "SplInt",
+                "SplString",
+                "SplType",
+                "SplTypes",
+                "compat",
+                "enum",
+                "enumerator",
+                "php",
+                "polyfill",
+                "poo",
+                "splenum"
+            ],
+            "support": {
+                "email": "adrien.loyant@gmail.com",
+                "issues": "https://github.com/ducks-project/spl-types/issues",
+                "source": "https://github.com/ducks-project/spl-types/tree/1.x"
+            },
+            "time": "2019-03-06T13:11:02+00:00"
         },
         {
             "name": "egulias/email-validator",
