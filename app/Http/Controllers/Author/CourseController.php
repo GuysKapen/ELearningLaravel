@@ -12,6 +12,7 @@ use App\Models\CoursePrice;
 use App\Models\CourseRequirement;
 use App\Models\CourseResult;
 use App\Models\CourseSection;
+use App\Models\CourseTarget;
 use App\Models\EvaluateType;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -134,6 +135,27 @@ class CourseController extends Controller
                 }
             }
 
+            if (isset($request->targets)
+                && !empty($request->targets)) {
+                $targets = $request->targets;
+
+                foreach ($targets as $key => $value) {
+                    if (empty($value)) {
+                        unset($targets[$key]);
+                    }
+                }
+
+                if (!empty($targets)) {
+                    $courseTargets = [];
+                    foreach ($request->targets as $target) {
+                        $courseTarget = new CourseTarget();
+                        $courseTarget->target = $target;
+                        $courseTargets[] = $courseTarget;
+                    }
+
+                    $course->targets()->saveMany($courseTargets);
+                }
+            }
 
             if (isset($request->evaluate_type_id)
                 && isset($request->pass_condition)) {
@@ -257,9 +279,9 @@ class CourseController extends Controller
                 if (!empty($results)) {
                     $courseResults = [];
                     foreach ($request->results as $result) {
-                        $courseRequirement = new CourseResult();
-                        $courseRequirement->result = $result;
-                        $courseResults[] = $courseRequirement;
+                        $courseTarget = new CourseResult();
+                        $courseTarget->result = $result;
+                        $courseResults[] = $courseTarget;
                     }
 
                     $course->results()->delete();
@@ -278,15 +300,38 @@ class CourseController extends Controller
                 }
 
                 if (!empty($requirements)) {
-                    $courseRequirements = [];
+                    $courseTargets = [];
                     foreach ($request->requirements as $requirement) {
-                        $courseRequirement = new CourseRequirement();
-                        $courseRequirement->requirement = $requirement;
-                        $courseRequirements[] = $courseRequirement;
+                        $courseTarget = new CourseRequirement();
+                        $courseTarget->requirement = $requirement;
+                        $courseTargets[] = $courseTarget;
                     }
 
                     $course->requirements()->delete();
-                    $course->requirements()->saveMany($courseRequirements);
+                    $course->requirements()->saveMany($courseTargets);
+                }
+            }
+
+            if (isset($request->targets)
+                && !empty($request->targets)) {
+                $targets = $request->targets;
+
+                foreach ($targets as $key => $value) {
+                    if (empty($value)) {
+                        unset($targets[$key]);
+                    }
+                }
+
+                if (!empty($targets)) {
+                    $courseTargets = [];
+                    foreach ($request->targets as $target) {
+                        $courseTarget = new CourseTarget();
+                        $courseTarget->target = $target;
+                        $courseTargets[] = $courseTarget;
+                    }
+
+                    $course->targets()->delete();
+                    $course->targets()->saveMany($courseTargets);
                 }
             }
 

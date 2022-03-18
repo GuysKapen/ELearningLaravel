@@ -496,6 +496,52 @@
                                                 </div>
 
                                             </div>
+
+                                            <div class="mt-8">
+                                                <div class="control mt-2">
+                                                    <label class="block font-semibold text-sm mt-2"
+                                                           for="input1">Who are your target students?</label>
+
+                                                    <div class="">
+
+                                                        <div id="course-targets">
+                                                            @if(isset($course->targets) && !$course->targets->isEmpty())
+                                                                @foreach($course->targets as $key=>$target)
+                                                                    <input id="targets"
+                                                                           name="targets[]"
+                                                                           value="{{ old('target', ($target->target ?? "")) }}"
+                                                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                                           type="text"
+                                                                           placeholder="Anyone who ..."/>
+                                                                @endforeach
+                                                            @else
+                                                                <input id="targets"
+                                                                       name="targets[]"
+                                                                       class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                                       type="text"
+                                                                       placeholder="Anyone who ..."/>
+                                                            @endif
+
+                                                        </div>
+
+                                                        <div
+                                                            class="text-sm cursor-pointer text-indigo-600 flex items-center mt-2"
+                                                            id="add-target">
+                                                            <span class="text-base material-icons outlined">add</span>
+                                                            <span class="text-sm ml-2">
+                                                                Add answer
+                                                            </span>
+                                                        </div>
+
+                                                        <span
+                                                            class="input-desc">The targets students of your course</span>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                         <!-- !Mores -->
 
@@ -671,6 +717,13 @@
                 $x = '<input id="requirements" name="requirements[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Need to ..."/>';
             @endphp
             $("#course-requirements").append('{!! $x !!}')
+        })
+
+        $("#add-target").click(function () {
+            @php
+                $x = '<input id="targets" name="targets[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Anyone who ..."/>';
+            @endphp
+            $("#course-targets").append('{!! $x !!}')
         })
     </script>
 @endpush

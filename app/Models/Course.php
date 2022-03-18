@@ -48,6 +48,11 @@ class Course extends Model
         return $this->hasMany(CourseRequirement::class, 'course_id', 'id');
     }
 
+    public function targets(): HasMany
+    {
+        return $this->hasMany(CourseTarget::class, 'course_id', 'id');
+    }
+
     public function courseAssessment(): HasOne
     {
         return $this->hasOne(CourseAssessment::class);
