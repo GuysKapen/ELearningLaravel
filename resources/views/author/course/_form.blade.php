@@ -224,7 +224,7 @@
                                                                                    class="form-radio w-4 h-4"
                                                                                    name="evaluate_type_id"
                                                                                    value="{{$type->id}}"
-                                                                                   {{ $type->id == $courseAssessment->evaluate_type_id ?? -1 ? 'checked' : '' }}>
+                                                                                {{ $type->id == $courseAssessment->evaluate_type_id ?? -1 ? 'checked' : '' }}>
                                                                             <span class="ml-2">{{$type->name}}</span>
                                                                         </label>
                                                                     </div>
@@ -414,14 +414,23 @@
 
                                                         <div id="course-result">
 
-                                                            @for($i = 0; $i < 2; $i++)
+                                                            @if(isset($course->results) && !$course->results->isEmpty())
+                                                                @foreach($course->results as $key=>$result)
+                                                                    <input id="results"
+                                                                           name="results[]"
+                                                                           value="{{ old('result', ($result->result ?? "")) }}"
+                                                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                                           type="text"
+                                                                           placeholder="How to ..."/>
+                                                                @endforeach
+                                                            @else
                                                                 <input id="results"
                                                                        name="results[]"
-                                                                       value="{{ old('result', isset($course->results) ? ($course->results[$i]->result ?? "") : "") }}"
                                                                        class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                                        type="text"
                                                                        placeholder="How to ..."/>
-                                                            @endfor
+                                                            @endif
+
                                                         </div>
 
                                                         <div
@@ -442,6 +451,51 @@
 
                                             </div>
 
+                                            <div class="mt-8">
+                                                <div class="control mt-2">
+                                                    <label class="block font-semibold text-sm mt-2"
+                                                           for="input1">Are there any course requirements or
+                                                        prerequisites?</label>
+
+                                                    <div class="">
+
+                                                        <div id="course-requirements">
+                                                            @if(isset($course->requirements) && !$course->requirements->isEmpty())
+                                                                @foreach($course->requirements as $key=>$requirement)
+                                                                    <input id="requirements"
+                                                                           name="requirements[]"
+                                                                           value="{{ old('$requirement', ($requirement->requirement ?? "")) }}"
+                                                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                                           type="text"
+                                                                           placeholder="Need to ..."/>
+                                                                @endforeach
+                                                            @else
+                                                                <input id="requirements"
+                                                                       name="requirements[]"
+                                                                       class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                                       type="text"
+                                                                       placeholder="Need to ..."/>
+                                                            @endif
+
+                                                        </div>
+
+                                                        <div
+                                                            class="text-sm cursor-pointer text-indigo-600 flex items-center mt-2"
+                                                            id="add-requirement">
+                                                            <span class="text-base material-icons outlined">add</span>
+                                                            <span class="text-sm ml-2">
+                                                                Add answer
+                                                            </span>
+                                                        </div>
+
+                                                        <span
+                                                            class="input-desc">The requirements for the course</span>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
                                         </div>
                                         <!-- !Mores -->
 
@@ -610,6 +664,13 @@
                 $x = '<input id="results" name="results[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="How to ..."/>';
             @endphp
             $("#course-result").append('{!! $x !!}')
+        })
+
+        $("#add-requirement").click(function () {
+            @php
+                $x = '<input id="requirements" name="requirements[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Need to ..."/>';
+            @endphp
+            $("#course-requirements").append('{!! $x !!}')
         })
     </script>
 @endpush

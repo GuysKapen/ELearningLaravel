@@ -1135,17 +1135,14 @@ select{
 .ml-2{
   margin-left: 0.5rem;
 }
-.mb-2{
-  margin-bottom: 0.5rem;
-}
 .mt-8{
   margin-top: 2rem;
 }
+.mb-2{
+  margin-bottom: 0.5rem;
+}
 .mr-3{
   margin-right: 0.75rem;
-}
-.mb-4{
-  margin-bottom: 1rem;
 }
 .mb-0{
   margin-bottom: 0px;
@@ -1161,6 +1158,9 @@ select{
 }
 .mr-auto{
   margin-right: auto;
+}
+.mb-4{
+  margin-bottom: 1rem;
 }
 .mb-6{
   margin-bottom: 1.5rem;
@@ -1312,6 +1312,9 @@ select{
 .w-5{
   width: 1.25rem;
 }
+.w-24{
+  width: 6rem;
+}
 .w-auto{
   width: auto;
 }
@@ -1383,6 +1386,9 @@ select{
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+.list-disc{
+  list-style-type: disc;
 }
 .grid-cols-6{
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -1757,6 +1763,15 @@ select{
 }
 .pr-4{
   padding-right: 1rem;
+}
+.pl-6{
+  padding-left: 1.5rem;
+}
+.pb-1{
+  padding-bottom: 0.25rem;
+}
+.pl-2{
+  padding-left: 0.5rem;
 }
 .pl-4{
   padding-left: 1rem;
@@ -2514,6 +2529,16 @@ textarea {
 .child-my-2 > *:not(:first-child) {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.marker\:text-indigo-400 *::marker{
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity));
+}
+
+.marker\:text-indigo-400::marker{
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity));
 }
 
 .focus-within\:outline-none:focus-within{

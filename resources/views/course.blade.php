@@ -123,17 +123,35 @@
             </section>
         @endif
 
+        @if(!$course->requirements->isEmpty())
+            <section class="mt-8">
+                <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
+                    Requirements
+                </h2>
+
+                <ul class="list-disc pl-6 marker:text-indigo-400 marker:text-xxs">
+                    @foreach($course->requirements as $key=>$requirement)
+                        <li class="text-sm pb-1 pl-2">{{$requirement->requirement}}</li>
+                    @endforeach
+
+                </ul>
+
+            </section>
+        @endif
+
         <section class="my-8">
             <div>
                 <div class="">
                     <div class="tab-pane active" id="description">
 
                         <div class="flex">
-                            <div class="mt-4 w-8/12">
+                            <div class="w-8/12">
                                 <h2 class="text-black fw-900 font-black text-2xl font-mul mb-2">
                                     Description
                                 </h2>
-                                {!! $course->description !!}
+                                <div class="prose">
+                                    {!! $course->description !!}
+                                </div>
                             </div>
 
                             @php

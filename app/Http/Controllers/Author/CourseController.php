@@ -9,6 +9,7 @@ use App\Models\CourseAssessment;
 use App\Models\CourseDetail;
 use App\Models\CourseLesson;
 use App\Models\CoursePrice;
+use App\Models\CourseRequirement;
 use App\Models\CourseResult;
 use App\Models\CourseSection;
 use App\Models\EvaluateType;
@@ -87,16 +88,52 @@ class CourseController extends Controller
                 $courseDetail->save();
             }
 
-            if (isset($request->results)) {
-                $courseResults = [];
-                foreach ($request->results as $result) {
-                    $courseResult = new CourseResult();
-                    $courseResult->result = $result;
-                    $courseResults[] = $courseResult;
+            if (isset($request->results)
+                && !empty($request->results)) {
+                $results = $request->results;
+
+                foreach ($results as $key => $value) {
+                    if (empty($value)) {
+                        unset($results[$key]);
+                    }
                 }
 
-                $course->results()->saveMany($courseResults);
+                if (!empty($results)) {
+
+                    $courseResults = [];
+                    foreach ($results as $result) {
+                        $courseResult = new CourseResult();
+                        $courseResult->result = $result;
+                        $courseResults[] = $courseResult;
+                    }
+
+                    $course->results()->saveMany($courseResults);
+                }
+
             }
+
+            if (isset($request->requirements)
+                && !empty($request->requirements)) {
+                $requirements = $request->requirements;
+
+                foreach ($requirements as $key => $value) {
+                    if (empty($value)) {
+                        unset($requirements[$key]);
+                    }
+                }
+
+                if (!empty($requirements)) {
+                    $courseRequirements = [];
+                    foreach ($request->requirements as $requirement) {
+                        $courseRequirement = new CourseRequirement();
+                        $courseRequirement->requirement = $requirement;
+                        $courseRequirements[] = $courseRequirement;
+                    }
+
+                    $course->requirements()->saveMany($courseRequirements);
+                }
+            }
+
 
             if (isset($request->evaluate_type_id)
                 && isset($request->pass_condition)) {
@@ -220,13 +257,36 @@ class CourseController extends Controller
                 if (!empty($results)) {
                     $courseResults = [];
                     foreach ($request->results as $result) {
-                        $courseResult = new CourseResult();
-                        $courseResult->result = $result;
-                        $courseResults[] = $courseResult;
+                        $courseRequirement = new CourseResult();
+                        $courseRequirement->result = $result;
+                        $courseResults[] = $courseRequirement;
                     }
 
                     $course->results()->delete();
                     $course->results()->saveMany($courseResults);
+                }
+            }
+
+            if (isset($request->requirements)
+                && !empty($request->requirements)) {
+                $requirements = $request->requirements;
+
+                foreach ($requirements as $key => $value) {
+                    if (empty($value)) {
+                        unset($requirements[$key]);
+                    }
+                }
+
+                if (!empty($requirements)) {
+                    $courseRequirements = [];
+                    foreach ($request->requirements as $requirement) {
+                        $courseRequirement = new CourseRequirement();
+                        $courseRequirement->requirement = $requirement;
+                        $courseRequirements[] = $courseRequirement;
+                    }
+
+                    $course->requirements()->delete();
+                    $course->requirements()->saveMany($courseRequirements);
                 }
             }
 
