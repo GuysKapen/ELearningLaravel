@@ -8,14 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property mixed $name
  * @property string $title
  * @property string $slug
- * @property string $video
- * @property string $body
- * @property int $view_count
- * @property boolean $status
- * @property boolean $is_approved
  * @property int $course_section_id
  */
 class CourseLesson extends Model
@@ -30,5 +24,10 @@ class CourseLesson extends Model
     public function detail(): HasOne
     {
         return $this->hasOne(LessonDetail::class);
+    }
+
+    public function content(): HasOne
+    {
+        return $this->hasOne(LessonContent::class);
     }
 }

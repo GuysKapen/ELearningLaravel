@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:300,400,700,900');
-
+@import "~aos/dist/aos.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,6 +18,8 @@ body {
     color: gray;
     font-weight: 300;
     font-size: 1.12rem;
+
+    overflow-x: hidden;
 }
 
 .collapse:not(.show) {

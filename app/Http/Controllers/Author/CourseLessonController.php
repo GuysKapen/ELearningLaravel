@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Library\DurationType;
 use App\Models\Category;
 use App\Models\CourseLesson;
+use App\Models\LessonContent;
 use App\Models\LessonDetail;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -59,18 +60,36 @@ class CourseLessonController extends Controller
 
             $courseLesson = new CourseLesson();
             $courseLesson->title = $request->title;
-            $courseLesson->body = $request->body;
-            $courseLesson->video = $request->video;
             $courseLesson->slug = $slug;
             $courseLesson->course_section_id = $section_id;
 
             if ($courseLesson->saveOrFail()) {
 
-                if (isset($request->duration) && isset($request->is_preview)) {
+                if (isset($request->body)) {
+                    $lessonContent = new LessonContent();
+                    $lessonContent->content = $request->body;
+                    $courseLesson->content()->save($lessonContent);
+                }
+
+                if (isset($request->duration) && isset($request->duration_type)) {
 
                     $lessonDetail = new LessonDetail();
-                    $lessonDetail->duration = $request->duration;
-                    $lessonDetail->is_preview = $request->is_preview;
+
+                    $factor = 1;
+                    switch ($request->duration_type) {
+                        case DurationType::Sec:
+                            $factor = 1;
+                            break;
+                        case DurationType::Min:
+                            $factor = 60;
+                            break;
+                        case DurationType::Hour:
+                            $factor = 3600;
+                            break;
+                    }
+
+                    $lessonDetail->is_preview = $request->is_preview ?? $lessonDetail->is_preview;
+                    $lessonDetail->duration = $factor * $request->duration;
 
                     $courseLesson->detail()->save($lessonDetail);
 
@@ -140,12 +159,19 @@ class CourseLessonController extends Controller
             $slug = Str::slug($request->title);
 
             $courseLesson->title = $request->title;
-            $courseLesson->body = $request->body;
-            $courseLesson->video = $request->video;
             $courseLesson->slug = $slug;
             $courseLesson->course_section_id = $section_id;
 
             if ($courseLesson->saveOrFail()) {
+
+                if (isset($request->body)) {
+                    $lessonContent = $courseLesson->content ?? new LessonContent();
+                    $lessonContent->content = $request->body;
+                    $lessonContent->course_lesson_id = $courseLesson->id;
+
+                    $lessonContent->saveOrFail();
+                }
+
 
                 if (isset($request->duration) && isset($request->duration_type)) {
 

@@ -7,19 +7,13 @@
 
 @section('content')
     <div class="bg-gray-50 py-8">
-        <section class="rounded-md background-white-grey shadow-md m-4 pb-4 overflow-hidden">
-            <div class="font-bold bg-white flex items-center relative px-4 mb-4">
-                <a href="">
-                    <div class="flex items-baseline py-3 pr-4 cursor-pointer border-r text-sm">
-                        <i class="fa fa-arrow-left mr-2 text-sm"></i>Back
-                    </div>
-                </a>
-                <div class="mx-8 text-sm">
-                    New Course
-                </div>
+        <section class="rounded-md background-white-grey shadow-md m-8 overflow-hidden">
+            <div class="py-4 px-8 flex bg-white text-base">
+                <a class="text-indigo-600" href="{{url("home")}}">Home &nbsp; > &nbsp;</a>
+                <h3>New Course</h3>
             </div>
 
-            @include('author.course._form')
+            @include('author.course._test_form')
 
         </section>
     </div>

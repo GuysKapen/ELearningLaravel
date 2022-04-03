@@ -76,8 +76,8 @@
                                             <span class="material-icons outlined text-base">description</span>
                                             <span class="ml-2 text-sm font-bold">1.1</span>
                                         </div>
-                                        <a href="{{route('author.course.lesson.show', $lesson->id)}}">
-                                            <span class="mx-2 text-sm font-bold text-black">{{$lesson->title}}</span>
+                                        <a href="{{route('author.course.lesson.show', $lesson->id)}}" class="mx-2 text-sm">
+                                            <span class="text-sm font-bold text-black">{{$lesson->title}}</span>
                                         </a>
                                         <span class="icon-wrap small mr-3 flex-end ml-auto"><span
                                                 class="icon material-icons">visibility</span></span>

@@ -25,7 +25,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-    <script src="{{ asset('js/tabs.js') }}" defer></script>
+    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
 
 <!-- Scripts Vue -->
 {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
@@ -36,6 +36,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @stack('css')
 
     <style>
         .active ~ #dropdown {
