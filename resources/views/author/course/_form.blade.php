@@ -903,12 +903,12 @@
         function initLecture(sectionId, lectureId) {
             $(".input-section").each(function () {
                 const index = $(this).attr("data-id")
-                if (index != sectionId) return;
+                if (index != sectionId && sectionId != -1) return;
                 const context = this;
 
                 $(".btn-save-lesson", this).each(function () {
                     const index = $(this).attr("data-id")
-                    if (index == lectureId) {
+                    if (index == lectureId || lectureId == -1) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
                             $(`#lesson-title-${index}`, context).text($(`#input-lesson-title-${index}`, context).val());
@@ -920,7 +920,7 @@
 
                 $(".btn-cancel-lesson", this).each(function () {
                     const index = $(this).attr("data-id");
-                    if (index == lectureId) {
+                    if (index == lectureId || lectureId == -1) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
                             $(`#lesson-input-${index}`, context).toggleClass("hidden")
@@ -931,7 +931,7 @@
 
                 $(".lesson-edit", this).each(function () {
                     const index = $(this).attr("data-id");
-                    if (index == lectureId) {
+                    if (index == lectureId || lectureId == -1) {
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
                             $(`#lesson-input-${index}`, context).toggleClass("hidden")
@@ -942,17 +942,18 @@
             })
         }
 
+        // init curriculum with js - pass -1 to init all sections or lessons
         function initCurriculum(sectionId, lectureId) {
             initLecture(sectionId, lectureId)
 
             $(".input-section").each(function () {
                 const index = $(this).attr("data-id")
-                if (index != sectionId) return;
+                if (index != sectionId && sectionId != -1) return;
                 const context = this;
 
                 $(".add-lesson", this).each(function () {
                     const index = $(this).attr("data-id");
-                    if (index == sectionId) {
+                    if (index == sectionId || sectionId == -1) {
                         $(this).on("click", function () {
                             @php
                                 $html_lecture = json_encode(View::make('author.course._lesson_form')->render());
@@ -970,7 +971,7 @@
 
                 $(".section-edit", this).each(function () {
                     const index = $(this).attr("data-id");
-                    if (index == sectionId) {
+                    if (index == sectionId || sectionId == -1) {
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
                             $(`#section-input-${index}`, context).toggleClass("hidden")
@@ -982,7 +983,7 @@
 
                 $(".btn-save-section", this).each(function () {
                     const index = $(this).attr("data-id")
-                    if (index == sectionId) {
+                    if (index == sectionId || sectionId != -1) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
                             $(`#section-title-${index}`, context).text($(`#input-section-title-${index}`, context).val());
@@ -994,7 +995,7 @@
 
                 $(".btn-cancel-section", this).each(function () {
                     const index = $(this).attr("data-id");
-                    if (index == lectureId) {
+                    if (index == sectionId || sectionId == -1) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
                             $(`#section-input-${index}`, context).toggleClass("hidden")
@@ -1007,7 +1008,7 @@
         }
 
 
-        initCurriculum(1, 1)
+        initCurriculum(-1, -1)
 
         $("#add-section").click(function () {
             @php
