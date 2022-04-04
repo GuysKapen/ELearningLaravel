@@ -13,7 +13,7 @@
                 <h3>New Course</h3>
             </div>
 
-            @include('author.course._test_form')
+            @include('author.course._form')
 
         </section>
     </div>

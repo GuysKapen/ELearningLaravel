@@ -47,7 +47,13 @@ class CourseController extends Controller
         $courseDetail = new CourseDetail();
         $courseAssessment = new CourseAssessment();
         $evaluateTypes = EvaluateType::all();
-        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment'));
+        $categories = Category::all();
+        $authors = DB::table("users")
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->select("users.id", "users.username")
+            ->where("roles.id", 2)
+            ->get();
+        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors'));
     }
 
     /**
@@ -74,21 +80,23 @@ class CourseController extends Controller
             /** @noinspection PhpUndefinedFieldInspection */
             $course->user_id = Auth::user()->id;
 
-            if ($course->saveOrFail()) {
-                $courseDetail = new CourseDetail();
+            $course->saveOrFail();
 
-                $courseDetail->duration = $request->duration ?? $courseDetail->duration;
-                $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
-                $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
-                $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
-                $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
-                $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
-                $courseDetail->language = $request->language ?? $courseDetail->language;
-                $courseDetail->course_id = $course->id;
+            $courseDetail = new CourseDetail();
 
-                $courseDetail->save();
-            }
+            $courseDetail->duration = $request->duration ?? $courseDetail->duration;
+            $courseDetail->max_student = $request->max_student ?? $courseDetail->max_student;
+            $courseDetail->student_enrolled = $request->student_enrolled ?? $courseDetail->student_enrolled;
+            $courseDetail->retake_course = $request->retake_course ?? $courseDetail->retake_course;
+            $courseDetail->duration_info = $request->duration_info ?? $courseDetail->duration_info;
+            $courseDetail->skill_level = $request->skill_level ?? $courseDetail->skill_level;
+            $courseDetail->language = $request->language ?? $courseDetail->language;
+            $courseDetail->course_id = $course->id;
 
+            $courseDetail->save();
+
+
+            // Course results info
             if (isset($request->results)
                 && !empty($request->results)) {
                 $results = $request->results;
@@ -113,6 +121,7 @@ class CourseController extends Controller
 
             }
 
+            // Course requirements info
             if (isset($request->requirements)
                 && !empty($request->requirements)) {
                 $requirements = $request->requirements;
@@ -135,6 +144,7 @@ class CourseController extends Controller
                 }
             }
 
+            // Course targets info
             if (isset($request->targets)
                 && !empty($request->targets)) {
                 $targets = $request->targets;
@@ -157,6 +167,7 @@ class CourseController extends Controller
                 }
             }
 
+            // Course evaluate
             if (isset($request->evaluate_type_id)
                 && isset($request->pass_condition)) {
                 $courseAssessment = new CourseAssessment();
@@ -165,14 +176,54 @@ class CourseController extends Controller
                 $course->courseAssessment()->save($courseAssessment);
             }
 
+            // Course price
             if (isset($request->price)) {
                 $coursePrice = $course->coursePrice ?? new CoursePrice();
                 $coursePrice->price = $request->price;
                 $course->coursePrice()->save($coursePrice);
             }
 
-            DB::commit();
+            // Course curriculum
+            if (isset($request->section) && is_array($request->section)
+            && !empty($request->section)) {
+
+                $sections = array_values($request->section);
+                foreach ($sections as $key => $value) {
+                    if (empty($value)) {
+                        unset($sections[$key]);
+                    }
+                }
+
+                if (!empty($sections)) {
+                    for ($i = 0; $i < count($sections); ++$i) {
+                        $section = $sections[$i];
+                        $title = $section['title'];
+                        $courseSection = new CourseSection();
+                        $courseSection->name = $title;
+                        $courseSection->slug = Str::slug($title);
+                        $courseSection->course_id = $course->id;
+                        $courseSection->index = $i;
+
+                        $course->sections()->save($courseSection);
+
+                        $lectures = array_values($section['lecture']);
+                        for ($j = 0; $j < count($lectures); ++$j) {
+                            $lecture = $lectures[$j];
+
+                            $courseLesson = new CourseLesson();
+                            $courseLesson->title = $lecture['title'];
+                            $courseLesson->slug = Str::slug($lecture['title']);
+                            $courseLesson->course_section_id = $courseSection->id;
+
+                            $courseSection->lessons()->save($courseLesson);
+                        }
+
+                    }
+                }
+            }
+
             // all good
+            DB::commit();
             Toastr::success('Save course successfully', 'Succeed');
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
