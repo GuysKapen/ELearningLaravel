@@ -6,12 +6,12 @@
 @endpush
 
 <section class="section">
-    <form class="simple_form new_course" id="new_course" novalidate="novalidate"
-          enctype="multipart/form-data"
-          action="{{ !isset($course) ? route('author.course.store') :  route('author.course.update',  $course->id ) }}"
-          accept-charset="UTF-8"
-          method="post"
-          data-dashlane-rid="e79702557837d0d6" data-form-type="identity">
+    <form
+        enctype="multipart/form-data"
+        action="{{ !isset($course) ? route('author.course.store') :  route('author.course.update',  $course->id ) }}"
+        accept-charset="UTF-8"
+        method="post"
+        data-dashlane-rid="e79702557837d0d6" data-form-type="identity">
 
         @isset($course->id)
             @method('PATCH')
@@ -30,7 +30,6 @@
                                 <input id="name"
                                        name="name"
                                        value="{{ old('name', isset($course) ? $course->name : "") }}"
-                                       required
                                        class="string required w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                        type="text" autofocus placeholder="Course name..."/>
                             </div>
@@ -190,68 +189,99 @@
                         <div id="input-curriculum-section">
                             <div data-id="1" class="input-section bg-gray-100 border py-4 px-2 relative">
 
-                                <div data-id="1"
-                                     class="add-lecture absolute left-0 top-10 bg-white px-2 cursor-pointer opacity-0 hover:opacity-100">
-                                    <span class="material-icons outlined text-sm">add</span>
+                                <div id="section-info-1" class="">
+                                    <div data-id="1"
+                                         class="add-lecture absolute left-0 top-10 bg-white px-2 cursor-pointer opacity-0 hover:opacity-100">
+                                        <span class="material-icons outlined text-sm">add</span>
+                                    </div>
+
+                                    <div class="flex items-start text-sm">
+                                        <span class="ml-2 text-sm font-bold text-black">Section 1:</span>
+                                        <div class="flex items-start w-12 flex-shrink-0 ml-2">
+                                            <span class="material-icons outlined text-sm">description</span>
+                                            <span id="section-title-1" class="mx-1 text-sm flex-shrink-0">Introduction</span>
+                                            <span data-id="1"
+                                                  class="section-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
+                                            <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
+                                        </div>
+                                    </div>
+
+                                    <div id="input-lecture-1">
+                                        <div class="m-8 p-3 bg-gray-50 relative">
+                                            <div id="lecture-info-1" class="flex items-center text-sm">
+                                                <span class="ml-2 text-sm">Lecture 1:</span>
+                                                <div class="flex items-start w-12 flex-shrink-0 ml-2">
+                                                    <span class="material-icons outlined text-sm">description</span>
+                                                    <span id="lecture-title-1"
+                                                          class="mx-1 text-sm flex-shrink-0">Introduction</span>
+                                                    <span data-id="1"
+                                                          class="lecture-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
+                                                    <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
+                                                </div>
+                                                <div class="flex-end flex items-center ml-auto">
+                                                    <button
+                                                        class="bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center mr-2">
+                                                        <span class="icon material-icons text-sm mr-1">add</span>
+                                                        Content
+                                                    </button>
+                                                    <span
+                                                        class="icon material-icons text-sm mr-1 mr-2">expand_more</span>
+                                                    <span class="icon material-icons text-sm mr-1">menu</span>
+                                                </div>
+                                            </div>
+
+                                            <div id="lecture-input-1" class="text-sm hidden">
+                                                <div class="flex items-center">
+                                                    <label class="block text-sm mr-2"
+                                                           for="input1">Lecture 1: </label>
+                                                    <input id="input-lecture-title-1"
+                                                           name="section[1][lecture][1][title]"
+                                                           class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                                           type="text"/>
+                                                </div>
+                                                <div class="flex-end flex items-center justify-end ml-auto">
+                                                    <div
+                                                        id="btn-cancel-lecture"
+                                                        data-id="1"
+                                                        class="btn-cancel-lecture text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
+                                                        Cancel
+                                                    </div>
+                                                    <div
+                                                        id="btn-save-lecture"
+                                                        data-id="1"
+                                                        class="btn-save-lecture bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
+                                                        Save
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                <div class="flex items-start text-sm">
-                                    <span class="ml-2 text-sm font-bold text-black">Section 1:</span>
-                                    <div class="flex items-start w-12 flex-shrink-0 ml-2">
-                                        <span class="material-icons outlined text-sm">description</span>
-                                        <span class="mx-1 text-sm">Introduction</span>
+                                <div id="section-input-1" class="text-sm hidden">
+                                    <div class="flex items-center">
+                                        <label class="block text-sm mr-2"
+                                               for="input">Section 1: </label>
+                                        <input id="input-section-title-1"
+                                               name="section[1][title]"
+                                               class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                               type="text"/>
+                                    </div>
+                                    <div class="flex-end flex items-center justify-end ml-auto">
+                                        <div
+                                            data-id="1"
+                                            class="btn-cancel-section text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
+                                            Cancel
+                                        </div>
+                                        <div
+                                            data-id="1"
+                                            class="btn-save-section bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
+                                            Save
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div id="input-lecture-1">
-                                    <div class="m-8 p-3 bg-gray-50 relative">
-                                        <div id="lecture-info-1" class="flex items-center text-sm">
-                                            <span class="ml-2 text-sm">Lecture 1:</span>
-                                            <div class="flex items-start w-12 flex-shrink-0 ml-2">
-                                                <span class="material-icons outlined text-sm">description</span>
-                                                <span id="lecture-title-1"
-                                                      class="mx-1 text-sm flex-shrink-0">Introduction</span>
-                                                <span data-id="1"
-                                                      class="lecture-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-                                                <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
-                                            </div>
-                                            <div class="flex-end flex items-center ml-auto">
-                                                <button
-                                                    class="bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center mr-2">
-                                                    <span class="icon material-icons text-sm mr-1">add</span>
-                                                    Content
-                                                </button>
-                                                <span class="icon material-icons text-sm mr-1 mr-2">expand_more</span>
-                                                <span class="icon material-icons text-sm mr-1">menu</span>
-                                            </div>
-                                        </div>
-
-                                        <div id="lecture-input-1" class="text-sm hidden">
-                                            <div class="flex items-center">
-                                                <label class="block text-sm mr-2"
-                                                       for="input1">Lecture 1: </label>
-                                                <input id="input-lecture-title-1"
-                                                       name="lecture_title"
-                                                       class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
-                                                       type="text"/>
-                                            </div>
-                                            <div class="flex-end flex items-center justify-end ml-auto">
-                                                <div
-                                                    id="btn-cancel-lecture"
-                                                    data-id="1"
-                                                    class="btn-cancel-lecture text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
-                                                    Cancel
-                                                </div>
-                                                <div
-                                                    id="btn-save-lecture"
-                                                    data-id="1"
-                                                    class="btn-save-lecture bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
-                                                    Save
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div id="add-section" class="cursor-pointer opacity-0 my-4 hover:opacity-100">
@@ -271,7 +301,6 @@
                                     <input id="duration"
                                            name="duration"
                                            value="{{ old('duration', isset($courseDetail) ? $courseDetail->duration : "10") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Duration"/>
@@ -293,7 +322,6 @@
                                     <input id="max_student"
                                            name="max_student"
                                            value="{{ old('max_student', isset($courseDetail) ? $courseDetail->max_student : "1000") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Max students"/>
@@ -312,7 +340,6 @@
                                     <input id="retake_course"
                                            name="retake_course"
                                            value="{{ old('retake_course', isset($courseDetail) ? $courseDetail->retake_course : "0") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Duration"/>
@@ -332,7 +359,6 @@
                                     <input id="duration_info"
                                            name="duration_info"
                                            value="{{ old('duration_info', isset($courseDetail) ? $courseDetail->duration_info : "50 hours") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Duration"/>
@@ -352,7 +378,6 @@
                                     <input id="skill_level"
                                            name="skill_level"
                                            value="{{ old('skill_level', isset($courseDetail) ? $courseDetail->skill_level : "All level") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Skill level"/>
@@ -372,7 +397,6 @@
                                     <input id="duration"
                                            name="language"
                                            value="{{ old('language', isset($courseDetail) ? $courseDetail->language : "English") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Duration"/>
@@ -430,7 +454,6 @@
                                         <input id="pass_condition"
                                                name="pass_condition"
                                                value="{{ old('pass_condition', isset($course->courseAssessment) ? $courseAssessment->pass_condition : "75") }}"
-                                               required
                                                class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                                type="number"
                                                placeholder="80"/>
@@ -458,7 +481,6 @@
                                     <input id="price"
                                            name="price"
                                            value="{{ old('price', isset($coursePrice) ? $coursePrice->price : "") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Price"/>
@@ -479,7 +501,6 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('sale_price', isset($courseSalePrice) ? $courseSalePrice->sale_price : "") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Sale Price"
@@ -501,7 +522,6 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="date"
                                     />
@@ -522,7 +542,6 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="date"
                                     />
@@ -549,7 +568,6 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Price"/>
@@ -570,7 +588,6 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                           required
                                            class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Price"/>
@@ -875,54 +892,10 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $("form").submit(function (event) {
-                event.preventDefault();
-
-                const formData = {
-                    _token: "{{ csrf_token() }}",
-                    name: $("#name").val(),
-                    course_id: $("#course_id").val(),
-                };
-
-                $.ajax({
-                    type: "POST",
-                    url: "{!! route('author.course.add-section') !!}",
-                    data: formData,
-                    success: function (response) {
-                        console.log(response);
-                        if (response.success) {
-                            $("#dialog").dialog('close');
-                            $("#accordionExample").append('<div class="overflow-hidden shadow-full mb-4 bg-transparent border-none relative flex flex-col rounded-md">' +
-                                '<div class="bg-transparent border-none py-2 px-4" id="heading-3">' +
-                                '<h2 class="mb-0">' +
-                                '<button' +
-                                ' class="cursor-pointer w-full h-16 text-black font-bold text-left block bg-transparent border-0 px-4 py-2 text-base rounded-md outline-none"' +
-                                ' type="button" data-toggle="collapse"' +
-                                ' data-target="#collapse-3" aria-expanded="false" aria-controls="collapse-3">' +
-                                'Chapter 2 : Manipulating Data types' +
-                                '</button>' +
-                                '</h2>' +
-                                '</div>' +
-                                '</div>');
-                        }
-                    },
-                    error: function (error) {
-                        console.log("xxxx");
-                    }
-                });
-
-            });
-        });
-    </script>
-
-
     <!--suppress EqualityComparisonWithCoercionJS -->
     <script>
 
-        function initCurriculum(sectionId, lectureId) {
-
+        function initLecture(sectionId, lectureId) {
             $(".input-section").each(function () {
                 const index = $(this).attr("data-id")
                 if (index != sectionId) return;
@@ -933,7 +906,7 @@
                     if (index == lectureId) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
-                            $(`#lecture-title-${index}`, context).text($(`#input-lecture-title-${index}`).val());
+                            $(`#lecture-title-${index}`, context).text($(`#input-lecture-title-${index}`, context).val());
                             $(`#lecture-input-${index}`, context).toggleClass("hidden")
                             $(`#lecture-info-${index}`, context).toggleClass("hidden")
                         })
@@ -961,8 +934,17 @@
                         })
                     }
                 })
+            })
+        }
 
-                console.log($(".lecture-edit", this))
+        function initCurriculum(sectionId, lectureId) {
+            initLecture(sectionId, lectureId)
+
+            $(".input-section").each(function () {
+                const index = $(this).attr("data-id")
+                if (index != sectionId) return;
+                const context = this;
+
                 $(".add-lecture", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == sectionId) {
@@ -974,15 +956,51 @@
                             const lecture = $(`#input-lecture-${sectionId}`, context)
                             const id = lecture.children().length + 1;
                             processed = processed.replaceAll("--index--", id);
+                            processed = processed.replaceAll("--sectionIndex--", sectionId)
                             lecture.append(processed)
-                            initCurriculum(sectionId, id)
+                            initLecture(sectionId, id)
                         })
                     }
                 })
+
+                $(".section-edit", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == sectionId) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#section-input-${index}`, context).toggleClass("hidden")
+                            $(`#section-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+
+                $(".btn-save-section", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == sectionId) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#section-title-${index}`, context).text($(`#input-section-title-${index}`, context).val());
+                            $(`#section-input-${index}`, context).toggleClass("hidden")
+                            $(`#section-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-section", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#section-input-${index}`, context).toggleClass("hidden")
+                            $(`#section-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
             })
-
-
         }
+
 
         initCurriculum(1, 1)
 

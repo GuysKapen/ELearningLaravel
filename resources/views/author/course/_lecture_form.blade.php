@@ -1,5 +1,6 @@
 @php
     $index = "--index--";
+    $sectionIndex = "--sectionIndex--";
 @endphp
 
 <div class="m-8 p-3 bg-gray-50 relative">
@@ -29,7 +30,7 @@
             <label class="block text-sm mr-2"
                    for="input1">Lecture {{$index}}: </label>
             <input id="input-lecture-title-{{$index}}"
-                   name="lecture_title"
+                   name="section[{{$sectionIndex}}][lecture][{{$index}}][title]"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
         </div>
