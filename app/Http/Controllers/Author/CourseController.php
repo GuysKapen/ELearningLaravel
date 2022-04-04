@@ -275,7 +275,13 @@ class CourseController extends Controller
         $evaluateTypes = EvaluateType::all();
         $courseDetail = $course->detail ?? new CourseDetail();
         $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
-        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes'));
+        $categories = Category::all();
+        $authors = DB::table("users")
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->select("users.id", "users.username")
+            ->where("roles.id", 2)
+            ->get();
+        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors'));
     }
 
     /**

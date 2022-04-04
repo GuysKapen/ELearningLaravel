@@ -186,105 +186,23 @@
                     <!-- !Mores -->
 
                     <div id="input-curriculum" class="tab-content">
-                        <div id="input-curriculum-section">
-                            <div data-id="1" class="input-section bg-gray-100 border py-4 px-2 relative">
-
-                                <div id="section-info-1" class="">
-                                    <div data-id="1"
-                                         class="add-lecture absolute left-0 top-10 bg-white px-2 cursor-pointer opacity-0 hover:opacity-100">
-                                        <span class="material-icons outlined text-sm">add</span>
-                                    </div>
-
-                                    <div class="flex items-start text-sm">
-                                        <span class="ml-2 text-sm font-bold text-black">Section 1:</span>
-                                        <div class="flex items-start w-12 flex-shrink-0 ml-2">
-                                            <span class="material-icons outlined text-sm">description</span>
-                                            <span id="section-title-1"
-                                                  class="mx-1 text-sm flex-shrink-0">Introduction</span>
-                                            <span data-id="1"
-                                                  class="section-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-                                            <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
-                                        </div>
-                                    </div>
-
-                                    <div id="input-lecture-1">
-                                        <div class="m-8 p-3 bg-gray-50 relative">
-                                            <div id="lecture-info-1" class="flex items-center text-sm">
-                                                <span class="ml-2 text-sm">Lecture 1:</span>
-                                                <div class="flex items-start w-12 flex-shrink-0 ml-2">
-                                                    <span class="material-icons outlined text-sm">description</span>
-                                                    <span id="lecture-title-1"
-                                                          class="mx-1 text-sm flex-shrink-0">Introduction</span>
-                                                    <span data-id="1"
-                                                          class="lecture-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-                                                    <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
-                                                </div>
-                                                <div class="flex-end flex items-center ml-auto">
-                                                    <button
-                                                        class="bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center mr-2">
-                                                        <span class="icon material-icons text-sm mr-1">add</span>
-                                                        Content
-                                                    </button>
-                                                    <span
-                                                        class="icon material-icons text-sm mr-1 mr-2">expand_more</span>
-                                                    <span class="icon material-icons text-sm mr-1">menu</span>
-                                                </div>
-                                            </div>
-
-                                            <div id="lecture-input-1" class="text-sm hidden">
-                                                <div class="flex items-center">
-                                                    <label class="block text-sm mr-2"
-                                                           for="input1">Lecture 1: </label>
-                                                    <input id="input-lecture-title-1"
-                                                           name="section[1][lecture][1][title]"
-                                                           class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
-                                                           type="text"/>
-                                                </div>
-                                                <div class="flex-end flex items-center justify-end ml-auto">
-                                                    <div
-                                                        id="btn-cancel-lecture"
-                                                        data-id="1"
-                                                        class="btn-cancel-lecture text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
-                                                        Cancel
-                                                    </div>
-                                                    <div
-                                                        id="btn-save-lecture"
-                                                        data-id="1"
-                                                        class="btn-save-lecture bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
-                                                        Save
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div id="section-input-1" class="text-sm hidden">
-                                    <div class="flex items-center">
-                                        <label class="block text-sm mr-2"
-                                               for="input">Section 1: </label>
-                                        <input id="input-section-title-1"
-                                               name="section[1][title]"
-                                               class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
-                                               type="text"/>
-                                    </div>
-                                    <div class="flex-end flex items-center justify-end ml-auto">
-                                        <div
-                                            data-id="1"
-                                            class="btn-cancel-section text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
-                                            Cancel
-                                        </div>
-                                        <div
-                                            data-id="1"
-                                            class="btn-save-section bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
-                                            Save
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                        <div id="input-curriculum-section" class="mt-8">
+                            @if(isset($course->sections))
+                                @php
+                                    $sectionIndex = 1;
+                                @endphp
+                                @foreach($course->sections as $key=>$section)
+                                    @include('author.course._section_form', ['sectionIndex' => $sectionIndex, 'sectionTitle' => $section->name, 'lessons' => $section->lessons])
+                                    @php
+                                        $sectionIndex++;
+                                    @endphp
+                                @endforeach
+                            @else
+                                @include('author.course._section_form', ['sectionIndex' => 1])
+                            @endif
                         </div>
+
+
                         <div id="add-section" class="cursor-pointer opacity-0 my-4 hover:opacity-100">
                             <span class="material-icons outlined text-base">add</span>
                         </div>
@@ -589,7 +507,8 @@
                                                         </div>
                                                         <span
                                                             class="absolute inset-y-0 top-0 bottom-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                            <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                            <svg class="h-5 w-5 text-gray-400" fill="currentColor"
+                                                                 viewBox="0 0 20 20">
                                                 <path
                                                     d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
                                                     clip-rule="evenodd" fill-rule="evenodd"></path>
@@ -987,36 +906,36 @@
                 if (index != sectionId) return;
                 const context = this;
 
-                $(".btn-save-lecture", this).each(function () {
+                $(".btn-save-lesson", this).each(function () {
                     const index = $(this).attr("data-id")
                     if (index == lectureId) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
-                            $(`#lecture-title-${index}`, context).text($(`#input-lecture-title-${index}`, context).val());
-                            $(`#lecture-input-${index}`, context).toggleClass("hidden")
-                            $(`#lecture-info-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-title-${index}`, context).text($(`#input-lesson-title-${index}`, context).val());
+                            $(`#lesson-input-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-info-${index}`, context).toggleClass("hidden")
                         })
                     }
                 })
 
-                $(".btn-cancel-lecture", this).each(function () {
+                $(".btn-cancel-lesson", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == lectureId) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
-                            $(`#lecture-input-${index}`, context).toggleClass("hidden")
-                            $(`#lecture-info-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-input-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-info-${index}`, context).toggleClass("hidden")
                         })
                     }
                 })
 
-                $(".lecture-edit", this).each(function () {
+                $(".lesson-edit", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == lectureId) {
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
-                            $(`#lecture-input-${index}`, context).toggleClass("hidden")
-                            $(`#lecture-info-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-input-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-info-${index}`, context).toggleClass("hidden")
                         })
                     }
                 })
@@ -1031,19 +950,19 @@
                 if (index != sectionId) return;
                 const context = this;
 
-                $(".add-lecture", this).each(function () {
+                $(".add-lesson", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == sectionId) {
                         $(this).on("click", function () {
                             @php
-                                $html_lecture = json_encode(View::make('author.course._lecture_form')->render());
+                                $html_lecture = json_encode(View::make('author.course._lesson_form')->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
-                            const lecture = $(`#input-lecture-${sectionId}`, context)
-                            const id = lecture.children().length + 1;
+                            const lesson = $(`#input-lesson-${sectionId}`, context)
+                            const id = lesson.children().length + 1;
                             processed = processed.replaceAll("--index--", id);
                             processed = processed.replaceAll("--sectionIndex--", sectionId)
-                            lecture.append(processed)
+                            lesson.append(processed)
                             initLecture(sectionId, id)
                         })
                     }
@@ -1092,8 +1011,9 @@
 
         $("#add-section").click(function () {
             @php
-                use Illuminate\Support\Facades\View;$html = json_encode(View::make('author.course._section_form', ['index' => 2])->render());
+                use Illuminate\Support\Facades\View;$html = json_encode(View::make('author.course._section_form')->render());
             @endphp
+            console.log("skjfskfjskfk")
             let processed = {!! $html !!};
             const section = $("#input-curriculum-section")
             const id = section.children().length + 1;
