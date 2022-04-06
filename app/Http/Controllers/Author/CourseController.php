@@ -14,6 +14,7 @@ use App\Models\CourseResult;
 use App\Models\CourseSection;
 use App\Models\CourseTarget;
 use App\Models\EvaluateType;
+use App\Models\Tag;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -48,12 +49,15 @@ class CourseController extends Controller
         $courseAssessment = new CourseAssessment();
         $evaluateTypes = EvaluateType::all();
         $categories = Category::all();
+        $tags = Tag::all();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
             ->select("users.id", "users.username")
             ->where("roles.id", 2)
             ->get();
-        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors'));
+
+        $coAuthors = $authors->where("id", "!=", Auth::user()->id);
+        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors', 'coAuthors', 'tags'));
     }
 
     /**
@@ -185,7 +189,7 @@ class CourseController extends Controller
 
             // Course curriculum
             if (isset($request->section) && is_array($request->section)
-            && !empty($request->section)) {
+                && !empty($request->section)) {
 
                 $sections = array_values($request->section);
                 foreach ($sections as $key => $value) {
@@ -220,6 +224,21 @@ class CourseController extends Controller
 
                     }
                 }
+            }
+
+            // Course categories
+            if (isset($request->categories) && is_array($request->categories)) {
+                $course->categories()->sync($request->categories);
+            }
+
+            // Course tags
+            if (isset($request->tags) && is_array($request->tags)) {
+                $course->tags()->sync($request->tags);
+            }
+
+            // Course co_author
+            if (isset($request->co_authors) && is_array($request->co_authors)) {
+                $course->coAuthors()->sync($request->co_authors);
             }
 
             // all good
@@ -281,7 +300,9 @@ class CourseController extends Controller
             ->select("users.id", "users.username")
             ->where("roles.id", 2)
             ->get();
-        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors'));
+        $tags = Tag::all();
+        $coAuthors = $authors->where("id", "!=", Auth::user()->id);
+        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors', 'coAuthors', 'tags'));
     }
 
     /**
@@ -408,6 +429,20 @@ class CourseController extends Controller
                 $coursePrice->saveOrFail();
             }
 
+            // Course categories
+            if (isset($request->categories) && is_array($request->categories)) {
+                $course->categories()->sync($request->categories);
+            }
+
+            // Course tags
+            if (isset($request->tags) && is_array($request->tags)) {
+                $course->tags()->sync($request->tags);
+            }
+
+            // Course co_author
+            if (isset($request->co_authors) && is_array($request->co_authors)) {
+                $course->coAuthors()->sync($request->co_authors);
+            }
 
             DB::commit();
             // all good

@@ -187,7 +187,7 @@
 
                     <div id="input-curriculum" class="tab-content">
                         <div id="input-curriculum-section" class="mt-8">
-                            @if(isset($course->sections))
+                            @if(isset($course->sections) && !$course->sections->empty())
                                 @php
                                     $sectionIndex = 1;
                                 @endphp
@@ -592,8 +592,9 @@
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none"
                                             multiple
                                         >
-                                            @foreach($authors as $key=>$author)
-                                                <option value="{{$author->id}}">{{$author->username}}</option>
+                                            @foreach($coAuthors as $key=>$author)
+                                                <option
+                                                    value="{{$author->id}}" {{($course->coAuthors ?? collect())->contains("id", $author->id) ? "selected" : ""}}>{{$author->username}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -626,7 +627,8 @@
                                             multiple
                                         >
                                             @foreach($categories as $key=>$category)
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                                <option
+                                                    value="{{$category->id}}" {{(($course->categories ?? collect())->contains("id", $category->id) ? "selected" : "") ?? ""}}>{{$category->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -653,10 +655,10 @@
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none"
                                             multiple
                                         >
-                                            <option value="1">super admin</option>
-                                            <option value="2">admin</option>
-                                            <option value="3">writer</option>
-                                            <option value="4">user</option>
+                                            @foreach($tags as $key=>$tag)
+                                                <option
+                                                    value="{{$tag->id}}" {{($course->tags ?? collect())->contains("id", $tag->id) ? "selected" : ""}}>{{$tag->tag}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -954,12 +956,13 @@
                 $(".add-lesson", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == sectionId || sectionId == -1) {
+                        const validId = sectionId == -1 ? 1 : sectionId;
                         $(this).on("click", function () {
                             @php
                                 $html_lecture = json_encode(View::make('author.course._lesson_form')->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
-                            const lesson = $(`#input-lesson-${sectionId}`, context)
+                            const lesson = $(`#input-lesson-${validId}`, context)
                             const id = lesson.children().length + 1;
                             processed = processed.replaceAll("--index--", id);
                             processed = processed.replaceAll("--sectionIndex--", sectionId)
