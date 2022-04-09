@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <style>
+        .owl-carousel .item {
+            height: 10rem;
+            background: #4DC7A0;
+            padding: 1rem;
+        }
+
+        .owl-carousel .item h4 {
+            color: #FFF;
+            font-weight: 400;
+            margin-top: 0rem;
+        }
+    </style>
+
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 <div>
@@ -93,113 +107,30 @@
     <div class="w-11/12 mx-auto">
         <div class="flex">
 
-            <div class="w-full flex flex-auto flex-wrap block z-10 relative">
+            <div class="w-full flex flex-auto flex-wrap block z-10 relative owl-carousel nonloop-block-14">
 
-                <div class="px-4 w-4/12">
-                    <div class="relative overflow-hidden self-start top-0 relative border shadow-full">
+                @foreach($courses as $key=>$course)
+                    <div class="relative overflow-hidden self-start top-0 relative border">
                         <figure class="m-0">
-                            <img src="images/img1.jpg" alt="Image" class="w-full block">
+                            <img
+                                src="{{ asset("storage/course/". ($course->feature_img ?? "default.png") ) }}"
+                                alt="Image" class="w-full block h-48 object-cover">
                         </figure>
                         <div class="relative pt-12 px-8 course">
-                            <span class="course-price">$0</span>
-                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>4 Lessons / 3 week
+                            <span class="course-price">${{$course->coursePrice->price ?? 0}}</span>
+                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>4 Lessons / 3
+                                week
                             </div>
                             <h3 class="text-indigo-600"><a href="#">English</a></h3>
-                            <p>Learn English in order to pass IELTS exam. </p>
+                            <p>{{$course->name}}</p>
                         </div>
                         <div class="flex border-t text-sm mt-8">
                             <div class="py-4 px-8"><span class="fa fa-users"></span> 2,193 students</div>
-                            <div class="py-4 px-6 w-1/4 ml-auto border-l"><span class="fa fa-comment"></span> 2</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="px-4 w-4/12">
-                    <div class="relative overflow-hidden align-stretch top-0 relative border shadow-full">
-                        <figure class="m-0">
-                            <img src="images/img2.jpg" alt="Image" class="img-fluid">
-                        </figure>
-                        <div class="relative pt-12 px-8 course">
-                            <span class="course-price">$0</span>
-                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>20 Lessons / 4 week
-                            </div>
-                            <h3 class="text-indigo-600"><a href="#">Introduction to Chemical Engineering</a></h3>
-                            <p>Discover the world of chemical engineering </p>
-                        </div>
-                        <div class="flex border-t text-sm mt-8">
-                            <div class="py-4 px-8"><span class="fa fa-users"></span> 2,100 students</div>
-                            <div class="py-4 px-6 w-1/4 ml-auto border-l"><span class="fa fa-comment"></span> 9
+                            <div class="py-4 px-6 w-1/4 ml-auto border-l"><span class="fa fa-comment"></span> 2
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="px-4 w-4/12">
-                    <div class="relative overflow-hidden align-stretch top-0 relative border shadow-full">
-                        <figure class="m-0">
-                            <img src="images/img4.jpg" alt="Image" class="img-fluid">
-                        </figure>
-                        <div class="relative pt-12 px-8 course">
-                            <span class="course-price">$0</span>
-                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>4 Lessons / 12 week
-                            </div>
-                            <h3 class="text-indigo-600"><a href="#">Arabic</a></h3>
-                            <p>Learn the basics of the arabic language . </p>
-                        </div>
-                        <div class="flex border-t text-sm mt-8">
-                            <div class="py-4 px-8"><span class="fa fa-users"></span> 2,100 students</div>
-                            <div class="py-4 px-6 w-1/4 ml-auto border-l"><span class="fa fa-comment"></span> 9
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{--                <div class="relative overflow-hidden align-stretch top-0 relative w-4/12 border shadow-full">--}}
-                {{--                    <figure class="m-0">--}}
-                {{--                        <img src="images/img_4.jpg" alt="Image" class="img-fluid">--}}
-                {{--                    </figure>--}}
-                {{--                    <div class="course-inner-text py-4 px-4">--}}
-                {{--                        <span class="course-price">$0</span>--}}
-                {{--                        <div class="meta"><span class="icon-clock-o"></span>3 Lessons / 9 week</div>--}}
-                {{--                        <h3><a href="#">C++</a></h3>--}}
-                {{--                        <p>Learn the most famous programming language. </p>--}}
-                {{--                    </div>--}}
-                {{--                    <div class="d-flex border-top stats">--}}
-                {{--                        <div class="py-3 px-4"><span class="icon-users"></span> 1,123 students</div>--}}
-                {{--                        <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 8</div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-
-                {{--                <div class="relative overflow-hidden align-stretch top-0 relative w-4/12 border shadow-full">--}}
-                {{--                    <figure class="m-0">--}}
-                {{--                        <img src="images/img_5.jpg" alt="Image" class="img-fluid">--}}
-                {{--                    </figure>--}}
-                {{--                    <div class="course-inner-text py-4 px-4">--}}
-                {{--                        <span class="course-price">$0</span>--}}
-                {{--                        <div class="meta"><span class="icon-clock-o"></span>2 Lessons / 5 week</div>--}}
-                {{--                        <h3><a href="#">JAVA</a></h3>--}}
-                {{--                        <p>java is a must learn versatile language. </p>--}}
-                {{--                    </div>--}}
-                {{--                    <div class="d-flex border-top stats">--}}
-                {{--                        <div class="py-3 px-4"><span class="icon-users"></span> 1,523 students</div>--}}
-                {{--                        <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 6</div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-
-                {{--                <div class="relative overflow-hidden align-stretch top-0 relative w-4/12 border shadow-full">--}}
-                {{--                    <figure class="m-0">--}}
-                {{--                        <img src="images/img_6.jpg" alt="Image" class="img-fluid">--}}
-                {{--                    </figure>--}}
-                {{--                    <div class="course-inner-text py-4 px-4">--}}
-                {{--                        <span class="course-price">$0</span>--}}
-                {{--                        <div class="meta"><span class="icon-clock-o"></span>5 Lessons / 7 week</div>--}}
-                {{--                        <h3><a href="#">Python</a></h3>--}}
-                {{--                        <p>Begin your journey in the world of AI. </p>--}}
-                {{--                    </div>--}}
-                {{--                    <div class="d-flex border-top stats">--}}
-                {{--                        <div class="py-3 px-4"><span class="icon-users"></span> 2,453 students</div>--}}
-                {{--                        <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 5</div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
+                @endforeach
 
             </div>
 
@@ -207,8 +138,8 @@
         </div>
         <div class="flex justify-center mt-8">
             <div class="w-7/12 text-center">
-                <button class="px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">Prev</button>
-                <button class="px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">Next</button>
+                <button class="custom-pre-button hover:bg-indigo-600 px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">Prev</button>
+                <button class="custom-next-button hover:bg-indigo-600 px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">Next</button>
             </div>
         </div>
     </div>
@@ -605,5 +536,51 @@
         integrity="sha512-QABeEm/oYtKZVyaO8mQQjePTPplrV8qoT7PrwHDJCBLqZl5UmuPi3APEcWwtTNOiH24psax69XPQtEo5dAkGcA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.green.min.css"/>
+<script>
+    jQuery(document).ready(function ($) {
+        $('.nonloop-block-14').owlCarousel({
+            center: false,
+            items: 1,
+            loop: true,
+            stagePadding: 0,
+            margin: 0,
+            autoplay: true,
+            dots: false,
+            nav: false,
+            navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
+            responsive: {
+                600: {
+                    margin: 20,
+                    nav: true,
+                    items: 2
+                },
+                1000: {
+                    margin: 30,
+                    stagePadding: 20,
+                    nav: true,
+                    items: 2
+                },
+                1200: {
+                    margin: 30,
+                    stagePadding: 20,
+                    nav: true,
+                    items: 3
+                }
+            }
+        });
+
+        $('.custom-pre-button').click(function () {
+            $('.nonloop-block-14').trigger('next.owl.carousel');
+        })
+        $('.custom-next-button').click(function () {
+            $('.nonloop-block-14').trigger('prev.owl.carousel');
+        })
+    })
+</script>
+
 </body>
 </html>

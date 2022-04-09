@@ -187,7 +187,8 @@
 
                     <div id="input-curriculum" class="tab-content">
                         <div id="input-curriculum-section" class="mt-8">
-                            @if(isset($course->sections) && !$course->sections->empty())
+
+                            @if(isset($course->sections) && !$course->sections->isEmpty())
                                 @php
                                     $sectionIndex = 1;
                                 @endphp
@@ -691,11 +692,10 @@
                                                     stroke-linejoin="round"/>
                                             </svg>
                                             <div class="flex text-sm text-gray-600">
-                                                <label for="cover"
+                                                <label for="feature_img"
                                                        class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                     <span>Upload a file</span>
-                                                    <input id="image_feature" name="image_feature" type="file"
-                                                           class="sr-only">
+                                                    <input id="feature_img" name="feature_img" type="file" class="sr-only">
                                                 </label>
                                                 <p class="pl-1">or drag and drop</p>
                                             </div>

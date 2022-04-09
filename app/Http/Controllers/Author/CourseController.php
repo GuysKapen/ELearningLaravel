@@ -17,10 +17,12 @@ use App\Models\EvaluateType;
 use App\Models\Tag;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -328,6 +330,26 @@ class CourseController extends Controller
             $course->description = $request->description;
             /** @noinspection PhpUndefinedFieldInspection */
             $course->user_id = Auth::user()->id;
+
+            $featureImg = $request->file("feature_img");
+            if (isset($featureImg)) {
+                $currentDate = Carbon::now()->toDateString();
+                $imageName = Auth::user()->username . '-' . $currentDate . '-' . uniqid() . '.' . $featureImg->getClientOriginalExtension();
+
+                // Image for cover
+                if (!Storage::disk('public')->exists('course')) {
+                    Storage::disk('public')->makeDirectory('course');
+                }
+
+                // Delete old image
+                if (!Storage::disk("public")->exists("course/" . $course->feature_img)) {
+                    Storage::disk("public")->delete("course/" . $course->feature_img);
+                }
+
+                Storage::disk('public')->put('course/' . $imageName, file_get_contents($featureImg));
+
+                $course->feature_img = $imageName;
+            }
 
             if ($course->saveOrFail()) {
                 $courseDetail = $course->detail ?? new CourseDetail();

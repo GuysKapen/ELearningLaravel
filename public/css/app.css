@@ -1148,6 +1148,9 @@ select{
 .h-screen{
   height: 100vh;
 }
+.h-48{
+  height: 12rem;
+}
 .h-auto{
   height: auto;
 }
@@ -1237,9 +1240,6 @@ select{
 }
 .w-56{
   width: 14rem;
-}
-.w-64{
-  width: 16rem;
 }
 .min-w-full{
   min-width: 100%;
@@ -2529,6 +2529,11 @@ textarea {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-indigo-600:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(79 70 229 / var(--tw-bg-opacity));
+}
+
 .hover\:text-indigo-500:hover{
   --tw-text-opacity: 1;
   color: rgb(99 102 241 / var(--tw-text-opacity));
@@ -2552,6 +2557,11 @@ textarea {
 .hover\:text-gray-900:hover{
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.hover\:text-indigo-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 
 .hover\:opacity-100:hover{

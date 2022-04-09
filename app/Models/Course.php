@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property CourseDetail $detail
  * @property string|null $description
  * @property CourseAssessment $courseAssessment
+ * @property mixed $feature_img
  */
 class Course extends Model
 {
