@@ -114,18 +114,22 @@
                         <figure class="m-0">
                             <img
                                 src="{{ asset("storage/course/". ($course->feature_img ?? "default.png") ) }}"
-                                alt="Image" class="w-full block h-48 object-cover">
+                                alt="Image" class="w-full block object-cover">
                         </figure>
                         <div class="relative pt-12 px-8 course">
                             <span class="course-price">${{$course->coursePrice->price ?? 0}}</span>
-                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>4 Lessons / 3
-                                week
-                            </div>
-                            <h3 class="text-indigo-600"><a href="#">English</a></h3>
+                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>{{$course->lessons()->count() ?? 0}} Lessons / {{$course->detail->duration_info ?? ""}}</div>
+                            <h3 class="text-indigo-600">
+                                @foreach($course->categories as $key=>$category)
+                                <a href="#">
+                                    {{$category->name}}
+                                </a>
+                                @endforeach
+                            </h3>
                             <p>{{$course->name}}</p>
                         </div>
                         <div class="flex border-t text-sm mt-8">
-                            <div class="py-4 px-8"><span class="fa fa-users"></span> 2,193 students</div>
+                            <div class="py-4 px-8"><span class="fa fa-users"></span> {{$course->detail->student_enrolled ?? 0}} students</div>
                             <div class="py-4 px-6 w-1/4 ml-auto border-l"><span class="fa fa-comment"></span> 2
                             </div>
                         </div>
@@ -574,10 +578,10 @@
         });
 
         $('.custom-pre-button').click(function () {
-            $('.nonloop-block-14').trigger('next.owl.carousel');
+            $('.nonloop-block-14').trigger('prev.owl.carousel');
         })
         $('.custom-next-button').click(function () {
-            $('.nonloop-block-14').trigger('prev.owl.carousel');
+            $('.nonloop-block-14').trigger('next.owl.carousel');
         })
     })
 </script>

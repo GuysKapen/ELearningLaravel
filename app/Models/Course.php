@@ -65,7 +65,7 @@ class Course extends Model
         return $this->hasOne(CoursePrice::class);
     }
 
-    public function lectures(): HasManyThrough
+    public function lessons(): HasManyThrough
     {
         return $this->hasManyThrough(CourseLesson::class, CourseSection::class);
     }

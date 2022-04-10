@@ -178,7 +178,7 @@
                                             </div>
                                         </td>
                                         <td class="text-sm font-medium text-gray-900 px-6 py-4">
-                                            <p class="text-sm text-gray-500 font-medium">{{$course->lectures()->count()}}</p>
+                                            <p class="text-sm text-gray-500 font-medium">{{$course->lessons()->count()}}</p>
                                         </td>
                                     </tr>
                                     <tr>
