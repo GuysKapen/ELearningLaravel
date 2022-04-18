@@ -142,93 +142,84 @@
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4 mt-8">
-                        @foreach($courses as $key=>$course)
-                            <div class="relative overflow-hidden self-start top-0 relative border">
-                                <figure class="m-0">
-                                    <img
-                                        src="{{ asset("storage/course/". ($course->feature_img ?? "default.png") ) }}"
-                                        alt="Image" class="w-full h-48 object-cover block">
-                                </figure>
-                                <div
-                                    class="absolute left-1/2 bg-white rounded-full p-1 -translate-x-1/2 -translate-y-1/2">
-                                    <span
-                                        class="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
-                                                <img
-                                                    src="{{ asset("storage/profile/". (Auth::user()->authorDetail->cover ?? "default.png") ) }}"
-                                                    alt="cover" class="object-cover h-full w-full">
-                                            </span>
-                                </div>
-                                <div class="relative pt-8 px-8 course">
-                                    <div class="mb-4 block text-sm text-center"><span
-                                            class="far fa-clock mr-3 capitalize">{{$course->user->username}}</span>
-                                    </div>
-                                    <p class="text-gray-800 font-bold text-base text-center">{{$course->name}}</p>
-                                </div>
-                                <div class="flex border-t text-sm mt-8">
-                                    <div class="py-4 px-4"><span
-                                            class="fa fa-users"></span> {{$course->detail->student_enrolled ?? 0}}</div>
-                                    <div class="py-4"><span class="fa fa-comment"></span> 2</div>
-                                    <div
-                                        class="py-4 px-4 ml-auto text-indigo-500 font-black">{{isset($course->coursePrice->price) ? "$" . $course->coursePrice->price : "Free"}}</div>
-                                </div>
-                            </div>
-                        @endforeach
+                    <div id="courses-container">
+                        @include('_courses', $courses)
                     </div>
+
                 </div>
                 <div class="w-3/12 ml-2">
-                    <div class="border pl-6 py-4">
-                        <div class="">
-                            <h3 class="font-bold text-gray-800">Course categories</h3>
-                            <div class="mt-2">
-                                @foreach($categories as $category)
-                                    <div>
-                                        <label class="inline-flex items-center mt-1">
-                                            <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 block">
-                                            <span class="ml-2 text-sm text-gray-700">{{$category->name}}</span>
-                                        </label>
+                    <form id="form-filter" action="{{route('course.filter')}}" method="POST">
+                        @method('POST')
+                        @csrf
+                        <div class="border py-4">
+                            <div class="pl-6">
+                                <div class="">
+                                    <h3 class="font-bold text-gray-800">Course categories</h3>
+                                    <div class="mt-2">
+                                        @foreach($categories as $category)
+                                            <div>
+                                                <label class="inline-flex items-center mt-1">
+                                                    <input type="checkbox" name="categories[]"
+                                                           value="{{$category->id}}"
+                                                           class="form-checkbox h-4 w-4 text-gray-600 block">
+                                                    <span class="ml-2 text-sm text-gray-700">{{$category->name}}</span>
+                                                </label>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <h3 class="font-bold text-gray-800">Author</h3>
-                            <div class="mt-2">
-                                @foreach($authors as $author)
-                                    <div>
-                                        <label class="inline-flex items-center mt-1">
-                                            <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 block">
-                                            <span
-                                                class="ml-2 text-sm text-gray-700 capitalize">{{$author->username}}</span>
-                                        </label>
+                                </div>
+                                <div class="mt-4">
+                                    <h3 class="font-bold text-gray-800">Author</h3>
+                                    <div class="mt-2">
+                                        @foreach($authors as $author)
+                                            <div>
+                                                <label class="inline-flex items-center mt-1">
+                                                    <input type="checkbox" name="authors[]"
+                                                           value="{{$author->id}}"
+                                                           class="form-checkbox h-4 w-4 text-gray-600 block">
+                                                    <span
+                                                        class="ml-2 text-sm text-gray-700 capitalize">{{$author->username}}</span>
+                                                </label>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
+                                <div class="mt-4">
+                                    <h3 class="font-bold text-gray-800">Price</h3>
+                                    <div class="mt-2">
+                                        <div>
+                                            <label class="inline-flex items-center mt-1">
+                                                <input type="checkbox"
+                                                       class="form-checkbox h-4 w-4 text-gray-600 block">
+                                                <span class="ml-2 text-sm text-gray-700">All</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="inline-flex items-center mt-1">
+                                                <input type="checkbox"
+                                                       class="form-checkbox h-4 w-4 text-gray-600 block">
+                                                <span class="ml-2 text-sm text-gray-700">Free</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="inline-flex items-center mt-1">
+                                                <input type="checkbox"
+                                                       class="form-checkbox h-4 w-4 text-gray-600 block">
+                                                <span class="ml-2 text-sm text-gray-700">Paid</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-3 sm:px-6 text-center w-full">
+                                <button type="submit"
+                                        class="inline-flex justify-center py-2 px-8 w-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Filter
+                                </button>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <h3 class="font-bold text-gray-800">Price</h3>
-                            <div class="mt-2">
-                                <div>
-                                    <label class="inline-flex items-center mt-1">
-                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 block">
-                                        <span class="ml-2 text-sm text-gray-700">All</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label class="inline-flex items-center mt-1">
-                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 block">
-                                        <span class="ml-2 text-sm text-gray-700">Free</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label class="inline-flex items-center mt-1">
-                                        <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-600 block">
-                                        <span class="ml-2 text-sm text-gray-700">Paid</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
         </section>
@@ -238,5 +229,24 @@
 @endsection
 
 @push('js')
+    <script>
+        $(document).ready(function () {
+            $("#form-filter").submit(function (event) {
+                event.preventDefault();
 
+                $.ajax({
+                    type: "POST",
+                    url: "{!! route('course.filter') !!}",
+                    data: $("#form-filter").serialize(),
+                    success: function (response) {
+                        $("#courses-container").html(response)
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+        })
+    </script>
 @endpush

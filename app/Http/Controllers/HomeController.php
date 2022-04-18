@@ -30,11 +30,13 @@ class HomeController extends Controller
         return view('home', compact('courses'));
     }
 
-    public function course(Course $course) {
+    public function course(Course $course)
+    {
         return view('course', compact('course'));
     }
 
-    public function courses() {
+    public function courses()
+    {
         $courses = Course::latest()->get();
         $categories = Category::latest()->get();
         $authors = DB::table("users")
@@ -43,5 +45,25 @@ class HomeController extends Controller
             ->where("roles.id", 2)
             ->get();
         return view('courses', compact('courses', 'categories', 'authors'));
+    }
+
+    public function filter(Request $request)
+    {
+        $categories = $request->categories;
+        $authors = $request->authors;
+        $courses_query = Course::query()
+            ->join("category_course as cc", "cc.course_id", "=", "courses.id")
+            ->select("courses.*");
+        if (isset($categories) && !empty($categories)) {
+            $courses_query = $courses_query->whereIn("cc.category_id", $categories);
+        }
+
+        if (isset($authors) && !empty($authors)) {
+            $courses_query = $courses_query->whereIn("courses.user_id", $authors);
+        }
+
+        $courses = $courses_query->get();
+
+        return view('_courses', compact('courses'))->render();
     }
 }

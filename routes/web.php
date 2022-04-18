@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Author\CourseController;
 use App\Http\Controllers\HomeController;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/course/{course}', [HomeController::class, 'course'])->name('course');
 Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
+Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
