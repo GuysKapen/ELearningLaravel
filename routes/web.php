@@ -26,6 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/course/{course}', [HomeController::class, 'course'])->name('course');
 Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
 Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
+Route::post('/courses/search', [HomeController::class, 'search'])->name("course.search");
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

@@ -19,7 +19,9 @@
                 <div class="mb-4 block text-sm text-center"><span
                         class="far fa-clock mr-3 capitalize">{{$course->user->username}}</span>
                 </div>
-                <p class="text-gray-800 font-bold text-base text-center">{{$course->name}}</p>
+                <a href="{{route("course", [$course->id])}}" class="text-gray-800 hover:text-indigo-500">
+                    <p class="font-bold text-base text-center">{{$course->name}}</p>
+                </a>
             </div>
             <div class="flex border-t text-sm mt-8">
                 <div class="py-4 px-4"><span

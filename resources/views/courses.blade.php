@@ -7,7 +7,7 @@
 
 @section('content')
 
-    <div class="w-10/12 mx-auto mt-8">
+    <div class="w-10/12 mx-auto py-8">
         <section>
             <nav
                 class="flex py-3 px-5 text-gray-700 rounded-lg shadow-sm border-gray-200 dark:bg-gray-800 dark:border-gray-700"
@@ -140,6 +140,17 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
+
+                        <form id="form-search" action="{{route("course.search")}}" class="ml-auto w-5/12" method="post">
+                            @csrf
+                            @method("POST")
+                            <input id="search"
+                                   name="keyword"
+                                   placeholder="Search for courses"
+                                   class="string ml-auto required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                   type="text"
+                            />
+                        </form>
                     </div>
 
                     <div id="courses-container">
@@ -220,8 +231,36 @@
                         </div>
                     </form>
 
+                    <div class="mt-4">
+                        <h1 class="text-xl font-bold text-gray-800">Course categories</h1>
+                        <div class="mt-2">
+                            @foreach($categories as $category)
+                                <div class="mt-1">
+                                    <span class="ml-2 text-sm text-gray-700">{{$category->name}}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h1 class="text-xl font-bold text-gray-800">Latest courses</h1>
+                        <div class="mt-2">
+                            @foreach($courses as $course)
+                                <div class="mb-8 flex">
+                                    <div class="w-4/12 flex-shrink-0">
+                                        <img class="object-cover h-full mt-1"
+                                             src="{{ asset("storage/course/". ($course->feature_img ?? "default.png") ) }}"
+                                             alt="Course image">
+                                    </div>
+                                    <div class="ml-2">
+                                        <h1 class="text-sm font-bold text-gray-800">{{$course->name}}</h1>
+                                        <p class="text-indigo-500 text-sm mt-2 font-black">{{isset($course->coursePrice->price) ? "$" . $course->coursePrice->price : "Free"}} </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
-            </div>
         </section>
     </div>
 
@@ -238,6 +277,25 @@
                     type: "POST",
                     url: "{!! route('course.filter') !!}",
                     data: $("#form-filter").serialize(),
+                    success: function (response) {
+                        $("#courses-container").html(response)
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+        })
+
+        $(document).ready(function () {
+            $("#form-search").submit(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{!! route('course.search') !!}",
+                    data: $("#form-search").serialize(),
                     success: function (response) {
                         $("#courses-container").html(response)
                     },

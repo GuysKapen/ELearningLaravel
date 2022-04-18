@@ -7,17 +7,37 @@
 
 @section('content')
 
-    <section>
+    <section class="mt-4">
+        <nav
+            class="flex py-3 px-5 text-gray-700 rounded-lg shadow-sm border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+            aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{{url("home")}}"
+                       class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                        Home
+                    </a>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <span
+                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Computer Science</span>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <span
+                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$course->name}}</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
 
-        <div class="py-4 px-8 mb-8 flex bg-white shadow-full">
-            <a class="text-indigo-600" href="{{url("home")}}">Home > &nbsp;</a>
-            <h3>Computer Science > &nbsp;<span
-                    class="text-gray-500">{{$course->name}} </span>
-            </h3>
-        </div>
     </section>
 
-    <section class="w-8/12 mx-auto">
+    <section class="w-8/12 mx-auto mt-8">
         <h2 class="text-black fw-900 font-black text-2xl font-mul mb-8">{{$course->name}}</h2>
         <div class="flex justify-between">
             <div class="flex divide-x-2">
