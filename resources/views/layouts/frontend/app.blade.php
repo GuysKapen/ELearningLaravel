@@ -158,13 +158,12 @@
                     </div>
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="#"
-                               class="inline-block py-4 px-4 text-sm font-medium text-center text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500"
-                               aria-current="page">Dashboard</a>
+                            <a href="{{route("home")}}"
+                               class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("home") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}"
+                               aria-current="page">Home</a>
 
-                            <a href="#"
-                               class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300            ">Team</a>
+                            <a href="{{route('courses')}}"
+                               class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("courses") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Courses</a>
 
                             <a href="#"
                                class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300">Projects</a>
@@ -245,8 +244,8 @@
                                                     class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white"
                                                     id="menu-button" aria-expanded="false" aria-haspopup="true">
                                                 <span class="sr-only">Open user menu</span>
-                                                <img class="h-8 w-8 rounded-full"
-                                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                <img class="h-8 w-8 rounded-full object-cover"
+                                                     src="{{ asset("storage/profile/". (Auth::user()->authorDetail->cover ?? "default.png") ) }}"
                                                      alt="">
                                             </button>
                                         @endguest

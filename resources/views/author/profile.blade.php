@@ -230,7 +230,7 @@
 
                 <div class="">
                     <div class="mt-5 md:mt-0 md:col-span-2">
-                        <form action="{{route('author.profile.update')}}" method="POST">
+                        <form action="{{route('author.profile.update')}}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="shadow sm:rounded-md sm:overflow-hidden">
@@ -272,7 +272,7 @@
                                                     src="{{ asset("storage/profile/". (Auth::user()->authorDetail->cover ?? "default.png") ) }}"
                                                     alt="cover" class="object-cover h-full w-full">
                                             </span>
-                                            <button type="button"
+                                            <button id="btn-change-cover" type="button"
                                                     class="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                 Change
                                             </button>
@@ -425,5 +425,9 @@
 @endsection
 
 @push('js')
-
+<script>
+    $("#btn-change-cover").on("click", function () {
+        $("#cover").trigger("click")
+    })
+</script>
 @endpush

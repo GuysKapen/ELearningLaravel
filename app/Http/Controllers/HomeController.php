@@ -37,7 +37,7 @@ class HomeController extends Controller
 
     public function courses()
     {
-        $courses = Course::latest()->get();
+        $courses = Course::latest()->simplePaginate(2);
         $categories = Category::latest()->get();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')

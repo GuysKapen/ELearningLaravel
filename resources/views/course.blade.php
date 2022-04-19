@@ -49,7 +49,8 @@
                     </div>
                     <div class="ml-4">
                         <div class="text-sm text-gray-500">{{$course->user->authorDetail->title ?? "Instructor"}}</div>
-                        <div class="text-sm font-medium text-gray-900 font-bold mt-1">{{$course->user->username}}</div>
+                        <div
+                            class="text-sm font-medium text-gray-900 capitalize font-bold mt-1">{{$course->user->username}}</div>
                     </div>
                 </div>
                 <div class="px-4 flex flex-col justify-center">
@@ -423,7 +424,7 @@
                             <div class="ml-4">
                                 <div class="text-sm text-gray-500">{{$course->user->authorDetail->title}}</div>
                                 <div
-                                    class="text-sm font-medium text-gray-900 text-capitalize font-bold mt-1">{{$course->user->username}}</div>
+                                    class="text-sm font-medium text-gray-900 capitalize font-bold mt-1">{{$course->user->username}}</div>
                                 <div class="flex mt-4">
                                     <div class="border-2 rounded-full w-8 h-8 border-f mr-2">
                                         <i class="fa-brands fa fa-facebook-f color-f w-full h-full text-center leading-7"></i>
@@ -461,7 +462,7 @@
                                       data-dashlane-rid="5f183d72891b1516" data-form-type="contact">
                                     <div>
                                         <h2 class="text-black fw-900 font-bold text-base font-mul">Rating</h2>
-                                        <div class="w-full inline-block">
+                                        <div class="w-full inline-block mt-2">
                                             <div class="rating-input width-max">
                                                 <input type="hidden" name="comment[rating]" value="">
                                                 <span class=""><input class="rating-input" type="radio"
@@ -504,27 +505,22 @@
                                     </div>
 
                                     <div class="my-4">
-                                        <h2 class="text-black fw-900 font-bold text-base font-mul">Your
-                                            review</h2>
+                                        <h2 class="text-black fw-900 font-bold text-base font-mul">Course review</h2>
                                         <label class="text optional label text-left w-full hidden"
                                                for="comment_message">Description</label>
                                         <textarea
-                                            class="placeholder-gray-500 p-4 text optional input my-2 w-full rounded-lg font-medium bg placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white placeholder-gray-800"
+                                            class="placeholder-gray-500 focus:outline-none string w-full required block px-4 py-2 rounded-lg font-medium border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-4"
                                             placeholder="Commenting publicly as Guys Developer"
                                             name="comment[message]" id="comment_message"
+                                            rows="6"
                                             data-dashlane-rid="b87d632607dec86a"
                                             data-form-type="other"></textarea>
                                     </div>
-                                    <div class="input hidden comment_product_id"><input value="99"
-                                                                                        class="hidden"
-                                                                                        type="hidden"
-                                                                                        name="comment[product_id]"
-                                                                                        id="comment_product_id">
-                                    </div>
-                                    <input type="submit" name="commit" value="Submit"
-                                           class="px-8 text-sm font-black py-2 bg-white shadow-md rounded-full mx-auto text-center f5 font-josesans color-fade cursor-pointer"
-                                           data-disable-with="Submit" data-dashlane-rid="4a4871ca8a8a9eee"
-                                           data-form-type="action">
+
+                                    <button type="submit"
+                                            class="flex justify-end py-2 px-8 ml-auto block border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Save
+                                    </button>
                                 </form>
                             </div>
 

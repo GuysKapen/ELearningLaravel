@@ -119,14 +119,16 @@
                         <div class="relative pt-12 px-8 course">
                             <span class="course-price">${{$course->coursePrice->price ?? 0}}</span>
                             <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>{{$course->lessons()->count() ?? 0}} Lessons / {{$course->detail->duration_info ?? ""}}</div>
-                            <h3 class="text-indigo-600">
+                            <h3 class="text-indigo-600 text-base">
                                 @foreach($course->categories as $key=>$category)
                                 <a href="#">
                                     {{$category->name}}
                                 </a>
                                 @endforeach
                             </h3>
-                            <p>{{$course->name}}</p>
+                            <a href="{{route("course", [$course->id])}}">
+                                <p class="hover:text-indigo-500 text-md">{{$course->name}}</p>
+                            </a>
                         </div>
                         <div class="flex border-t text-sm mt-8">
                             <div class="py-4 px-8"><span class="fa fa-users"></span> {{$course->detail->student_enrolled ?? 0}} students</div>
