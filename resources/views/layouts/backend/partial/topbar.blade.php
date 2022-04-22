@@ -41,31 +41,16 @@
             </div>
             <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="https://flowbite.com" class="flex hidden lg:flex h-8 w-auto">
-                        <svg class="mr-3 h-9" viewBox="0 0 52 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M1.87695 53H28.7791C41.5357 53 51.877 42.7025 51.877 30H24.9748C12.2182 30 1.87695 40.2975 1.87695 53Z"
-                                fill="#76A9FA"></path>
-                            <path
-                                d="M0.000409561 32.1646L0.000409561 66.4111C12.8618 66.4111 23.2881 55.9849 23.2881 43.1235L23.2881 8.87689C10.9966 8.98066 1.39567 19.5573 0.000409561 32.1646Z"
-                                fill="#A4CAFE"></path>
-                            <path
-                                d="M50.877 5H23.9748C11.2182 5 0.876953 15.2975 0.876953 28H27.7791C40.5357 28 50.877 17.7025 50.877 5Z"
-                                fill="#1C64F2"></path>
-                        </svg>
-                        <span
-                            class="self-center text-lg font-semibold whitespace-nowrap dark:text-white text-gray-900">FlowBite</span>
-                    </a>
+                    <div class="relative font-black text-xl w-1/4 mr-auto"><a href="{{route("home")}}" class="text-gray-800">LAcademy</a></div>
                 </div>
-                <div class="hidden sm:block sm:ml-6">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="#"
-                           class="inline-block py-4 px-4 text-sm font-medium text-center text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500"
-                           aria-current="page">Dashboard</a>
+                <div class="hidden sm:block sm:ml-6 mx-auto flex-grow">
+                    <div class="block space-x-4 w-max mx-auto">
+                        <a href="{{route("home")}}"
+                           class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("home") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}"
+                           aria-current="page">Home</a>
 
-                        <a href="#"
-                           class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300            ">Team</a>
+                        <a href="{{route('courses')}}"
+                           class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("courses") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Courses</a>
 
                         <a href="#"
                            class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300">Projects</a>
@@ -154,9 +139,6 @@
 
                                 </div>
                             </div>
-
-
-
 
 
                         </div>

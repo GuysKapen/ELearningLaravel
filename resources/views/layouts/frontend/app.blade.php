@@ -27,7 +27,7 @@
 
     <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
 
-<!-- Scripts Vue -->
+    <!-- Scripts Vue -->
 {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
 
 <!-- Fonts -->
@@ -48,61 +48,8 @@
 </head>
 <body>
 <div id="app">
-{{--        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">--}}
-{{--            <div class="container">--}}
-{{--                <a class="navbar-brand" href="{{ url('/') }}">--}}
-{{--                    {{ config('app.name', 'Laravel') }}--}}
-{{--                </a>--}}
-{{--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">--}}
-{{--                    <span class="navbar-toggler-icon"></span>--}}
-{{--                </button>--}}
 
-{{--                <div class="collapse navbar-collapse" id="navbarSupportedContent">--}}
-{{--                    <!-- Left Side Of Navbar -->--}}
-{{--                    <ul class="navbar-nav me-auto">--}}
-
-{{--                    </ul>--}}
-
-{{--                    <!-- Right Side Of Navbar -->--}}
-{{--                    <ul class="navbar-nav ms-auto">--}}
-{{--                        <!-- Authentication Links -->--}}
-{{--                        @guest--}}
-{{--                            @if (Route::has('login'))--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>--}}
-{{--                                </li>--}}
-{{--                            @endif--}}
-
-{{--                            @if (Route::has('register'))--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
-{{--                                </li>--}}
-{{--                            @endif--}}
-{{--                        @else--}}
-{{--                            <li class="nav-item dropdown">--}}
-{{--                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
-{{--                                    {{ Auth::user()->name }}--}}
-{{--                                </a>--}}
-
-{{--                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">--}}
-{{--                                    <a class="dropdown-item" href="{{ route('logout') }}"--}}
-{{--                                       onclick="event.preventDefault();--}}
-{{--                                                     document.getElementById('logout-form').submit();">--}}
-{{--                                        {{ __('Logout') }}--}}
-{{--                                    </a>--}}
-
-{{--                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">--}}
-{{--                                        @csrf--}}
-{{--                                    </form>--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
-{{--                        @endguest--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </nav>--}}
-
-<!-- This example requires Tailwind CSS v2.0+ -->
+    <!-- This example requires Tailwind CSS v2.0+ -->
     <nav class="bg-white">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
@@ -140,24 +87,10 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="https://flowbite.com" class="flex hidden lg:flex h-8 w-auto">
-                            <svg class="mr-3 h-9" viewBox="0 0 52 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M1.87695 53H28.7791C41.5357 53 51.877 42.7025 51.877 30H24.9748C12.2182 30 1.87695 40.2975 1.87695 53Z"
-                                    fill="#76A9FA"></path>
-                                <path
-                                    d="M0.000409561 32.1646L0.000409561 66.4111C12.8618 66.4111 23.2881 55.9849 23.2881 43.1235L23.2881 8.87689C10.9966 8.98066 1.39567 19.5573 0.000409561 32.1646Z"
-                                    fill="#A4CAFE"></path>
-                                <path
-                                    d="M50.877 5H23.9748C11.2182 5 0.876953 15.2975 0.876953 28H27.7791C40.5357 28 50.877 17.7025 50.877 5Z"
-                                    fill="#1C64F2"></path>
-                            </svg>
-                            <span
-                                class="self-center text-lg font-semibold whitespace-nowrap dark:text-white text-gray-900">FlowBite</span>
-                        </a>
+                        <div class="relative font-black text-xl w-1/4 mr-auto"><a href="{{route("home")}}" class="text-gray-800">LAcademy</a></div>
                     </div>
-                    <div class="hidden sm:block sm:ml-6">
-                        <div class="flex space-x-4">
+                    <div class="hidden sm:block sm:ml-6 mx-auto flex-grow">
+                        <div class="block space-x-4 w-max mx-auto">
                             <a href="{{route("home")}}"
                                class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("home") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}"
                                aria-current="page">Home</a>
@@ -252,9 +185,6 @@
 
                                     </div>
                                 </div>
-
-
-
 
 
                             </div>

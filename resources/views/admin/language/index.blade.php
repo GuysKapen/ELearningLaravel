@@ -19,11 +19,11 @@
                                 All languages
                             </h2>
                             <span
-                                class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{{ $languages->count() }}</span>
+                                class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-indigo-600 rounded-full">{{ $languages->count() }}</span>
                         </div>
 
                         <a href="{{ route('admin.language.create') }}"
-                           class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                           class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-black rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             New
                         </a>
                     </div>
@@ -77,7 +77,7 @@
                                                     <a href="{{ route('admin.language.edit',$language->id) }}"
                                                        class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
 
-                                                    <button class="text-indigo-600 hover:text-indigo-900" type="button"
+                                                    <button class="text-red-600 hover:text-red-900" type="button"
                                                             onclick="deleteCategory({{ $language->id }})">
                                                         Delete
                                                     </button>

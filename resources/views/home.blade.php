@@ -48,8 +48,8 @@
                         <nav class="block position-relative text-right" role="navigation">
                             <ul class="lg:block p-0 m-0 mx-auto">
                                 <li class="inline-block"><a href="#home-section"
-                                                            class="text-white inline-block px-6 py-3">Home</a></li>
-                                <li class="inline-block"><a href="#courses-section"
+                                                            class="text-white inline-block px-6 py-3 {{Request::is("home") ? "text-indigo-400" : ""}}">Home</a></li>
+                                <li class="inline-block"><a href="{{route("courses")}}"
                                                             class="text-white inline-block px-6 py-3">Courses</a></li>
                                 <li class="inline-block"><a href="#programs-section"
                                                             class="text-white inline-block px-6 py-3">Programs</a></li>
