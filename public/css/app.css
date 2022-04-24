@@ -1169,6 +1169,9 @@ select{
 .h-16{
   height: 4rem;
 }
+.h-64{
+  height: 16rem;
+}
 .max-h-56{
   max-height: 14rem;
 }
@@ -1223,14 +1226,14 @@ select{
 .w-7\/12{
   width: 58.333333%;
 }
+.w-12{
+  width: 3rem;
+}
 .w-6{
   width: 1.5rem;
 }
 .w-3{
   width: 0.75rem;
-}
-.w-12{
-  width: 3rem;
 }
 .w-1\/2{
   width: 50%;
@@ -1668,6 +1671,10 @@ select{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.px-16{
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1903,13 +1910,13 @@ select{
   --tw-text-opacity: 1;
   color: rgb(22 101 52 / var(--tw-text-opacity));
 }
-.text-gray-300{
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
 .text-red-600{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+.text-gray-300{
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 .placeholder-gray-500::-moz-placeholder{
   --tw-placeholder-opacity: 1;

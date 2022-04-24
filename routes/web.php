@@ -43,4 +43,5 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\
     Route::resource('course-lesson', 'CourseLessonController');
     Route::post('profile', 'ProfileController@updateProfile')->name("profile.update");
     Route::get('profile', 'ProfileController@profile')->name("profile.show");
+    Route::get("dashboard", 'AuthorController@dashboard')->name("dashboard");
 });
