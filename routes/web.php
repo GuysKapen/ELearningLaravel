@@ -44,4 +44,7 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\
     Route::post('profile', 'ProfileController@updateProfile')->name("profile.update");
     Route::get('profile', 'ProfileController@profile')->name("profile.show");
     Route::get("dashboard", 'AuthorController@dashboard')->name("dashboard");
+    Route::get("questions", "AuthorController@questions")->name("questions");
+    Route::get("tools", "AuthorController@tools")->name("tools");
+    Route::get("resources", "AuthorController@resources")->name("resources");
 });
