@@ -1157,6 +1157,9 @@ select{
 .h-auto{
   height: auto;
 }
+.h-36{
+  height: 9rem;
+}
 .h-6{
   height: 1.5rem;
 }
@@ -1222,6 +1225,9 @@ select{
 }
 .w-7\/12{
   width: 58.333333%;
+}
+.w-2\/12{
+  width: 16.666667%;
 }
 .w-6{
   width: 1.5rem;
@@ -1713,6 +1719,9 @@ select{
 .pl-8{
   padding-left: 2rem;
 }
+.pb-8{
+  padding-bottom: 2rem;
+}
 .pr-8{
   padding-right: 2rem;
 }
@@ -1724,9 +1733,6 @@ select{
 }
 .pl-1{
   padding-left: 0.25rem;
-}
-.pb-8{
-  padding-bottom: 2rem;
 }
 .pl-3{
   padding-left: 0.75rem;
@@ -1902,13 +1908,13 @@ select{
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
 }
-.text-blue-600{
-  --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity));
-}
 .text-red-100{
   --tw-text-opacity: 1;
   color: rgb(254 226 226 / var(--tw-text-opacity));
+}
+.text-blue-600{
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 .text-green-800{
   --tw-text-opacity: 1;
@@ -2825,6 +2831,10 @@ textarea {
   .sm\:pr-0{
     padding-right: 0px;
   }
+  .sm\:text-2xl{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
   .sm\:text-sm{
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -2832,10 +2842,6 @@ textarea {
   .sm\:text-3xl{
     font-size: 1.875rem;
     line-height: 2.25rem;
-  }
-  .sm\:text-2xl{
-    font-size: 1.5rem;
-    line-height: 2rem;
   }
   .sm\:leading-5{
     line-height: 1.25rem;

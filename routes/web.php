@@ -47,4 +47,5 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\
     Route::get("questions", "AuthorController@questions")->name("questions");
     Route::get("tools", "AuthorController@tools")->name("tools");
     Route::get("resources", "AuthorController@resources")->name("resources");
+    Route::get("courses", "AuthorController@courses")->name("courses");
 });

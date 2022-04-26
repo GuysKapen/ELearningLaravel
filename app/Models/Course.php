@@ -84,4 +84,9 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, "course_co_author")->withTimestamps();
     }
+
+    public function displayPrice(): string
+    {
+        return isset($this->coursePrice->price) ? ("$" . $this->coursePrice->price) : "Free";
+    }
 }

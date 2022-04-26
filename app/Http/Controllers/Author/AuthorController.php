@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
@@ -21,5 +23,10 @@ class AuthorController extends Controller
 
     public function resources() {
         return view("author.resources");
+    }
+
+    public function courses() {
+        $courses = Auth::user()->courses;
+        return view('author.courses', compact('courses'));
     }
 }
