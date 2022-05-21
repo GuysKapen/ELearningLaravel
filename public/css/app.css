@@ -1241,13 +1241,13 @@ select{
 .w-1\/2{
   width: 50%;
 }
-.w-24{
-  width: 6rem;
-}
 .w-max{
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+.w-24{
+  width: 6rem;
 }
 .w-56{
   width: 14rem;
@@ -1616,6 +1616,9 @@ select{
 }
 .p-16{
   padding: 4rem;
+}
+.p-5{
+  padding: 1.25rem;
 }
 .px-8{
   padding-left: 2rem;

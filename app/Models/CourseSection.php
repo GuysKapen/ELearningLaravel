@@ -13,9 +13,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $index
  * @property integer $course_id
  */
-class CourseSection extends Model
+class CourseSection extends SyncableModel
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'slug',
+        'index',
+        'course_id',
+    ];
+
 
     public function lessons(): HasMany
     {

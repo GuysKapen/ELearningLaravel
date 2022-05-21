@@ -99,7 +99,7 @@
             <div class="iframe-container flex justify-center items-center">
                 <iframe src="{{$courseLesson->video}}"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen="" width="950" height="550" frameborder="0"></iframe>
+                        allowfullscreen="" width="950" height="550"></iframe>
             </div>
 
             <div class="mt-8 mx-24">

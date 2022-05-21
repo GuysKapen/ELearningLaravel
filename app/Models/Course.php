@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property CourseAssessment $courseAssessment
  * @property mixed $feature_img
  */
-class Course extends Model
+class Course extends SyncableModel
 {
     use HasFactory;
 

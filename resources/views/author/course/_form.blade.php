@@ -193,7 +193,7 @@
                                     $sectionIndex = 1;
                                 @endphp
                                 @foreach($course->sections as $key=>$section)
-                                    @include('author.course._section_form', ['sectionIndex' => $sectionIndex, 'sectionTitle' => $section->name, 'lessons' => $section->lessons])
+                                    @include('author.course._section_form', ['sectionIndex' => $sectionIndex, 'section' => $section])
                                     @php
                                         $sectionIndex++;
                                     @endphp
@@ -927,6 +927,47 @@
                             const index = $(this).attr("data-id")
                             $(`#lesson-input-${index}`, context).toggleClass("hidden")
                             $(`#lesson-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-save-lesson-resource", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-input-resource-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-lesson-resource", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-input-resource-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-content", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-add-list-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-resource", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-add-list-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-input-resource-${index}`, context).toggleClass("hidden")
                         })
                     }
                 })

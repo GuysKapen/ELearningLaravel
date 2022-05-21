@@ -14,6 +14,7 @@ use App\Models\CourseResult;
 use App\Models\CourseSection;
 use App\Models\CourseTarget;
 use App\Models\EvaluateType;
+use App\Models\LessonResource;
 use App\Models\Tag;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\callback;
 
 class CourseController extends Controller
 {
@@ -202,30 +204,37 @@ class CourseController extends Controller
 
                 if (!empty($sections)) {
                     for ($i = 0; $i < count($sections); ++$i) {
-                        $section = $sections[$i];
-                        $title = $section['title'];
-                        $courseSection = new CourseSection();
-                        $courseSection->name = $title;
-                        $courseSection->slug = Str::slug($title);
-                        $courseSection->course_id = $course->id;
-                        $courseSection->index = $i;
+                        $section =& $sections[$i];
+                        $section += array('slug' => Str::slug($section['name']));
+                        $section += array('course_id' => $course->id);
+                        $section += array('index' => $i);
+
+                        $courseSection = new CourseSection($section);
 
                         $course->sections()->save($courseSection);
 
-                        $lectures = array_values($section['lecture']);
-                        for ($j = 0; $j < count($lectures); ++$j) {
-                            $lecture = $lectures[$j];
+                        $lessons = array_values($section['lesson']);
+                        for ($j = 0; $j < count($lessons); ++$j) {
+                            $lesson = $lessons[$j];
+                            $lesson += ['slug' => Str::slug($lesson['title'])];
+                            $lesson += ['course_section_id' => $courseSection->id];
 
-                            $courseLesson = new CourseLesson();
-                            $courseLesson->title = $lecture['title'];
-                            $courseLesson->slug = Str::slug($lecture['title']);
-                            $courseLesson->course_section_id = $courseSection->id;
+                            $courseLesson = new CourseLesson($lesson);
 
                             $courseSection->lessons()->save($courseLesson);
+
+                            if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
+                                $resource = $lesson['resource'];
+                                $resource += ['course_lesson_id' => $courseLesson->id];
+                                $lessonResource = new LessonResource($resource);
+
+                                $courseLesson->resource()->save($lessonResource);
+                            }
                         }
 
                     }
                 }
+
             }
 
             // Course categories
@@ -249,6 +258,7 @@ class CourseController extends Controller
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
+            return $e;
             // something went wrong
         }
 
@@ -449,6 +459,49 @@ class CourseController extends Controller
                 $coursePrice->price = $request->price;
                 $coursePrice->course_id = $course->id;
                 $coursePrice->saveOrFail();
+            }
+
+            // Course curriculum
+            if (isset($request->section) && is_array($request->section)
+                && !empty($request->section)) {
+
+                $sections = array_values($request->section);
+                foreach ($sections as $key => $value) {
+                    if (empty($value)) {
+                        unset($sections[$key]);
+                    }
+                }
+
+                if (!empty($sections)) {
+                    for ($i = 0; $i < count($sections); ++$i) {
+                        $section =& $sections[$i];
+                        $section += array('slug' => Str::slug($section['name']));
+                        $section += array('course_id' => $course->id);
+                        $section += array('index' => $i);
+
+                    }
+
+                    $course->sections()->sync($sections, function ($section, $model) {
+                        $lessons = array_values($section['lesson']);
+                        for ($j = 0; $j < count($lessons); ++$j) {
+                            $lesson =& $lessons[$j];
+                            $lesson += ['slug' => Str::slug($lesson['title'])];
+                            $lesson += ['course_section_id' => $model->id];
+                        }
+
+                        $model->lessons()->sync($lessons, function ($lesson, $model) {
+                            if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
+                                $resource =& $lesson['resource'];
+                                $lessonResource = $model->resource ?? new LessonResource();
+                                $lessonResource->video = $resource['video'];
+                                $lessonResource->course_lesson_id = $model->id;
+
+                                $model->resource()->save($lessonResource);
+                            }
+                        });
+                    });
+                }
+
             }
 
             // Course categories
