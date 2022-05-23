@@ -12,6 +12,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class LessonDetail extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'duration',
+        'is_preview',
+        'course_lesson_id',
+    ];
+
     protected $attributes = array(
         'is_preview' => false
     );

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
 use App\Library\DurationType;
-use App\Models\Category;
 use App\Models\CourseLesson;
 use App\Models\LessonContent;
 use App\Models\LessonDetail;
@@ -14,7 +13,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use mysql_xdevapi\Exception;
 
 class CourseLessonController extends Controller
 {
@@ -46,7 +44,6 @@ class CourseLessonController extends Controller
      */
     public function store(Request $request)
     {
-
         DB::beginTransaction();
 
         try {
@@ -88,7 +85,7 @@ class CourseLessonController extends Controller
                             break;
                     }
 
-                    $lessonDetail->is_preview = $request->is_preview ?? $lessonDetail->is_preview;
+                    $lessonDetail->is_preview = isset($request->is_preview);
                     $lessonDetail->duration = $factor * $request->duration;
 
                     $courseLesson->detail()->save($lessonDetail);

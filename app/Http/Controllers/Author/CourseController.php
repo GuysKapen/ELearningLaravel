@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
+use App\Library\DurationType;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\CourseAssessment;
@@ -14,12 +15,15 @@ use App\Models\CourseResult;
 use App\Models\CourseSection;
 use App\Models\CourseTarget;
 use App\Models\EvaluateType;
+use App\Models\LessonContent;
+use App\Models\LessonDetail;
 use App\Models\LessonResource;
 use App\Models\Tag;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -54,6 +58,7 @@ class CourseController extends Controller
         $evaluateTypes = EvaluateType::all();
         $categories = Category::all();
         $tags = Tag::all();
+        $timeUnits = DurationType::toCollection();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
             ->select("users.id", "users.username")
@@ -61,7 +66,7 @@ class CourseController extends Controller
             ->get();
 
         $coAuthors = $authors->where("id", "!=", Auth::user()->id);
-        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors', 'coAuthors', 'tags'));
+        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors', 'coAuthors', 'tags', 'timeUnits'));
     }
 
     /**
@@ -230,6 +235,36 @@ class CourseController extends Controller
 
                                 $courseLesson->resource()->save($lessonResource);
                             }
+
+                            if (isset($lesson['content']['content']) && !empty($lesson['content']['content'])) {
+                                $content = $lesson['content'];
+                                $lessonContent = new LessonContent($content);
+
+                                $courseLesson->content()->save($lessonContent);
+                            }
+
+                            if (isset($lesson['detail']) && !empty($lesson['detail'])) {
+                                $detail = $lesson['detail'];
+                                $lessonDetail = new LessonDetail();
+
+                                $factor = 1;
+                                switch ($request->duration_type) {
+                                    case DurationType::Sec:
+                                        $factor = 1;
+                                        break;
+                                    case DurationType::Min:
+                                        $factor = 60;
+                                        break;
+                                    case DurationType::Hour:
+                                        $factor = 3600;
+                                        break;
+                                }
+
+                                $lessonDetail->is_preview = isset($detail['is_preview']);
+                                $lessonDetail->duration = $factor * $detail['duration'];
+
+                                $courseLesson->detail()->save($lessonDetail);
+                            }
                         }
 
                     }
@@ -307,6 +342,7 @@ class CourseController extends Controller
         $courseDetail = $course->detail ?? new CourseDetail();
         $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
         $categories = Category::all();
+        $timeUnits = DurationType::toCollection();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
             ->select("users.id", "users.username")
@@ -314,7 +350,7 @@ class CourseController extends Controller
             ->get();
         $tags = Tag::all();
         $coAuthors = $authors->where("id", "!=", Auth::user()->id);
-        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors', 'coAuthors', 'tags'));
+        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors', 'coAuthors', 'tags', 'timeUnits'));
     }
 
     /**
@@ -496,7 +532,21 @@ class CourseController extends Controller
                                 $lessonResource->video = $resource['video'];
                                 $lessonResource->course_lesson_id = $model->id;
 
-                                $model->resource()->save($lessonResource);
+                                $model->resource()->updateOrCreate($lessonResource->attributesToArray());
+                            }
+
+                            if (isset($lesson['content']) && isset($lesson['content']['content'])) {
+                                $content =& $lesson['content'];
+                                $lessonContent = $model->content ?? new LessonContent($content);
+
+                                $model->content()->updateOrCreate($lessonContent->attributesToArray());
+                            }
+
+                            if (isset($lesson['detail'])) {
+                                $detail =& $lesson['detail'];
+                                $lessonDetail = $model->detail ?? new LessonDetail($detail);
+
+                                $model->detail()->updateOrCreate($lessonDetail->attributesToArray());
                             }
                         });
                     });
@@ -525,6 +575,7 @@ class CourseController extends Controller
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
+            return $e;
             // something went wrong
         }
 

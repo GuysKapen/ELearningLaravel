@@ -17,10 +17,47 @@
 <body>
 
 <div class="py-4 px-8 mb-8 flex bg-white shadow-full">
-    <a class="text-indigo-600" href="{{url("home")}}">Home > &nbsp;</a>
-    <h3>Computer Science <span
-            class="text-gray-500">&nbsp;/&nbsp;C++&nbsp;/&nbsp; {{$courseLesson->section->course->name}} &nbsp;/&nbsp; {{$courseLesson->section->name}} &nbsp;/&nbsp; {{$courseLesson->title}}</span>
-    </h3>
+    <nav
+        class="flex py-3 px-5 text-gray-700 rounded-lg shadow-sm border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+        aria-label="Breadcrumb">
+        <ol class="inline-flex items-center flex-wrap space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="{{url("home")}}"
+                   class="hover:text-indigo-500 inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    Home
+                </a>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                    <span
+                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Computer Science</span>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                    <span
+                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->section->course->name}}</span>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                    <span
+                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->section->name}}</span>
+                </div>
+            </li>
+
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                    <span
+                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->title}}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
 </div>
 
 
@@ -30,11 +67,11 @@
             <div class="px-4">
                 <div class="flex items-center text-sm font-black text-indigo-400">
                     <h3>COURSE</h3>
-                    <span class="material-icons outlined text-sm">chevron_right</span>
+                    <span class="material-icons mx-2 outlined text-sm">chevron_right</span>
                     <h3>TECHNOLOGY</h3>
-                    <span class="material-icons outlined text-sm">chevron_right</span>
+                    <span class="material-icons mx-2 outlined text-sm">chevron_right</span>
                 </div>
-                <p class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">Learn C++ Programming</p>
+                <p class="block text-gray-500 text-sm font-bold md:text-left mb-1 md:mb-0 pr-4">{{$courseLesson->section->course->name}}</p>
             </div>
 
             @php
@@ -59,7 +96,7 @@
                                     type="button" data-toggle="collapse"
                                     data-target=".mul-collapse-{{$i}}" aria-expanded="false"
                                     aria-controls="collapse-{{$i}}">
-                                    Section {{$section->index}}: {{$section->name}}
+                                    Section {{$section->index + 1}}: {{$section->name}}
                                 </button>
                             </h2>
                         </div>
@@ -76,15 +113,18 @@
                                             <span class="material-icons outlined text-base">description</span>
                                             <span class="ml-2 text-sm font-bold">1.1</span>
                                         </div>
-                                        <a href="{{route('author.course.lesson.show', $lesson->id)}}" class="mx-2 text-sm">
+                                        <a href="{{route('author.course.lesson.show', $lesson->id)}}"
+                                           class="mx-2 text-sm">
                                             <span class="text-sm font-bold text-black">{{$lesson->title}}</span>
                                         </a>
-                                        <span class="icon-wrap small mr-3 flex-end ml-auto"><span
-                                                class="icon material-icons">visibility</span></span>
+                                        @if($lesson->detail->is_preview)
+                                            <span class="icon-wrap small mr-3 flex-end ml-auto"><span
+                                                    class="icon material-icons">visibility</span></span>
+                                        @endif
                                     </div>
                                     <div class="flex mt-1">
                                         <div class="w-12"></div>
-                                        <p class="ml-2 text-gray-500 text-sm">50 mins</p>
+                                        <p class="ml-2 text-gray-500 text-sm">{{timeText($lesson->detail->duration ?? 0)}}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -96,18 +136,22 @@
         </div>
         <div class="md:w-9/12">
             <!-- The actual video content -->
-            <div class="iframe-container flex justify-center items-center">
-                <iframe src="{{$courseLesson->video}}"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen="" width="950" height="550"></iframe>
-            </div>
-
-            <div class="mt-8 mx-24">
-                <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Description</h2>
-                <div class="prose">
-                    {!! $courseLesson->body !!}
+            @if(isset($courseLesson->resource))
+                <div class="iframe-container flex justify-center items-center">
+                    <iframe src="{{$courseLesson->resource->video ?? ""}}"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen="" width="950" height="550"></iframe>
                 </div>
-            </div>
+            @endif
+
+            @if(isset($courseLesson->content))
+                <div class="mt-8 mx-24">
+                    <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Description</h2>
+                    <div class="prose">
+                        {!! $courseLesson->content->content !!}
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 

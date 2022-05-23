@@ -44,7 +44,7 @@
                 <div class="flex items-center pr-4">
                     <div class="flex-shrink-0 h-10 w-10">
                         <img class="h-10 w-10 rounded-full object-cover"
-                             src="{{asset("storage/profile/" . $course->user->authorDetail->cover)}}"
+                             src="{{asset("storage/profile/" . ($course->user->authorDetail->cover ?? ""))}}"
                              alt="">
                     </div>
                     <div class="ml-4">
@@ -418,11 +418,11 @@
                         <div class="flex items-center pr-4">
                             <div class="flex-shrink-0 h-32 w-32">
                                 <img class="h-32 w-32 rounded-full object-cover"
-                                     src="{{asset("storage/profile/" . $course->user->authorDetail->cover)}}"
+                                     src="{{asset("storage/profile/" . ($course->user->authorDetail->cover ?? ""))}}"
                                      alt="">
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm text-gray-500">{{$course->user->authorDetail->title}}</div>
+                                <div class="text-sm text-gray-500">{{$course->user->authorDetail->title ?? ""}}</div>
                                 <div
                                     class="text-sm font-medium text-gray-900 capitalize font-bold mt-1">{{$course->user->username}}</div>
                                 <div class="flex mt-4">
@@ -442,7 +442,7 @@
                             </div>
                         </div>
                         <p class="mt-8 text-sm">
-                            {{$course->user->authorDetail->about}}
+                            {{$course->user->authorDetail->about ?? ""}}
                         </p>
                     </div>
                 </div>

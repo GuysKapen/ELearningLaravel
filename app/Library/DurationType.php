@@ -1,5 +1,7 @@
 <?php namespace App\Library {
 
+    use Illuminate\Support\Collection;
+
     class DurationType extends \SplEnum
     {
         const __default = self::Sec;
@@ -16,6 +18,19 @@
                 self::Hour => 'Hour'
             );
             return $names[$key];
+        }
+
+        public static function toCollection(): Collection
+        {
+            $items = (new DurationType)->getConstList();
+            $timeUnits = new Collection();
+            foreach ($items as $item) {
+                $timeUnits->push((object)['id' => $item,
+                    'name' => DurationType::GetName($item)
+                ]);
+
+            }
+            return $timeUnits;
         }
     }
 

@@ -37,7 +37,7 @@
                         <div class="field mt-5">
                             <div>
                                 <label class="block font-semibold mb-2 text-sm" for="input1">Description</label>
-                                <textarea id="mce-instance" name="description"
+                                <textarea id="course-desc" name="description"
                                           placeholder="Enter content here"></textarea>
                             </div>
                         </div>
@@ -193,13 +193,13 @@
                                     $sectionIndex = 1;
                                 @endphp
                                 @foreach($course->sections as $key=>$section)
-                                    @include('author.course._section_form', ['sectionIndex' => $sectionIndex, 'section' => $section])
+                                    @include('author.course._section_form', ['sectionIndex' => $sectionIndex, 'section' => $section, "timeUnits" => $timeUnits])
                                     @php
                                         $sectionIndex++;
                                     @endphp
                                 @endforeach
                             @else
-                                @include('author.course._section_form', ['sectionIndex' => 1])
+                                @include('author.course._section_form', ['sectionIndex' => 1, "timeUnits" => $timeUnits])
                             @endif
                         </div>
 
@@ -832,7 +832,7 @@
     <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: 'textarea#mce-instance', // Replace this CSS selector to match the placeholder element for TinyMCE
+            selector: 'textarea#course-desc', // Replace this CSS selector to match the placeholder element for TinyMCE
             plugins: [
                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                 'searchreplace wordcount visualblocks visualchars code fullscreen',
@@ -908,6 +908,7 @@
                 if (index != sectionId && sectionId != -1) return;
                 const context = this;
 
+                // btn save and cancel title
                 $(".btn-save-lesson", this).each(function () {
                     const index = $(this).attr("data-id")
                     if (index == lectureId || lectureId == -1) {
@@ -931,6 +932,7 @@
                     }
                 })
 
+                // btns resource listener
                 $(".btn-save-lesson-resource", this).each(function () {
                     const index = $(this).attr("data-id")
                     if (index == lectureId || lectureId == -1) {
@@ -951,12 +953,66 @@
                     }
                 })
 
+                // Btn save and cancel content click listener
+                $(".btn-save-lesson-content", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-input-content-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-lesson-content", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-input-content-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                // btns save and cancel detail listener
+                $(".btn-save-lesson-detail", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-input-detail-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-lesson-detail", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-input-detail-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
                 $(".btn-add-content", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == lectureId || lectureId == -1) {
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
                             $(`#lesson-add-list-${index}`, context).toggleClass("hidden")
+                            $(`div[id^='lesson-input']`, context).addClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-text-content", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-add-list-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-input-content-${index}`, context).toggleClass("hidden")
                         })
                     }
                 })
@@ -968,6 +1024,17 @@
                             const index = $(this).attr("data-id")
                             $(`#lesson-add-list-${index}`, context).toggleClass("hidden")
                             $(`#lesson-input-resource-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-detail", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-add-list-${index}`, context).toggleClass("hidden")
+                            $(`#lesson-input-detail-${index}`, context).toggleClass("hidden")
                         })
                     }
                 })
@@ -1000,7 +1067,7 @@
                         const validId = sectionId == -1 ? 1 : sectionId;
                         $(this).on("click", function () {
                             @php
-                                $html_lecture = json_encode(View::make('author.course._lesson_form')->render());
+                                $html_lecture = json_encode(View::make('author.course._lesson_form', ["timeUnits" => $timeUnits])->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
                             const lesson = $(`#input-lesson-${validId}`, context)
@@ -1056,9 +1123,8 @@
 
         $("#add-section").click(function () {
             @php
-                use Illuminate\Support\Facades\View;$html = json_encode(View::make('author.course._section_form')->render());
+                use Illuminate\Support\Facades\View;$html = json_encode(View::make('author.course._section_form', ["timeUnits" => $timeUnits])->render());
             @endphp
-            console.log("skjfskfjskfk")
             let processed = {!! $html !!};
             const section = $("#input-curriculum-section")
             const id = section.children().length + 1;
@@ -1142,5 +1208,4 @@
         }
 
     </script>
-
 @endpush

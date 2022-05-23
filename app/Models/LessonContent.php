@@ -10,5 +10,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class LessonContent extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'content',
+        'course_lesson_id',
+    ];
+
     use HasFactory;
 }

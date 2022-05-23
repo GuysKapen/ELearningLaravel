@@ -32,16 +32,23 @@
     </div>
 
     <div id="lesson-add-list-{{$lessonIndex}}" class="text-sm hidden p-5">
-        <div id="lesson-add-description-{{$lessonIndex}}"
-             class="bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+        <div id="lesson-add-content-{{$lessonIndex}}"
+             data-id="{{$lessonIndex}}"
+             class="btn-add-text-content bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
             <span class="icon material-icons text-sm mr-1">add</span>
-            Description
+            Text
         </div>
         <div id="lesson-add-resource-{{$lessonIndex}}"
              data-id="{{$lessonIndex}}"
              class="btn-add-resource bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 mt-2 cursor-pointer">
             <span class="icon material-icons text-sm mr-1">add</span>
             Resource
+        </div>
+        <div id="lesson-add-detail-{{$lessonIndex}}"
+             data-id="{{$lessonIndex}}"
+             class="btn-add-detail bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 mt-2 cursor-pointer">
+            <span class="icon material-icons text-sm mr-1">add</span>
+            Detail
         </div>
     </div>
 
@@ -105,6 +112,42 @@
                 id="btn-save-lesson-resource"
                 data-id="{{$lessonIndex}}"
                 class="btn-save-lesson-resource bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
+                Save
+            </div>
+        </div>
+    </div>
+
+    <div id="lesson-input-content-{{$lessonIndex}}" class="text-sm mt-2 p-5 hidden">
+        @include("author.course._lesson_content_form", ["sectionIndex" => $sectionIndex, "lessonIndex" => $lessonIndex])
+        <div class="flex-end flex items-center justify-end ml-auto mt-2">
+            <div
+                id="btn-cancel-lesson-content"
+                data-id="{{$lessonIndex}}"
+                class="btn-cancel-lesson-content text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
+                Cancel
+            </div>
+            <div
+                id="btn-save-lesson-content"
+                data-id="{{$lessonIndex}}"
+                class="btn-save-lesson-content bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
+                Save
+            </div>
+        </div>
+    </div>
+
+    <div id="lesson-input-detail-{{$lessonIndex}}" class="text-sm mt-2 p-5 hidden">
+        @include("author.course._lesson_detail_form", ["sectionIndex" => $sectionIndex, "lessonIndex" => $lessonIndex, "timeUnits" => $timeUnits, "lessonDetail" => $lesson->detail ?? null])
+        <div class="flex-end flex items-center justify-end ml-auto mt-2">
+            <div
+                id="btn-cancel-lesson-detail"
+                data-id="{{$lessonIndex}}"
+                class="btn-cancel-lesson-detail text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
+                Cancel
+            </div>
+            <div
+                id="btn-save-lesson-detail"
+                data-id="{{$lessonIndex}}"
+                class="btn-save-lesson-detail bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
                 Save
             </div>
         </div>

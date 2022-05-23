@@ -30,13 +30,13 @@
                 $lessonIndex = 1;
             @endphp
             @foreach($section->lessons as $key=>$lesson)
-                @include('author.course._lesson_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'lesson' => $lesson])
+                @include('author.course._lesson_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'lesson' => $lesson, "timeUnits" => $timeUnits])
                 @php
                     $lessonIndex++;
                 @endphp
             @endforeach
         @else
-            @include('author.course._lesson_form', ['lessonIndex' => 1])
+            @include('author.course._lesson_form', ['lessonIndex' => 1, 'timeUnits' => $timeUnits])
         @endif
 
     </div>
