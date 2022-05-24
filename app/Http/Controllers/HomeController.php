@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Course;
+use Brian2694\Toastr\Facades\Toastr;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -81,5 +85,23 @@ class HomeController extends Controller
         }
 
         return view('course_detail', compact('course'));
+    }
+
+    public function comment(Request $request) {
+        $this->validate($request, [
+            'comment' => 'required',
+        ]);
+
+        $course = Course::find($request->comment['course_id']);
+        if ($course == null) {
+            return;
+        }
+        $comment = new Comment($request->comment);
+
+        if (Auth::user()->comments()->save($comment)) {
+            Toastr::success('Add comment successfully', 'Succeed');
+        }
+
+        Toastr::warning('Add comment failed', 'Failed');
     }
 }

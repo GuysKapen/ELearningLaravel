@@ -25,6 +25,7 @@ Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
     Route::post('/courses/search', [HomeController::class, 'search'])->name("course.search");
+    Route::post('/courses/comment', [HomeController::class, 'comment'])->name("course.comment");
     Route::get('/course/detail/{course}', [HomeController::class, 'courseDetail'])->name('course.detail');
 });
 

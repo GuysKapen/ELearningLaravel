@@ -50,6 +50,71 @@
 
 /***/ }),
 
+/***/ "./resources/js/functions.js":
+/*!***********************************!*\
+  !*** ./resources/js/functions.js ***!
+  \***********************************/
+/***/ (() => {
+
+window.onload = function () {
+  setupTap();
+  setupRating();
+};
+
+function setupTap() {
+  var tabViews = _class("tab-view");
+
+  var _loop = function _loop(i) {
+    var tabPanes = _class("tabs-panel")[i].getElementsByClassName("tab-panel");
+
+    var _loop2 = function _loop2(k) {
+      var tab = tabPanes[k];
+      tab.addEventListener("click", function () {
+        _class("tabs-panel")[i].getElementsByClassName("active")[0].classList.remove("active");
+
+        tab.classList.add("active");
+
+        _class("tabs-content")[i].getElementsByClassName("active")[0].classList.remove("active");
+
+        _class("tabs-content")[i].getElementsByClassName("tab-content")[k].classList.add("active");
+      });
+    };
+
+    for (var k = 0; k < tabPanes.length; k++) {
+      _loop2(k);
+    }
+  };
+
+  for (var i = 0; i < tabViews.length; i++) {
+    _loop(i);
+  }
+}
+
+function _class(name) {
+  return document.getElementsByClassName(name);
+}
+
+function setupRating() {
+  $('.rating-input input').click(function () {
+    $(".rating-input span").removeClass('checked');
+    $(this).parent().addClass('checked');
+  });
+
+  $.fn.stars = function () {
+    return $(this).each(function () {
+      var starWidth = $(this).width() / 5;
+      var width = Math.max(0, Math.min(5, parseFloat($(this).html()))) * starWidth;
+      $(this).html("<span style=\"width: ".concat(width, "px;position: absolute;top: 0;background: #fff;\"></span><span style=\"width: ").concat(width, "px;z-index: 100;position: absolute;top: 0;\"></span>"));
+    });
+  };
+
+  $(document).ready(function () {
+    $('span.rating-stars').stars();
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/main.js":
 /*!******************************!*\
   !*** ./resources/js/main.js ***!
@@ -304,11 +369,13 @@ try {
     siteDatePicker();
 
     var siteSticky = function siteSticky() {
-      var _$;
+      if ($('.js-sticky-header').length > 0) {
+        var _$;
 
-      (_$ = $(".js-sticky-header")) === null || _$ === void 0 ? void 0 : _$.sticky({
-        topSpacing: 0
-      });
+        (_$ = $(".js-sticky-header")) === null || _$ === void 0 ? void 0 : _$.sticky({
+          topSpacing: 0
+        });
+      }
     };
 
     siteSticky(); // navigation
@@ -521,51 +588,6 @@ try {
 
 /***/ }),
 
-/***/ "./resources/js/tabs.js":
-/*!******************************!*\
-  !*** ./resources/js/tabs.js ***!
-  \******************************/
-/***/ (() => {
-
-window.onload = function () {
-  setupTap();
-};
-
-function setupTap() {
-  var tabViews = _class("tab-view");
-
-  var _loop = function _loop(i) {
-    var tabPanes = _class("tabs-panel")[i].getElementsByClassName("tab-panel");
-
-    var _loop2 = function _loop2(k) {
-      var tab = tabPanes[k];
-      tab.addEventListener("click", function () {
-        _class("tabs-panel")[i].getElementsByClassName("active")[0].classList.remove("active");
-
-        tab.classList.add("active");
-
-        _class("tabs-content")[i].getElementsByClassName("active")[0].classList.remove("active");
-
-        _class("tabs-content")[i].getElementsByClassName("tab-content")[k].classList.add("active");
-      });
-    };
-
-    for (var k = 0; k < tabPanes.length; k++) {
-      _loop2(k);
-    }
-  };
-
-  for (var i = 0; i < tabViews.length; i++) {
-    _loop(i);
-  }
-}
-
-function _class(name) {
-  return document.getElementsByClassName(name);
-}
-
-/***/ }),
-
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -731,7 +753,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/main.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/tabs.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/functions.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);

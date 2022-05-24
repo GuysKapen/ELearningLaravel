@@ -56,7 +56,8 @@
                 @if(!$course->categories->isEmpty())
                     <div class="px-4 flex flex-col justify-center">
                         <div class="text-sm text-gray-500">Category</div>
-                        <div class="text-sm font-medium text-gray-900 font-bold mt-1">{{$course->categories[0]->name}}</div>
+                        <div
+                            class="text-sm font-medium text-gray-900 font-bold mt-1">{{$course->categories[0]->name}}</div>
                     </div>
                 @endif
 
@@ -118,7 +119,8 @@
                 @else
                     <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
                     <a href="{{route('course.detail', ['course' => $course])}}"
-                       class="px-6 rounded-lg font-black flex items-center text-sm text-white bg-indigo-600 ml-8">Take this
+                       class="px-6 rounded-lg font-black flex items-center text-sm text-white bg-indigo-600 ml-8">Take
+                        this
                         course
                     </a>
                 @endif
@@ -464,7 +466,8 @@
                             <div class="border rounded-md p-8 my-8">
                                 <form class="simple_form w-full" id="new-comment-form" novalidate="novalidate"
                                       accept-charset="UTF-8" data-remote="true" method="post"
-                                      data-dashlane-rid="5f183d72891b1516" data-form-type="contact">
+                                      action="{{route('course.comment')}}">
+                                    @csrf
                                     <div>
                                         <h2 class="text-black fw-900 font-bold text-base font-mul">Rating</h2>
                                         <div class="w-full inline-block mt-2">
@@ -472,37 +475,27 @@
                                                 <input type="hidden" name="comment[rating]" value="">
                                                 <span class=""><input class="rating-input" type="radio"
                                                                       value="5" name="comment[rating]"
-                                                                      id="comment_rating_5"
-                                                                      data-dashlane-rid="3a463bf61ae0f97b"
-                                                                      data-form-type="other"><label
+                                                                      id="comment_rating_5"><label
                                                         for="comment_rating_5"></label></span>
 
                                                 <span class=""><input class="rating-input" type="radio"
                                                                       value="4" name="comment[rating]"
-                                                                      id="comment_rating_4"
-                                                                      data-dashlane-rid="497668f5cd6d19f4"
-                                                                      data-form-type="other"><label
+                                                                      id="comment_rating_4"><label
                                                         for="comment_rating_4"></label></span>
 
                                                 <span class=""><input class="rating-input" type="radio"
                                                                       value="3" name="comment[rating]"
-                                                                      id="comment_rating_3"
-                                                                      data-dashlane-rid="76184e2a7ccbff16"
-                                                                      data-form-type="other"><label
+                                                                      id="comment_rating_3"><label
                                                         for="comment_rating_3"></label></span>
 
                                                 <span class=""><input class="rating-input" type="radio"
                                                                       value="2" name="comment[rating]"
-                                                                      id="comment_rating_2"
-                                                                      data-dashlane-rid="d010ffde94ddce38"
-                                                                      data-form-type="other"><label
+                                                                      id="comment_rating_2"><label
                                                         for="comment_rating_2"></label></span>
 
                                                 <span class=""><input class="rating-input" type="radio"
                                                                       value="1" name="comment[rating]"
-                                                                      id="comment_rating_1"
-                                                                      data-dashlane-rid="1ad10248812cddac"
-                                                                      data-form-type="other"><label
+                                                                      id="comment_rating_1"><label
                                                         for="comment_rating_1"></label></span>
                                             </div>
                                         </div>
@@ -516,17 +509,48 @@
                                         <textarea
                                             class="placeholder-gray-500 focus:outline-none string w-full required block px-4 py-2 rounded-lg font-medium border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-4"
                                             placeholder="Commenting publicly as Guys Developer"
-                                            name="comment[message]" id="comment_message"
-                                            rows="6"
-                                            data-dashlane-rid="b87d632607dec86a"
-                                            data-form-type="other"></textarea>
+                                            name="comment[comment]" id="comment_message"
+                                            rows="6"></textarea>
                                     </div>
 
+                                    <input type="hidden" value="{{$course->id}}" name="comment[course_id]">
                                     <button type="submit"
                                             class="flex justify-end py-2 px-8 ml-auto block border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Save
+                                        Submit
                                     </button>
                                 </form>
+                            </div>
+
+                            <div class="antialiased mx-auto max-w-screen-sm">
+                                @if(!$course->comments->isEmpty())
+                                    <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
+                                @endif
+
+                                @foreach($course->comments as $key=>$comment)
+                                    <div class="space-y-4">
+
+                                        <div class="flex">
+                                            <div class="flex-shrink-0 mr-3">
+                                                <img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                                                     src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
+                                                     alt="">
+                                            </div>
+                                            <div
+                                                class="flex-1 capitalize border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                                                <strong>{{$comment->user->username}}</strong> <span class="text-xs text-gray-400">{{\Carbon\Carbon::parse($comment->created_at)->format('j F, Y')}}</span>
+                                                <div class="width-max mt-2 relative flex">
+                                                    <span class="rating-stars">{{$comment->rating}}</span>
+                                                    <span class="text-sm ml-4">{{$comment->rating}} stars</span>
+                                                </div>
+                                                <p class="text-sm mt-2">
+                                                    {{$comment->comment}}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+
                             </div>
 
                         </div>

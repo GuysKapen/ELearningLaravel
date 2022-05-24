@@ -326,6 +326,11 @@ textarea {
     content: 'star';
 }
 
+.rating-input:checked span label::before {
+    color: #ff5000;
+    content: 'star';
+}
+
 .rating-input span input {
     position: absolute;
     top: 0;
@@ -357,6 +362,22 @@ textarea {
     color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
+span.rating-stars {
+    position: relative;
+}
+
+span.rating-stars, span.rating-stars span {
+    display: block;
+    background: url("/images/star.svg") 0 0 repeat-x;
+    width: 90px; /* width of a star multiplied by 5 */
+    height: 18px; /* the height of the star */
+    background-size: 18px 18px;
+}
+
+span.rating-stars span {
+    background: url("/images/star_fill_space.svg") 0 0 repeat-x;
+    background-size: 18px 18px;
+}
 
 
 

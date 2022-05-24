@@ -1145,6 +1145,9 @@ select{
 .h-32{
   height: 8rem;
 }
+.h-6{
+  height: 1.5rem;
+}
 .h-16{
   height: 4rem;
 }
@@ -1162,9 +1165,6 @@ select{
 }
 .h-36{
   height: 9rem;
-}
-.h-6{
-  height: 1.5rem;
 }
 .h-3{
   height: 0.75rem;
@@ -1195,6 +1195,9 @@ select{
 }
 .w-32{
   width: 8rem;
+}
+.w-6{
+  width: 1.5rem;
 }
 .w-12{
   width: 3rem;
@@ -1232,9 +1235,6 @@ select{
 .w-2\/12{
   width: 16.666667%;
 }
-.w-6{
-  width: 1.5rem;
-}
 .w-3{
   width: 0.75rem;
 }
@@ -1255,17 +1255,20 @@ select{
 .min-w-full{
   min-width: 100%;
 }
+.max-w-screen-sm{
+  max-width: 640px;
+}
 .max-w-xs{
   max-width: 20rem;
 }
 .max-w-7xl{
   max-width: 80rem;
 }
-.flex-auto{
-  flex: 1 1 auto;
-}
 .flex-1{
   flex: 1 1 0%;
+}
+.flex-auto{
+  flex: 1 1 auto;
 }
 .flex-shrink-0{
   flex-shrink: 0;
@@ -1368,6 +1371,16 @@ select{
   margin-right: calc(0.25rem * var(--tw-space-x-reverse));
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
+.space-y-4 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+.-space-x-2 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(-0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(-0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
 .space-x-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -1387,11 +1400,6 @@ select{
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
-}
-.space-y-4 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 .space-x-3 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
@@ -1507,6 +1515,10 @@ select{
 }
 .border-transparent{
   border-color: transparent;
+}
+.border-white{
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 .border-indigo-500{
   --tw-border-opacity: 1;
@@ -1792,6 +1804,14 @@ select{
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
 .text-5xl{
   font-size: 3rem;
   line-height: 1;
@@ -1799,10 +1819,6 @@ select{
 .text-3xl{
   font-size: 1.875rem;
   line-height: 2.25rem;
-}
-.text-xs{
-  font-size: 0.75rem;
-  line-height: 1rem;
 }
 .text-6xl{
   font-size: 3.75rem;
@@ -1817,6 +1833,9 @@ select{
 .font-medium{
   font-weight: 500;
 }
+.font-semibold{
+  font-weight: 600;
+}
 .font-light{
   font-weight: 300;
 }
@@ -1825,9 +1844,6 @@ select{
 }
 .font-normal{
   font-weight: 400;
-}
-.font-semibold{
-  font-weight: 600;
 }
 .uppercase{
   text-transform: uppercase;
@@ -1840,6 +1856,9 @@ select{
 }
 .leading-7{
   line-height: 1.75rem;
+}
+.leading-relaxed{
+  line-height: 1.625;
 }
 .leading-none{
   line-height: 1;
@@ -1930,6 +1949,10 @@ select{
 .text-gray-300{
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.antialiased{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .placeholder-gray-500::-moz-placeholder{
   --tw-placeholder-opacity: 1;
@@ -2346,6 +2369,11 @@ textarea {
     content: 'star';
 }
 
+.rating-input:checked span label::before {
+    color: #ff5000;
+    content: 'star';
+}
+
 .rating-input span input {
     position: absolute;
     top: 0;
@@ -2387,6 +2415,22 @@ textarea {
     color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
+span.rating-stars {
+    position: relative;
+}
+
+span.rating-stars, span.rating-stars span {
+    display: block;
+    background: url("/images/star.svg") 0 0 repeat-x;
+    width: 90px; /* width of a star multiplied by 5 */
+    height: 18px; /* the height of the star */
+    background-size: 18px 18px;
+}
+
+span.rating-stars span {
+    background: url("/images/star_fill_space.svg") 0 0 repeat-x;
+    background-size: 18px 18px;
+}
 
 
 
@@ -2801,6 +2845,12 @@ textarea {
   .sm\:hidden{
     display: none;
   }
+  .sm\:h-10{
+    height: 2.5rem;
+  }
+  .sm\:w-10{
+    width: 2.5rem;
+  }
   .sm\:w-8\/12{
     width: 66.666667%;
   }
@@ -2830,6 +2880,10 @@ textarea {
   .sm\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+  .sm\:py-4{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   .sm\:pr-0{
     padding-right: 0px;
