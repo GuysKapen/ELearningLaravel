@@ -1007,6 +1007,10 @@ select{
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.mx-24{
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
 .my-2{
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -1019,17 +1023,13 @@ select{
   margin-top: -0.5rem;
   margin-bottom: -0.5rem;
 }
-.mx-1{
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-}
 .mx-0{
   margin-left: 0px;
   margin-right: 0px;
 }
-.mx-24{
-  margin-left: 6rem;
-  margin-right: 6rem;
+.mx-1{
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 .mt-8{
   margin-top: 2rem;
@@ -1079,6 +1079,9 @@ select{
 .mr-2{
   margin-right: 0.5rem;
 }
+.mb-1{
+  margin-bottom: 0.25rem;
+}
 .-mr-1{
   margin-right: -0.25rem;
 }
@@ -1105,9 +1108,6 @@ select{
 }
 .mt-10{
   margin-top: 2.5rem;
-}
-.mb-1{
-  margin-bottom: 0.25rem;
 }
 .block{
   display: block;
@@ -1145,6 +1145,9 @@ select{
 .h-32{
   height: 8rem;
 }
+.h-16{
+  height: 4rem;
+}
 .h-5{
   height: 1.25rem;
 }
@@ -1169,9 +1172,6 @@ select{
 .h-12{
   height: 3rem;
 }
-.h-16{
-  height: 4rem;
-}
 .max-h-56{
   max-height: 14rem;
 }
@@ -1195,6 +1195,9 @@ select{
 }
 .w-32{
   width: 8rem;
+}
+.w-12{
+  width: 3rem;
 }
 .w-10\/12{
   width: 83.333333%;
@@ -1235,19 +1238,16 @@ select{
 .w-3{
   width: 0.75rem;
 }
-.w-12{
-  width: 3rem;
-}
 .w-1\/2{
   width: 50%;
+}
+.w-24{
+  width: 6rem;
 }
 .w-max{
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-}
-.w-24{
-  width: 6rem;
 }
 .w-56{
   width: 14rem;
@@ -1713,6 +1713,9 @@ select{
 .pb-2{
   padding-bottom: 0.5rem;
 }
+.pb-8{
+  padding-bottom: 2rem;
+}
 .pt-12{
   padding-top: 3rem;
 }
@@ -1721,9 +1724,6 @@ select{
 }
 .pl-8{
   padding-left: 2rem;
-}
-.pb-8{
-  padding-bottom: 2rem;
 }
 .pr-8{
   padding-right: 2rem;
@@ -1899,13 +1899,13 @@ select{
   --tw-text-opacity: 1;
   color: rgb(79 70 229 / var(--tw-text-opacity));
 }
-.text-gray-600{
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
-}
 .text-indigo-400{
   --tw-text-opacity: 1;
   color: rgb(129 140 248 / var(--tw-text-opacity));
+}
+.text-gray-600{
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 .text-gray-100{
   --tw-text-opacity: 1;
@@ -2858,11 +2858,11 @@ textarea {
   .md\:ml-2{
     margin-left: 0.5rem;
   }
-  .md\:mt-0{
-    margin-top: 0px;
-  }
   .md\:mb-0{
     margin-bottom: 0px;
+  }
+  .md\:mt-0{
+    margin-top: 0px;
   }
   .md\:block{
     display: block;
@@ -2872,6 +2872,12 @@ textarea {
   }
   .md\:min-h-screen{
     min-height: 100vh;
+  }
+  .md\:w-3\/12{
+    width: 25%;
+  }
+  .md\:w-9\/12{
+    width: 75%;
   }
   .md\:w-6\/12{
     width: 50%;
@@ -2890,12 +2896,6 @@ textarea {
   }
   .md\:w-4\/12{
     width: 33.333333%;
-  }
-  .md\:w-3\/12{
-    width: 25%;
-  }
-  .md\:w-9\/12{
-    width: 75%;
   }
   .md\:w-64{
     width: 16rem;

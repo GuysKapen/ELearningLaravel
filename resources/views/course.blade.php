@@ -53,10 +53,13 @@
                             class="text-sm font-medium text-gray-900 capitalize font-bold mt-1">{{$course->user->username}}</div>
                     </div>
                 </div>
-                <div class="px-4 flex flex-col justify-center">
-                    <div class="text-sm text-gray-500">Category</div>
-                    <div class="text-sm font-medium text-gray-900 font-bold mt-1">Technology</div>
-                </div>
+                @if(!$course->categories->isEmpty())
+                    <div class="px-4 flex flex-col justify-center">
+                        <div class="text-sm text-gray-500">Category</div>
+                        <div class="text-sm font-medium text-gray-900 font-bold mt-1">{{$course->categories[0]->name}}</div>
+                    </div>
+                @endif
+
                 <div class="px-4">
                     <div class="text-sm text-gray-500">Review</div>
                     <div class="mt-1">
@@ -114,8 +117,10 @@
                     </button>
                 @else
                     <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
-                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Take this course
-                    </button>
+                    <a href="{{route('course.detail', ['course' => $course])}}"
+                       class="px-6 rounded-lg font-black flex items-center text-sm text-white bg-indigo-600 ml-8">Take this
+                        course
+                    </a>
                 @endif
             </div>
         </div>

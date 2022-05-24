@@ -67,9 +67,19 @@ class HomeController extends Controller
         return view('_courses', compact('courses'))->render();
     }
 
-    public function search(Request $request)
+    public function search(Request $request): string
     {
         $courses = Course::whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->keyword) . '%'])->get();
         return view('_courses', compact('courses'))->render();
+    }
+
+    public function courseDetail(Course $course)
+    {
+        if (!$course->sections->isEmpty() && !$course->sections[0]->lessons->isEmpty()) {
+            $courseLesson = $course->sections[0]->lessons[0];
+            return view('course_detail', compact('courseLesson', 'course'));
+        }
+
+        return view('course_detail', compact('course'));
     }
 }
