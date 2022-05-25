@@ -18,13 +18,15 @@
                         Home
                     </a>
                 </li>
-                <li aria-current="page">
-                    <div class="flex items-center">
-                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
-                        <span
-                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Computer Science</span>
-                    </div>
-                </li>
+                @if(!$course->categories->isEmpty())
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                            <span
+                                class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$course->categories[0]->name}}</span>
+                        </div>
+                    </li>
+                @endif
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="material-icons text-base outlined mx-2">chevron_right</span>
@@ -61,53 +63,16 @@
                     </div>
                 @endif
 
-                <div class="px-4">
-                    <div class="text-sm text-gray-500">Review</div>
-                    <div class="mt-1">
-                        <ul class="flex justify-center">
-                            <li>
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
-                                     class="w-4 text-yellow-500 mr-1" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 576 512">
-                                    <path fill="currentColor"
-                                          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                                </svg>
-                            </li>
-                            <li>
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
-                                     class="w-4 text-yellow-500 mr-1" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 576 512">
-                                    <path fill="currentColor"
-                                          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                                </svg>
-                            </li>
-                            <li>
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star"
-                                     class="w-4 text-yellow-500 mr-1" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 576 512">
-                                    <path fill="currentColor"
-                                          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-                                </svg>
-                            </li>
-                            <li>
-                                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="star"
-                                     class="w-4 text-yellow-500 mr-1" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 576 512">
-                                    <path fill="currentColor"
-                                          d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path>
-                                </svg>
-                            </li>
-                            <li>
-                                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="star"
-                                     class="w-4 text-yellow-500" role="img" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 576 512">
-                                    <path fill="currentColor"
-                                          d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path>
-                                </svg>
-                            </li>
-                        </ul>
+                @if(!$course->comments->empty())
+                    <div class="px-4">
+                        <div class="text-sm text-gray-500">Review</div>
+                        <div class="mt-1">
+                            <div class="width-max mt-2 relative flex">
+                                <span class="rating-stars">{{$course->comments->avg('rating')}}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
             <div class="flex item-centers">
                 @if(isset($course->coursePrice) && $course->coursePrice->price != 0)
@@ -531,13 +496,14 @@
 
                                         <div class="flex">
                                             <div class="flex-shrink-0 mr-3">
-                                                <img class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
-                                                     src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                                                     alt="">
+                                                <img class="object-cover mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                                                     src="{{asset("storage/profile/" . ($course->user->authorDetail->cover ?? ""))}}"
+                                                     alt="Profile">
                                             </div>
                                             <div
                                                 class="flex-1 capitalize border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                                                <strong>{{$comment->user->username}}</strong> <span class="text-xs text-gray-400">{{\Carbon\Carbon::parse($comment->created_at)->format('j F, Y')}}</span>
+                                                <strong>{{$comment->user->username}}</strong> <span
+                                                    class="text-xs text-gray-400">{{\Carbon\Carbon::parse($comment->created_at)->format('j F, Y')}}</span>
                                                 <div class="width-max mt-2 relative flex">
                                                     <span class="rating-stars">{{$comment->rating}}</span>
                                                     <span class="text-sm ml-4">{{$comment->rating}} stars</span>

@@ -17,7 +17,7 @@
 </head>
 <body class="theme-blue">
 <!-- Top Bar -->
-@include('layouts.backend.partial.topbar')
+@include('layouts.nav_bar')
 <!-- #Top Bar -->
 <div class="flex">
     <section>

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:300,400,700,900');
 @import "~aos/dist/aos.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,6 +21,11 @@ body {
     font-size: 1.12rem;
 
     overflow-x: hidden;
+}
+
+.active ~ #dropdown {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .collapse:not(.show) {
@@ -378,12 +384,6 @@ span.rating-stars span {
     background: url("/images/star_fill_space.svg") 0 0 repeat-x;
     background-size: 18px 18px;
 }
-
-
-
-
-
-
 
 
 .tab-panel {

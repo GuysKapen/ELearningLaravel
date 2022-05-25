@@ -27,13 +27,15 @@
                     Home
                 </a>
             </li>
-            <li aria-current="page">
-                <div class="flex items-center">
-                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
-                    <span
-                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Computer Science</span>
-                </div>
-            </li>
+            @if(!$course->categories->isEmpty())
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <span
+                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$course->categories[0]->name}}</span>
+                    </div>
+                </li>
+            @endif
             <li aria-current="page">
                 <div class="flex items-center">
                     <span class="material-icons text-base outlined mx-2">chevron_right</span>

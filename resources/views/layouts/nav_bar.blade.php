@@ -1,9 +1,3 @@
-<style>
-    .active ~ #dropdown {
-        opacity: 1;
-        transform: scale(1);
-    }
-</style>
 <nav class="bg-white">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
@@ -52,11 +46,11 @@
                         <a href="{{route('courses')}}"
                            class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("courses") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Courses</a>
 
-                        <a href="#"
-                           class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300">Projects</a>
+                        <a href="{{route('author.course.index')}}"
+                           class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("author/*") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Author</a>
 
-                        <a href="#"
-                           class="inline-block py-4 px-4 text-sm font-medium text-center text-gray-500 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300">Calendar</a>
+                        <a href="{{route('admin.course.index')}}"
+                           class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("admin/*") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Admin</a>
                     </div>
                 </div>
 
@@ -92,7 +86,7 @@
                          role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                         <div class="py-1" role="none">
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                            <a href="{{route('author.profile.show')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                                id="menu-item-0">Account settings</a>
                             <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                                id="menu-item-1">Support</a>
@@ -158,10 +152,10 @@
                              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div class="py-1" role="none">
                                 <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                <a href="{{route('author.profile.show')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                    tabindex="-1" id="menu-item-0">Account settings</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
-                                   tabindex="-1" id="menu-item-1">Support</a>
+                                <a href="{{route('author.dashboard')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                   tabindex="-1" id="menu-item-1">Dashboard</a>
                                 <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                    tabindex="-1" id="menu-item-2">License</a>
                                 <form method="POST" action="{{route('logout')}}" role="none">

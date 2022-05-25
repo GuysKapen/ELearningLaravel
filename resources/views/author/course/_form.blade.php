@@ -30,7 +30,7 @@
                                 <input id="name"
                                        name="name"
                                        value="{{ old('name', isset($course) ? $course->name : "") }}"
-                                       class="string required w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                       class="string w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                        type="text" autofocus placeholder="Course name..."/>
                             </div>
                         </div>
@@ -59,14 +59,14 @@
                                                 <input id="results"
                                                        name="results[]"
                                                        value="{{ old('result', ($result->result ?? "")) }}"
-                                                       class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                       class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                        type="text"
                                                        placeholder="How to ..."/>
                                             @endforeach
                                         @else
                                             <input id="results"
                                                    name="results[]"
-                                                   class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                   class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                    type="text"
                                                    placeholder="How to ..."/>
                                         @endif
@@ -105,14 +105,14 @@
                                                 <input id="requirements"
                                                        name="requirements[]"
                                                        value="{{ old('$requirement', ($requirement->requirement ?? "")) }}"
-                                                       class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                       class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                        type="text"
                                                        placeholder="Need to ..."/>
                                             @endforeach
                                         @else
                                             <input id="requirements"
                                                    name="requirements[]"
-                                                   class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                   class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                    type="text"
                                                    placeholder="Need to ..."/>
                                         @endif
@@ -150,14 +150,14 @@
                                                 <input id="targets"
                                                        name="targets[]"
                                                        value="{{ old('target', ($target->target ?? "")) }}"
-                                                       class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                       class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                        type="text"
                                                        placeholder="Anyone who ..."/>
                                             @endforeach
                                         @else
                                             <input id="targets"
                                                    name="targets[]"
-                                                   class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
+                                                   class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full"
                                                    type="text"
                                                    placeholder="Anyone who ..."/>
                                         @endif
@@ -221,7 +221,7 @@
                                     <input id="duration"
                                            name="duration"
                                            value="{{ old('duration', isset($courseDetail) ? $courseDetail->duration : "10") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Duration"/>
 
@@ -242,7 +242,7 @@
                                     <input id="max_student"
                                            name="max_student"
                                            value="{{ old('max_student', isset($courseDetail) ? $courseDetail->max_student : "1000") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Max students"/>
 
@@ -260,7 +260,7 @@
                                     <input id="retake_course"
                                            name="retake_course"
                                            value="{{ old('retake_course', isset($courseDetail) ? $courseDetail->retake_course : "0") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Duration"/>
 
@@ -279,7 +279,7 @@
                                     <input id="duration_info"
                                            name="duration_info"
                                            value="{{ old('duration_info', isset($courseDetail) ? $courseDetail->duration_info : "50 hours") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Duration"/>
 
@@ -298,7 +298,7 @@
                                     <input id="skill_level"
                                            name="skill_level"
                                            value="{{ old('skill_level', isset($courseDetail) ? $courseDetail->skill_level : "All level") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Skill level"/>
 
@@ -317,7 +317,7 @@
                                     <input id="duration"
                                            name="language"
                                            value="{{ old('language', isset($courseDetail) ? $courseDetail->language : "English") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="text"
                                            placeholder="Duration"/>
 
@@ -374,7 +374,7 @@
                                         <input id="pass_condition"
                                                name="pass_condition"
                                                value="{{ old('pass_condition', isset($course->courseAssessment) ? $courseAssessment->pass_condition : "75") }}"
-                                               class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                               class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                                type="number"
                                                placeholder="80"/>
 
@@ -401,7 +401,7 @@
                                     <input id="price"
                                            name="price"
                                            value="{{ old('price', isset($coursePrice) ? $coursePrice->price : "") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Price"/>
 
@@ -421,7 +421,7 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('sale_price', isset($courseSalePrice) ? $courseSalePrice->sale_price : "") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="number"
                                            placeholder="Sale Price"
                                     />
@@ -442,7 +442,7 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="date"
                                     />
 
@@ -462,7 +462,7 @@
                                     <input id="duration"
                                            name="attr"
                                            value="{{ old('duration', isset($course) ? $course->duration : "10") }}"
-                                           class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                           class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                            type="date"
                                     />
 
@@ -855,21 +855,21 @@
     <script>
         $("#add-result").click(function () {
             @php
-                $x = '<input id="results" name="results[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="How to ..."/>';
+                $x = '<input id="results" name="results[]" class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="How to ..."/>';
             @endphp
             $("#course-result").append('{!! $x !!}')
         })
 
         $("#add-requirement").click(function () {
             @php
-                $x = '<input id="requirements" name="requirements[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Need to ..."/>';
+                $x = '<input id="requirements" name="requirements[]" class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Need to ..."/>';
             @endphp
             $("#course-requirements").append('{!! $x !!}')
         })
 
         $("#add-target").click(function () {
             @php
-                $x = '<input id="targets" name="targets[]" class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Anyone who ..."/>';
+                $x = '<input id="targets" name="targets[]" class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2 w-full" type="text" placeholder="Anyone who ..."/>';
             @endphp
             $("#course-targets").append('{!! $x !!}')
         })

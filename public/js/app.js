@@ -65,7 +65,10 @@ function setupTap() {
   var tabViews = _class("tab-view");
 
   var _loop = function _loop(i) {
-    var tabPanes = _class("tabs-panel")[i].getElementsByClassName("tab-panel");
+    var panel = _class("tabs-panel")[i];
+
+    if (panel == null) return "continue";
+    var tabPanes = panel.getElementsByClassName("tab-panel");
 
     var _loop2 = function _loop2(k) {
       var tab = tabPanes[k];
@@ -86,7 +89,9 @@ function setupTap() {
   };
 
   for (var i = 0; i < tabViews.length; i++) {
-    _loop(i);
+    var _ret = _loop(i);
+
+    if (_ret === "continue") continue;
   }
 }
 

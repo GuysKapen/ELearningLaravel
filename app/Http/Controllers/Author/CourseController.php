@@ -542,7 +542,7 @@ class CourseController extends Controller
                                 $model->content()->updateOrCreate($lessonContent->attributesToArray());
                             }
 
-                            if (isset($lesson['detail'])) {
+                            if (isset($lesson['detail']) && isset($lesson['detail']['duration'])) {
                                 $detail =& $lesson['detail'];
                                 $lessonDetail = $model->detail ?? new LessonDetail($detail);
 

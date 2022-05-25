@@ -10,8 +10,7 @@
                         <input id="duration"
                                name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][detail][duration]"
                                value="{{ isset($lessonDetail) ? $lessonDetail->duration : "" }}"
-                               required
-                               class="string required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                               class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                type="number"
                                placeholder="Duration"/>
 

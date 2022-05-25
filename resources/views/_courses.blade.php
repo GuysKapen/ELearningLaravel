@@ -11,7 +11,7 @@
                                     <span
                                         class="inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100">
                                                 <img
-                                                    src="{{ asset("storage/profile/". (Auth::user()->authorDetail->cover ?? "default.png") ) }}"
+                                                    src="{{ asset("storage/profile/". ($course->user->authorDetail->cover ?? "default.png") ) }}"
                                                     alt="cover" class="object-cover h-full w-full">
                                             </span>
             </div>

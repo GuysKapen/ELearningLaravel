@@ -8,7 +8,10 @@ function setupTap() {
     let tabViews = _class("tab-view")
 
     for (let i = 0; i < tabViews.length; i++) {
-        let tabPanes = _class("tabs-panel")[i].getElementsByClassName("tab-panel");
+        let panel = _class("tabs-panel")[i];
+        if (panel == null) continue
+        let tabPanes =
+            panel.getElementsByClassName("tab-panel");
         for (let k = 0; k < tabPanes.length; k++) {
             const tab = tabPanes[k];
             tab.addEventListener("click", function () {
