@@ -35,92 +35,96 @@
             <div class="flex mt-8">
                 <div class="w-9/12 mr-2">
                     <div class="flex items-center bg-gray-50 px-5 py-1">
-                        <div x-data="Components.menu({ open: false })" x-init="init()"
-                             @keydown.escape.stop="open = false; focusButton()" @click.away="onClickAway($event)"
-                             class="relative inline-block text-left">
-                            <div>
-                                <button type="button"
-                                        class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                        id="menu-button" x-ref="button" @click="onButtonClick()"
-                                        @keyup.space.prevent="onButtonEnter()" @keydown.enter.prevent="onButtonEnter()"
-                                        aria-expanded="false" aria-haspopup="true"
-                                        x-bind:aria-expanded="open.toString()" @keydown.arrow-up.prevent="onArrowUp()"
-                                        @keydown.arrow-down.prevent="onArrowDown()">
-                                    Sort
-                                    <svg
-                                        class="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                        x-description="Heroicon name: solid/chevron-down"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                              clip-rule="evenodd"></path>
-                                    </svg>
-                                </button>
-                            </div>
 
+                        <form id="form-sort" action="{{route('course.sort')}}" method="POST" class="z-10">
+                            @csrf
+                            <div class="ml-2 z-10"
+                                 x-data="window.customSelect({ open: true, value: 4, selected: 4 })"
+                                 x-init="init()">
+                                <input x-ref="input" type="hidden" name="sort_type"
+                                       id="sort_type">
+                                <div class="relative">
+                                                <span class="inline-block w-full rounded-md shadow-sm">
+                                                    <button x-ref="button" @click="onButtonClick()" type="button"
+                                                            aria-haspopup="listbox" :aria-expanded="open"
+                                                            aria-labelledby="assigned-to-label"
+                                                            class="cursor-default relative w-24 rounded-md border border-gray-300 bg-white pl-3 pr-8 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                                        <div class="flex items-center space-x-3">
+                                            @php
+                                                $sorts_str = $sortTypes->map(function ($sort) {   return $sort->name; });
+                                            @endphp
 
-                            <div x-show="open" x-transition:enter="transition ease-out duration-100"
-                                 x-transition:enter-start="transform opacity-0 scale-95"
-                                 x-transition:enter-end="transform opacity-100 scale-100"
-                                 x-transition:leave="transition ease-in duration-75"
-                                 x-transition:leave-start="transform opacity-100 scale-100"
-                                 x-transition:leave-end="transform opacity-0 scale-95"
-                                 class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                 x-ref="menu-items" x-description="Dropdown menu, show/hide based on menu state."
-                                 x-bind:aria-activedescendant="activeDescendant" role="menu" aria-orientation="vertical"
-                                 aria-labelledby="menu-button" tabindex="-1" @keydown.arrow-up.prevent="onArrowUp()"
-                                 @keydown.arrow-down.prevent="onArrowDown()" @keydown.tab="open = false"
-                                 @keydown.enter.prevent="open = false; focusButton()"
-                                 @keyup.space.prevent="open = false; focusButton()" style="display: none;">
-                                <div class="py-1" role="none">
+                                            <span
+                                                x-text='{{$sorts_str}}[value]'
+                                                class="block truncate">Secs</span>
+                                        </div>
+                                                        <span
+                                                            class="absolute inset-y-0 top-0 bottom-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                                            </svg></span>
+                                                    </button>
+                                                </span>
+                                    <div x-show="open" @focusout="onEscape()" @click.away="open = false"
+                                         x-description="Select popover, show/hide based on select state."
+                                         x-transition:leave="transition ease-in duration-100"
+                                         x-transition:leave-start="opacity-100"
+                                         x-transition:leave-end="opacity-0"
+                                         class="absolute mt-1 rounded-md bg-white shadow-lg"
+                                         style="display: none;">
+                                        <ul @keydown.enter.stop.prevent="onOptionSelect()"
+                                            @keydown.space.stop.prevent="onOptionSelect()"
+                                            @keydown.escape="onEscape()"
+                                            @keydown.arrow-up.prevent="onArrowUp()"
+                                            @keydown.arrow-down.prevent="onArrowDown()" x-ref="listbox"
+                                            tabindex="-1"
+                                            role="listbox" aria-labelledby="assigned-to-label"
+                                            :aria-activedescendant="activeDescendant"
+                                            class="max-h-56 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5">
 
-                                    <a href="#" class="font-medium text-gray-900 block px-4 py-2 text-sm"
-                                       x-state:on="Active" x-state:off="Not Active" x-state:on:option.current="Selected"
-                                       x-state:off:option.current="Not Selected"
-                                       x-state-description="Selected: &quot;font-medium text-gray-900&quot;, Not Selected: &quot;text-gray-500&quot;"
-                                       :class="{ 'bg-gray-100': activeIndex === 0 }" role="menuitem" tabindex="-1"
-                                       id="menu-item-0" @mouseenter="activeIndex = 0" @mouseleave="activeIndex = -1"
-                                       @click="open = false; focusButton()">
-                                        Most Popular
-                                    </a>
+                                            @php
+                                                $i = -1;
+                                            @endphp
+                                            @foreach($sortTypes as $key=>$category)
+                                                @php
+                                                    $i++;
+                                                    $id = $category->id;
+                                                @endphp
+                                                <li id="assigned-to-option-{{$id}}" role="option"
+                                                    @click="choose({{$i}}, {{$id}})"
+                                                    @mouseenter="selected = {{$id}}"
+                                                    @mouseleave="selected = null"
+                                                    :class="{ 'text-white bg-indigo-600': selected === {{$id}}, 'text-gray-900': !(selected === {{$id}}) }"
+                                                    class="text-gray-900 cursor-default select-none relative py-2 pl-4 pr-9">
+                                                    <div class="flex items-center space-x-3">
+                                                                    <span
+                                                                        :class="{ 'font-semibold': value === {{$id}}, 'font-normal': !(value === {{$id}}) }"
+                                                                        class="font-normal block truncate">
+                                                                        {{$category->name}}
+                                                                    </span>
+                                                    </div>
+                                                    <span x-show="value === {{$id}}"
+                                                          :class="{ 'text-white': selected === {{$id}}, 'text-indigo-600': !(selected === {{$id}}) }"
+                                                          class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600"
+                                                          style="display: none;">
+                                                                    <svg class="h-5 w-5" fill="currentColor"
+                                                                         viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clip-rule="evenodd"></path>
+                  </svg>
+                                                                </span>
+                                                </li>
+                                            @endforeach
 
-                                    <a href="#" class="text-gray-500 block px-4 py-2 text-sm"
-                                       x-state-description="undefined: &quot;font-medium text-gray-900&quot;, undefined: &quot;text-gray-500&quot;"
-                                       :class="{ 'bg-gray-100': activeIndex === 1 }" role="menuitem" tabindex="-1"
-                                       id="menu-item-1" @mouseenter="activeIndex = 1" @mouseleave="activeIndex = -1"
-                                       @click="open = false; focusButton()">
-                                        Best Rating
-                                    </a>
-
-                                    <a href="#" class="text-gray-500 block px-4 py-2 text-sm"
-                                       x-state-description="undefined: &quot;font-medium text-gray-900&quot;, undefined: &quot;text-gray-500&quot;"
-                                       :class="{ 'bg-gray-100': activeIndex === 2 }" role="menuitem" tabindex="-1"
-                                       id="menu-item-2" @mouseenter="activeIndex = 2" @mouseleave="activeIndex = -1"
-                                       @click="open = false; focusButton()">
-                                        Newest
-                                    </a>
-
-                                    <a href="#" class="text-gray-500 block px-4 py-2 text-sm"
-                                       x-state-description="undefined: &quot;font-medium text-gray-900&quot;, undefined: &quot;text-gray-500&quot;"
-                                       :class="{ 'bg-gray-100': activeIndex === 3 }" role="menuitem" tabindex="-1"
-                                       id="menu-item-3" @mouseenter="activeIndex = 3" @mouseleave="activeIndex = -1"
-                                       @click="open = false; focusButton()">
-                                        Price: Low to High
-                                    </a>
-
-                                    <a href="#" class="text-gray-500 block px-4 py-2 text-sm"
-                                       x-state-description="undefined: &quot;font-medium text-gray-900&quot;, undefined: &quot;text-gray-500&quot;"
-                                       :class="{ 'bg-gray-100': activeIndex === 4 }" role="menuitem" tabindex="-1"
-                                       id="menu-item-4" @mouseenter="activeIndex = 4" @mouseleave="activeIndex = -1"
-                                       @click="open = false; focusButton()">
-                                        Price: High to Low
-                                    </a>
-
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+                        </form>
 
-                        </div>
 
                         <button type="button" class="p-2 -m-2 ml-5 sm:ml-7 text-gray-400 hover:text-gray-500">
                             <span class="sr-only">View grid</span>
@@ -306,5 +310,93 @@
 
             });
         })
+
+
+        $(document).ready(function () {
+            $("#form-sort").submit(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{!! route('course.sort') !!}",
+                    data: $("#form-sort").serialize(),
+                    success: function (response) {
+                        $("#courses-container").html(response)
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+        })
     </script>
+
+    <script>
+
+        window.customSelect = function (options) {
+            return {
+                init() {
+                    this.value = 0;
+                    this.open = false;
+
+                    this.$refs.listbox.focus()
+                    this.optionCount = this.$refs.listbox.children.length
+                    this.$watch('selected', value => {
+                        if (!this.open) return
+
+                        if (this.selected === null) {
+                            this.activeDescendant = ''
+                            return
+                        }
+
+                        this.activeDescendant = this.$refs.listbox.children[this.selected].id
+                    })
+                },
+                activeDescendant: null,
+                optionCount: null,
+                open: false,
+                selected: 0,
+                value: 0,
+                choose(index, value) {
+                    console.log(value)
+                    this.value = index
+                    this.open = false
+                    this.$refs.input.value = value;
+                    $("#form-sort").submit();
+                },
+                onButtonClick() {
+                    if (this.open) return
+                    this.selected = this.value
+                    this.open = true
+                    this.$nextTick(() => {
+                        this.$refs.listbox.focus()
+                        this.$refs.listbox.children[this.selected].scrollIntoView({block: 'nearest'})
+                    })
+                },
+                onOptionSelect() {
+                    if (this.selected !== null) {
+                        this.value = this.selected
+                    }
+                    this.open = false
+                    this.$refs.button.focus()
+                },
+                onEscape() {
+                    this.open = false
+                    this.$refs.button.focus()
+                },
+                onArrowUp() {
+                    this.selected = this.selected - 1 < 1 ? this.optionCount : this.selected - 1
+                    this.$refs.listbox.children[this.selected].scrollIntoView({block: 'nearest'})
+                },
+                onArrowDown() {
+                    this.selected = this.selected + 1 > this.optionCount ? 1 : this.selected + 1
+                    this.$refs.listbox.children[this.selected].scrollIntoView({block: 'nearest'})
+                },
+                ...options,
+            }
+        }
+
+    </script>
+
 @endpush

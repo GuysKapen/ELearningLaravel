@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\DurationType;
+use App\Library\SortType;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Course;
@@ -39,41 +41,130 @@ class HomeController extends Controller
         return view('course', compact('course'));
     }
 
-    public function courses()
+    public function courses(Request $request)
     {
-        $courses = Course::latest()->simplePaginate(2);
+        $params = [];
+        if (isset($request->search)) {
+            $courses_query = Course::query()
+                ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id")
+                ->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->search) . '%']);
+
+            $params[] = ['search' => $request->search];
+        } else {
+            $courses_query = Course::query()
+                ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id");
+        }
+
+        $categories = $request->cat;
+        if (isset($categories) && !empty($categories)) {
+            $courses_query = $courses_query
+                ->leftJoin("category_course as cc", "cc.course_id", "=", "courses.id");
+            $courses_query = $courses_query->whereIn("cc.category_id", $categories);
+            $params += ['cat' => $categories];
+        }
+
+        $authors = $request->author;
+        if (isset($authors) && !empty($authors)) {
+            $courses_query = $courses_query->whereIn("courses.user_id", $authors);
+            $params += ['author' => $authors];
+        }
+
+        $col = 'updated_at';
+        $direction = 'desc';
+        if (isset($request->sort)) {
+            switch ($request->sort) {
+                case SortType::Newest:
+                    $col = 'updated_at';
+                    $direction = 'desc';
+                    break;
+                case SortType::Oldest:
+                    $col = 'updated_at';
+                    $direction = 'asc';
+                    break;
+                case SortType::Cheapest:
+                    $col = 'price';
+                    $direction = 'desc';
+                    break;
+                case SortType::Expest:
+                    $col = 'price';
+                    $direction = 'asc';
+                    break;
+            }
+
+            $params += ['sort' => $request->sort];
+        }
+
+        $courses = $courses_query->select("courses.*")->distinct()->orderBy($col, $direction)->simplePaginate(2)->appends($params);
+
         $categories = Category::latest()->get();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
             ->select("users.id", "users.username")
-            ->where("roles.id", 2)
+            ->whereIn("roles.id", [1, 2])
             ->get();
-        return view('courses', compact('courses', 'categories', 'authors'));
+        $sortTypes = SortType::toCollection();
+        return view('courses', compact('courses', 'categories', 'authors', 'sortTypes'));
     }
 
     public function filter(Request $request)
     {
         $categories = $request->categories;
         $authors = $request->authors;
+        $params = [];
         $courses_query = Course::query()
-            ->join("category_course as cc", "cc.course_id", "=", "courses.id")
+            ->leftJoin("category_course as cc", "cc.course_id", "=", "courses.id")
             ->select("courses.*");
         if (isset($categories) && !empty($categories)) {
             $courses_query = $courses_query->whereIn("cc.category_id", $categories);
+            $params += ['cat' => $categories];
         }
 
         if (isset($authors) && !empty($authors)) {
             $courses_query = $courses_query->whereIn("courses.user_id", $authors);
+            $params += ['author' => $authors];
         }
 
-        $courses = $courses_query->get();
+        $courses = $courses_query->distinct()->simplePaginate(2)->withPath('/courses')->appends($params);
 
         return view('_courses', compact('courses'))->render();
     }
 
     public function search(Request $request): string
     {
-        $courses = Course::whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->keyword) . '%'])->get();
+        $courses = Course::whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->keyword) . '%'])->simplePaginate(2)->withPath("/courses")->appends(['search' => $request->keyword]);
+        return view('_courses', compact('courses'))->render();
+    }
+
+    public function sort(Request $request)
+    {
+        $col = 'updated';
+        $direction = 'desc';
+        switch ($request->sort_type) {
+            case SortType::Newest:
+                $col = 'updated_at';
+                $direction = 'desc';
+                break;
+            case SortType::Oldest:
+                $col = 'updated_at';
+                $direction = 'asc';
+                break;
+            case SortType::Cheapest:
+                $col = 'price';
+                $direction = 'desc';
+                break;
+            case SortType::Expest:
+                $col = 'price';
+                $direction = 'asc';
+                break;
+        }
+        $courses = Course::query()
+            ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id")
+            ->orderBy($col, $direction)
+            ->select("courses.*")
+            ->simplePaginate(2)
+            ->withPath('/courses')
+            ->appends(['sort' => $request->sort_type]);
+
         return view('_courses', compact('courses'))->render();
     }
 
@@ -87,7 +178,8 @@ class HomeController extends Controller
         return view('course_detail', compact('course'));
     }
 
-    public function comment(Request $request) {
+    public function comment(Request $request)
+    {
         $this->validate($request, [
             'comment' => 'required',
         ]);
