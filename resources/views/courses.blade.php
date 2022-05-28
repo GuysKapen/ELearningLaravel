@@ -176,6 +176,7 @@
                                                 <label class="inline-flex items-center mt-1">
                                                     <input type="checkbox" name="categories[]"
                                                            value="{{$category->id}}"
+                                                           {{ (Request::input('cats') != null && in_array($category->id, Request::input('cats'))) ? 'checked' : '' }}
                                                            class="form-checkbox h-4 w-4 text-gray-600 block">
                                                     <span class="ml-2 text-sm text-gray-700">{{$category->name}}</span>
                                                 </label>
@@ -191,6 +192,7 @@
                                                 <label class="inline-flex items-center mt-1">
                                                     <input type="checkbox" name="authors[]"
                                                            value="{{$author->id}}"
+                                                           {{ (Request::input('authors') != null && in_array($author->id, Request::input('authors'))) ? 'checked' : '' }}
                                                            class="form-checkbox h-4 w-4 text-gray-600 block">
                                                     <span
                                                         class="ml-2 text-sm text-gray-700 capitalize">{{$author->username}}</span>
@@ -249,8 +251,8 @@
                     <div class="mt-4">
                         <h1 class="text-xl font-bold text-gray-800">Latest courses</h1>
                         <div class="mt-2">
-                            @foreach($courses as $course)
-                                <div class="mb-8 flex">
+                            @foreach($latestCourses as $course)
+                                <div class="mb-8 flex h-20">
                                     <div class="w-4/12 flex-shrink-0">
                                         <img class="object-cover h-full mt-1"
                                              src="{{ asset("storage/course/". ($course->feature_img ?? "default.png") ) }}"
@@ -276,12 +278,25 @@
         $(document).ready(function () {
             $("#form-filter").submit(function (event) {
                 event.preventDefault();
-
+                let formData = new FormData($(this)[0]);
+                let authors = formData.getAll('authors[]');
+                let cats = formData.getAll('categories[]');
+                console.log(authors, cats)
+                const url = new URL("http://127.0.0.1:8000/courses");
+                for (const cat of cats) {
+                    url.searchParams.append("cats[]", cat)
+                }
+                for (const author of authors) {
+                    url.searchParams.append("authors[]", author)
+                }
+                console.log(url.href)
+                window.history.pushState(null, "", url.href);
                 $.ajax({
                     type: "POST",
                     url: "{!! route('course.filter') !!}",
                     data: $("#form-filter").serialize(),
                     success: function (response) {
+                        console.log($("#form-filter").serializeArray()[0])
                         $("#courses-container").html(response)
                     },
                     error: function (error) {

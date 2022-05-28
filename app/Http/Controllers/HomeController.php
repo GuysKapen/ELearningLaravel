@@ -55,18 +55,18 @@ class HomeController extends Controller
                 ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id");
         }
 
-        $categories = $request->cat;
+        $categories = $request->cats;
         if (isset($categories) && !empty($categories)) {
             $courses_query = $courses_query
                 ->leftJoin("category_course as cc", "cc.course_id", "=", "courses.id");
             $courses_query = $courses_query->whereIn("cc.category_id", $categories);
-            $params += ['cat' => $categories];
+            $params += ['cats' => $categories];
         }
 
-        $authors = $request->author;
+        $authors = $request->authors;
         if (isset($authors) && !empty($authors)) {
             $courses_query = $courses_query->whereIn("courses.user_id", $authors);
-            $params += ['author' => $authors];
+            $params += ['authors' => $authors];
         }
 
         $col = 'updated_at';
@@ -96,6 +96,7 @@ class HomeController extends Controller
 
         $courses = $courses_query->select("courses.*")->distinct()->orderBy($col, $direction)->simplePaginate(2)->appends($params);
 
+        $latestCourses = Course::latest()->take(5)->get();
         $categories = Category::latest()->get();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
@@ -103,7 +104,7 @@ class HomeController extends Controller
             ->whereIn("roles.id", [1, 2])
             ->get();
         $sortTypes = SortType::toCollection();
-        return view('courses', compact('courses', 'categories', 'authors', 'sortTypes'));
+        return view('courses', compact('courses', 'categories', 'authors', 'sortTypes', 'latestCourses'));
     }
 
     public function filter(Request $request)
@@ -116,12 +117,12 @@ class HomeController extends Controller
             ->select("courses.*");
         if (isset($categories) && !empty($categories)) {
             $courses_query = $courses_query->whereIn("cc.category_id", $categories);
-            $params += ['cat' => $categories];
+            $params += ['cats' => $categories];
         }
 
         if (isset($authors) && !empty($authors)) {
             $courses_query = $courses_query->whereIn("courses.user_id", $authors);
-            $params += ['author' => $authors];
+            $params += ['authors' => $authors];
         }
 
         $courses = $courses_query->distinct()->simplePaginate(2)->withPath('/courses')->appends($params);

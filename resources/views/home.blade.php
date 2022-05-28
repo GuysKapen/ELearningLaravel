@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -48,7 +51,8 @@
                         <nav class="block position-relative text-right" role="navigation">
                             <ul class="lg:block p-0 m-0 mx-auto">
                                 <li class="inline-block"><a href="#home-section"
-                                                            class="text-white inline-block px-6 py-3 {{Request::is("home") ? "text-indigo-400" : ""}}">Home</a></li>
+                                                            class="text-white inline-block px-6 py-3 {{Request::is("home") ? "text-indigo-400" : ""}}">Home</a>
+                                </li>
                                 <li class="inline-block"><a href="{{route("courses")}}"
                                                             class="text-white inline-block px-6 py-3">Courses</a></li>
                                 <li class="inline-block"><a href="#programs-section"
@@ -62,10 +66,10 @@
                     <div class="ml-auto w-1/4">
                         <nav class="relative text-right" role="navigation">
                             <ul class="mr-auto hidden lg:block m-0 p-0">
-                                <li class="inline-block"><a href="#contact-section"
+                                <li class="inline-block"><a href="{{route('register')}}"
                                                             class="px-6 py-2 inline-block    nav-link">
                                         <span
-                                            class="text-white bg-indigo-500 border border-indigo-500 px-6 py-3 rounded-full text-xxs font-black uppercase transition-all">Contact Us</span>
+                                            class="text-white bg-indigo-500 border border-indigo-500 px-6 py-3 rounded-full text-xxs font-black uppercase transition-all">Get Started</span>
                                     </a>
                                 </li>
                             </ul>
@@ -118,12 +122,14 @@
                         </figure>
                         <div class="relative pt-12 px-8 course">
                             <span class="course-price">${{$course->coursePrice->price ?? 0}}</span>
-                            <div class="mb-4 block text-sm"><span class="far fa-clock mr-3"></span>{{$course->lessons()->count() ?? 0}} Lessons / {{$course->detail->duration_info ?? ""}}</div>
+                            <div class="mb-4 block text-sm"><span
+                                    class="far fa-clock mr-3"></span>{{$course->lessons()->count() ?? 0}} Lessons
+                                / {{$course->detail->duration_info ?? ""}}</div>
                             <h3 class="text-indigo-600 text-base">
                                 @foreach($course->categories as $key=>$category)
-                                <a href="#">
-                                    {{$category->name}}
-                                </a>
+                                    <a href="#">
+                                        {{$category->name}}
+                                    </a>
                                 @endforeach
                             </h3>
                             <a href="{{route("course", [$course->id])}}">
@@ -131,7 +137,9 @@
                             </a>
                         </div>
                         <div class="flex border-t text-sm mt-8">
-                            <div class="py-4 px-8"><span class="fa fa-users"></span> {{$course->detail->student_enrolled ?? 0}} students</div>
+                            <div class="py-4 px-8"><span
+                                    class="fa fa-users"></span> {{$course->detail->student_enrolled ?? 0}} students
+                            </div>
                             <div class="py-4 px-6 w-1/4 ml-auto border-l"><span class="fa fa-comment"></span> 2
                             </div>
                         </div>
@@ -144,8 +152,14 @@
         </div>
         <div class="flex justify-center mt-8">
             <div class="w-7/12 text-center">
-                <button class="custom-pre-button hover:bg-indigo-600 px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">Prev</button>
-                <button class="custom-next-button hover:bg-indigo-600 px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">Next</button>
+                <button
+                    class="custom-pre-button hover:bg-indigo-600 px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">
+                    Prev
+                </button>
+                <button
+                    class="custom-next-button hover:bg-indigo-600 px-8 py-4 bg-indigo-500 text-sm text-white font-black rounded-md btn m-2">
+                    Next
+                </button>
             </div>
         </div>
     </div>
@@ -277,24 +291,136 @@
     </div>
 </div>
 
-<div class="relative py-32 bg-cover bg-fixed bg-center" style="background-image: url('images/hero_1.jpg');">
-    <div class="absolute top-0 bottom-0 left-0 right-0 bg-gray-900/[0.5] bg"></div>
-    <div class="w-11/12 mx-auto z-10 relative">
-        <div class="flex justify-center items-center">
-            <div class="md:w-8/12 text-center">
-                <img src="{{asset("images/person_4.jpg")}}" alt="Image"
-                     class="w-32 mb-4 rounded-full mx-auto img-fluid w-25 mb-4 rounded-circle">
-                <h3 class="mb-4 text-white">Najem Märzouky</h3>
-                <blockquote class="italic text-white">
-                    <p>&ldquo; I was struggling with my studies but it all changed when I learned about LAcademy,
-                        I'm
-                        now a senior software engineer making a 6 figure salary per year.This website is a real game
-                        changer. &rdquo;</p>
-                </blockquote>
+{{--    People say      --}}
+<div class="py-16 relative bg-gray-100">
+
+    <div class="w-11/12 mx-auto">
+        <div class="flex mb-8 justify-center" data-aos="fade-up"
+             data-aos-delay="">
+            <div class="lg:w-7/12 text-center">
+                <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">People Say About Us</h2>
             </div>
+        </div>
+        <div class="grid grid-cols-3 gap-6">
+            <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="bg-white rounded-lg p-4">
+                    <span class="material-icons text-4xl text-indigo-600">format_quote</span>
+                    <p class="text-sm my-2 text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, animi aperiam assumenda
+                        temporibus unde vitae, voluptates?
+                    </p>
+                    <div class="flex mt-6 items-center">
+                        <img class="object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                             src="{{asset("storage/profile/" . (Auth::user()->authorDetail->cover ?? ""))}}"
+                             alt="Profile">
+                        <h3 class="font-bold text-base text-black ml-2">
+                            Annette Black
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="bg-white rounded-lg p-4">
+                    <span class="material-icons text-4xl text-indigo-600">format_quote</span>
+                    <p class="text-sm my-2 text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, animi aperiam assumenda
+                        temporibus unde vitae, voluptates?
+                    </p>
+                    <div class="flex mt-6 items-center">
+                        <img class="object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                             src="{{asset("storage/profile/" . (Auth::user()->authorDetail->cover ?? ""))}}"
+                             alt="Profile">
+                        <h3 class="font-bold text-base text-black ml-2">
+                            Annette Black
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="bg-white rounded-lg p-4">
+                    <span class="material-icons text-4xl text-indigo-600">format_quote</span>
+                    <p class="text-sm my-2 text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, animi aperiam assumenda
+                        temporibus unde vitae, voluptates?
+                    </p>
+                    <div class="flex mt-6 items-center">
+                        <img class="object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                             src="{{asset("storage/profile/" . (Auth::user()->authorDetail->cover ?? ""))}}"
+                             alt="Profile">
+                        <h3 class="font-bold text-base text-black ml-2">
+                            Annette Black
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="bg-white rounded-lg p-4">
+                    <span class="material-icons text-4xl text-indigo-600">format_quote</span>
+                    <p class="text-sm my-2 text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, animi aperiam assumenda
+                        temporibus unde vitae, voluptates?
+                    </p>
+                    <div class="flex mt-6 items-center">
+                        <img class="object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                             src="{{asset("storage/profile/" . (Auth::user()->authorDetail->cover ?? ""))}}"
+                             alt="Profile">
+                        <h3 class="font-bold text-base text-black ml-2">
+                            Annette Black
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="bg-white rounded-lg p-4">
+                    <span class="material-icons text-4xl text-indigo-600">format_quote</span>
+                    <p class="text-sm my-2 text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, animi aperiam assumenda
+                        temporibus unde vitae, voluptates?
+                    </p>
+                    <div class="flex mt-6 items-center">
+                        <img class="object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                             src="{{asset("storage/profile/" . (Auth::user()->authorDetail->cover ?? ""))}}"
+                             alt="Profile">
+                        <h3 class="font-bold text-base text-black ml-2">
+                            Annette Black
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="bg-white rounded-lg p-4">
+                    <span class="material-icons text-4xl text-indigo-600">format_quote</span>
+                    <p class="text-sm my-2 text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, animi aperiam assumenda
+                        temporibus unde vitae, voluptates?
+                    </p>
+                    <div class="flex mt-6 items-center">
+                        <img class="object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                             src="{{asset("storage/profile/" . (Auth::user()->authorDetail->cover ?? ""))}}"
+                             alt="Profile">
+                        <h3 class="font-bold text-base text-black ml-2">
+                            Annette Black
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
+{{--!   People say      --}}
 
 {{--    Why choose us   --}}
 <div class="py-16 relative pb-0">
