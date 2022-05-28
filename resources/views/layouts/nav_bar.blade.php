@@ -35,7 +35,7 @@
             </div>
             <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
-                    <div class="relative font-black text-xl w-1/4 mr-auto"><a href="{{route("home")}}" class="text-gray-800">LAcademy</a></div>
+                    <div class="relative font-black text-xl w-1/4 mr-auto"><a href="{{route("home")}}" class="text-gray-800">ILearning</a></div>
                 </div>
                 <div class="hidden sm:block sm:ml-6 mx-auto flex-grow">
                     <div class="block space-x-4 w-max mx-auto">
@@ -88,10 +88,8 @@
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                             <a href="{{route('author.profile.show')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                                id="menu-item-0">Account settings</a>
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                               id="menu-item-1">Support</a>
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                               id="menu-item-2">License</a>
+                            <a href="{{route('author.dashboard')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                               id="menu-item-1">Dashboard</a>
                             <form method="POST" action="{{route('logout')}}" role="none">
                                 @csrf
                                 <button type="submit" class="text-gray-700 block w-full text-left px-4 py-2 text-sm"
@@ -156,8 +154,6 @@
                                    tabindex="-1" id="menu-item-0">Account settings</a>
                                 <a href="{{route('author.dashboard')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                    tabindex="-1" id="menu-item-1">Dashboard</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
-                                   tabindex="-1" id="menu-item-2">License</a>
                                 <form method="POST" action="{{route('logout')}}" role="none">
                                     @csrf
                                     <button type="submit"

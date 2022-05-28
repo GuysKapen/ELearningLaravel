@@ -94,7 +94,7 @@ class HomeController extends Controller
             $params += ['sort' => $request->sort];
         }
 
-        $courses = $courses_query->select("courses.*")->distinct()->orderBy($col, $direction)->simplePaginate(2)->appends($params);
+        $courses = $courses_query->select("courses.*")->distinct()->orderBy($col, $direction)->simplePaginate(12)->appends($params);
 
         $latestCourses = Course::latest()->take(5)->get();
         $categories = Category::latest()->get();
@@ -125,14 +125,14 @@ class HomeController extends Controller
             $params += ['authors' => $authors];
         }
 
-        $courses = $courses_query->distinct()->simplePaginate(2)->withPath('/courses')->appends($params);
+        $courses = $courses_query->distinct()->simplePaginate(12)->withPath('/courses')->appends($params);
 
         return view('_courses', compact('courses'))->render();
     }
 
     public function search(Request $request): string
     {
-        $courses = Course::whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->keyword) . '%'])->simplePaginate(2)->withPath("/courses")->appends(['search' => $request->keyword]);
+        $courses = Course::whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->keyword) . '%'])->simplePaginate(12)->withPath("/courses")->appends(['search' => $request->keyword]);
         return view('_courses', compact('courses'))->render();
     }
 
@@ -162,7 +162,7 @@ class HomeController extends Controller
             ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id")
             ->orderBy($col, $direction)
             ->select("courses.*")
-            ->simplePaginate(2)
+            ->simplePaginate(12)
             ->withPath('/courses')
             ->appends(['sort' => $request->sort_type]);
 

@@ -7,7 +7,7 @@
 
 @section('content')
 
-    <div class="w-10/12 mx-auto py-8">
+    <div class="w-11/12 mx-auto py-8">
         <section>
             <nav
                 class="flex py-3 px-5 text-gray-700 rounded-lg shadow-sm border-gray-200 dark:bg-gray-800 dark:border-gray-700"
@@ -33,7 +33,7 @@
 
         <section>
             <div class="flex mt-8">
-                <div class="w-9/12 mr-2">
+                <div class="w-9/12 mr-8">
                     <div class="flex items-center bg-gray-50 px-5 py-1">
 
                         <form id="form-sort" action="{{route('course.sort')}}" method="POST" class="z-10">

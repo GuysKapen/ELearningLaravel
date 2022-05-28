@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>LAcademy</title>
+    <title>ILearning</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -44,21 +44,21 @@
 
             <div class="w-full px-24">
                 <div class="flex items-center">
-                    <div class="relative font-black text-xl w-1/4 mr-auto"><a href="index.php" class="text-white">LAcademy</a>
+                    <div class="relative font-black text-xl w-1/4 mr-auto"><a href="index.php" class="text-white">ILearning</a>
                     </div>
 
                     <div class="mx-auto text-center">
                         <nav class="block position-relative text-right" role="navigation">
                             <ul class="lg:block p-0 m-0 mx-auto">
                                 <li class="inline-block"><a href="#home-section"
-                                                            class="text-white inline-block px-6 py-3 {{Request::is("home") ? "text-indigo-400" : ""}}">Home</a>
+                                                            class="hover:text-indigo-600 text-white inline-block px-6 py-3 {{Request::is("home") ? "text-indigo-400" : ""}}">Home</a>
                                 </li>
                                 <li class="inline-block"><a href="{{route("courses")}}"
-                                                            class="text-white inline-block px-6 py-3">Courses</a></li>
+                                                            class="hover:text-indigo-600 text-white inline-block px-6 py-3">Courses</a></li>
                                 <li class="inline-block"><a href="#programs-section"
-                                                            class="text-white inline-block px-6 py-3">Programs</a></li>
+                                                            class="hover:text-indigo-600 text-white inline-block px-6 py-3">Programs</a></li>
                                 <li class="inline-block"><a href="#teachers-section"
-                                                            class="text-white inline-block px-6 py-3">Teachers</a></li>
+                                                            class="hover:text-indigo-600 text-white inline-block px-6 py-3">Teachers</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -87,8 +87,29 @@
             <div class="slide-1"
                  style="background-image: url('images/hero_1.jpg'); background-position: 50% -25px; background-size: cover; height: 100vh"
                  data-stellar-background-ratio="0.5">
-                <div class="container">
-                    <div class="row align-items-center">
+                <div class="flex items-center h-full">
+                    <div class="w-full z-10 flex items-center px-24 space-x-16">
+                        <div class="w-1/2">
+                            <h1 class="text-6xl text-white font-black">Online learning you can access anywhere
+                                easily</h1>
+                            <p class="text-gray-100 text-sm my-8">a Solution for easy and flexible online learning, you
+                                can study anywhere through this platform</p>
+                            <div class="flex space-x-8">
+                                <a href="{{route('register')}}"
+                                   class="py-2 inline-block nav-link flex-grow">
+                                        <span
+                                            class="w-full block text-white bg-indigo-600 hover:bg-indigo-900 text-center px-8 py-3 rounded-full text-xxs font-black transition-all">Get Started</span>
+                                </a>
+                                <a href="{{route('login')}}"
+                                   class="py-2 inline-block nav-link flex-grow">
+                                        <span
+                                            class="w-full block text-white bg-indigo-600 hover:bg-indigo-900 text-center px-8 py-3 rounded-full text-xxs font-black transition-all">Sign In</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text-right w-1/2">
+                            <img src="{{ asset('images/undraw_youtube_tutorial.svg') }}" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -291,6 +312,106 @@
     </div>
 </div>
 
+{{--    Instructor   --}}
+<div class="py-16 relative bg-gray-100">
+
+    <div class="w-11/12 mx-auto">
+        <div class="flex mb-8 justify-center" data-aos="fade-up"
+             data-aos-delay="">
+            <div class="lg:w-7/12 text-center">
+                <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Join With Us</h2>
+            </div>
+        </div>
+        <div class="flex items-center space-x-8 px-24">
+            <div class="lg:w-6/12 align-end pl-8" data-aos="fade-left" data-aos-delay="200">
+                <img src="images/person_transparent.png" alt="Image" class="img-fluid">
+            </div>
+            <div class="w-4/12">
+                <h3 class="text-2xl font-black text-indigo-600">Easy to join with us</h3>
+                <h2 class="text-4xl font-black mt-4 text-gray-800">Let's become an instructor</h2>
+                <p class="my-8 text-gray-400 text-sm">
+                    Instructors around the world tech millions of students.
+                    We provide the tools and technology to help you tech what you love
+                </p>
+                <a href="{{route('register')}}"
+                   class="mt-4 py-2 inline-block nav-link"> <span
+                        class="text-white hover:bg-indigo-900 px-8 py-3 rounded-full text-xxs font-black transition-all bg-indigo-600">Start teaching</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{{--!   Instructor--}}
+
+{{--    Why choose us   --}}
+<div class="py-16 relative pb-0">
+
+    <div class="overflow-hidden flex absolute w-full h-full -z-10 top-0 pointer-events-none">
+        <div class="absolute bottom-8 -left-32">
+            <img src="{{asset("images/blob_2.svg")}}" alt="Image">
+        </div>
+        <div class="absolute top-8 -right-32">
+            <img src="{{asset("images/blob_1.svg")}}" alt="Image">
+        </div>
+    </div>
+    <div class="w-11/12 mx-auto">
+        <div class="flex mb-8 justify-center" data-aos="fade-up"
+             data-aos-delay="">
+            <div class="lg:w-7/12 text-center">
+                <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Why Choose Us</h2>
+            </div>
+        </div>
+        <div class="flex">
+            <div class="lg:w-4/12 ml-auto align-start" data-aos="fade-up"
+                 data-aos-delay="100">
+
+                <div class="p-8 rounded bg-white shadow-full">
+
+                    <div class="flex items-center mb-4">
+                        <span class="mr-3 icon-wrap-big"><span class="icon fa fa-graduation-cap"></span></span>
+                        <div><h3 class="m-0 text-base text-gray-800 font-medium">2,931 Yearly Graduates</h3></div>
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span></div>
+                        <div><h3 class="m-0 text-base text-gray-800 font-medium">50 Universities Worldwide</h3>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        <div class="mr-3 icon-wrap-big"><<span class="icon fa fa-graduation-cap"></span></div>
+                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Top Professionals in The World</h3>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span></div>
+                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Expand Your Knowledge</h3></div>
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-graduation-cap"></span></div>
+                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Online Teaching Assistant
+                                Courses</h3></div>
+                    </div>
+
+                    <div class="flex items-center mb-4">
+                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span></div>
+                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Teachers</h3></div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="lg:w-7/12 align-end pl-8" data-aos="fade-left" data-aos-delay="200">
+                <img src="images/person_transparent.png" alt="Image" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+{{--!    Why choose us   !--}}
+
 {{--    People say      --}}
 <div class="py-16 relative bg-gray-100">
 
@@ -422,75 +543,6 @@
 </div>
 {{--!   People say      --}}
 
-{{--    Why choose us   --}}
-<div class="py-16 relative pb-0">
-
-    <div class="overflow-hidden flex absolute w-full h-full -z-10 top-0 pointer-events-none">
-        <div class="absolute bottom-8 -left-32">
-            <img src="{{asset("images/blob_2.svg")}}" alt="Image">
-        </div>
-        <div class="absolute top-8 -right-32">
-            <img src="{{asset("images/blob_1.svg")}}" alt="Image">
-        </div>
-    </div>
-    <div class="w-11/12 mx-auto">
-        <div class="flex mb-8 justify-center" data-aos="fade-up"
-             data-aos-delay="">
-            <div class="lg:w-7/12 text-center">
-                <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Why Choose Us</h2>
-            </div>
-        </div>
-        <div class="flex">
-            <div class="lg:w-4/12 ml-auto align-start" data-aos="fade-up"
-                 data-aos-delay="100">
-
-                <div class="p-8 rounded bg-white shadow-full">
-
-                    <div class="flex items-center mb-4">
-                        <span class="mr-3 icon-wrap-big"><span class="icon fa fa-graduation-cap"></span></span>
-                        <div><h3 class="m-0 text-base text-gray-800 font-medium">2,931 Yearly Graduates</h3></div>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span></div>
-                        <div><h3 class="m-0 text-base text-gray-800 font-medium">50 Universities Worldwide</h3>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <div class="mr-3 icon-wrap-big"><<span class="icon fa fa-graduation-cap"></span></div>
-                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Top Professionals in The World</h3>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span></div>
-                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Expand Your Knowledge</h3></div>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-graduation-cap"></span></div>
-                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Online Teaching Assistant
-                                Courses</h3></div>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <div class="mr-3 icon-wrap-big"><span class="icon fa fa-university"></span></div>
-                        <div><h3 class="m-0 text-base text-gray-800 font-medium">Best Teachers</h3></div>
-                    </div>
-
-                </div>
-
-
-            </div>
-            <div class="lg:w-7/12 align-end pl-8" data-aos="fade-left" data-aos-delay="200">
-                <img src="images/person_transparent.png" alt="Image" class="img-fluid">
-            </div>
-        </div>
-    </div>
-</div>
-{{--!    Why choose us   !--}}
-
 {{--    Message Us      --}}
 <div class="py-16 relative bg-gray-50" id="contact-section">
     <div class="w-11/12 mx-auto">
@@ -525,7 +577,7 @@
                             $msgClass = 'alert-danger';
                         } else {
                             // Passed
-                            $toEmail = 'support@lacademy.com';
+                            $toEmail = 'support@ilearning.com';
                             $body = $subject . '<h4>Name</h4><p>' . $name . '</p>
                     <h4>Email</h4><p>' . $email . '</p>
                     <h4>Message</h4><p>' . $message . '</p>';
@@ -613,7 +665,7 @@
     <div class="w-11/12 mx-auto">
         <div class="flex">
             <div class="md:w-4/12">
-                <h3 class="footer-heading">About LAcademy</h3>
+                <h3 class="footer-heading">About ILearning</h3>
                 <p class="text-base">An E-Learning platform rich of resources, We make learning easy and simple for
                     Everyone.</p>
             </div>
@@ -635,7 +687,7 @@
 
             <div class="md:w-4/12">
                 <h3 class="footer-heading">Subscribe</h3>
-                <p class="text-base">Keep yourself up to date and receive all kind of news about LAcademy.</p>
+                <p class="text-base">Keep yourself up to date and receive all kind of news about ILearning.</p>
                 <form action="https://mailchi.mp/064deb47eeaa/lacdemy" target="_blank" class="footer-subscribe">
                     <div class="flex mb-4 mt-8">
                         <input type="submit"
