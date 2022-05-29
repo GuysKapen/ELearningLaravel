@@ -128,7 +128,9 @@
         </div>
 
         <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
-            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat background-login"></div>
+            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat background-login flex items-center">
+                <img src="{{asset("images/login.svg")}}" alt="Image" class="img-fluid">
+            </div>
         </div>
     </div>
 

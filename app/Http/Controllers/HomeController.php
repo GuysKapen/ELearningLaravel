@@ -2,28 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\DurationType;
 use App\Library\SortType;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Course;
 use Brian2694\Toastr\Facades\Toastr;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.

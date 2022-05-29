@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", [HomeController::class, 'index'])->name("index");
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/course/{course}', [HomeController::class, 'course'])->name('course');
 Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/course/{course}', [HomeController::class, 'course'])->name('course');
     Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
     Route::post('/courses/search', [HomeController::class, 'search'])->name("course.search");
     Route::post('/courses/sort', [HomeController::class, 'sort'])->name("course.sort");

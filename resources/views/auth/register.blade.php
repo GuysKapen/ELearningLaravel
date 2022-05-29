@@ -7,7 +7,7 @@
             <div class="lg:w-6/12 sm:w-8/12 w-11/12 flex flex-col items-center max-w-xs">
                 <h1 class="text-2xl xl:text-3xl text-center font-extrabold font-josesans">Register</h1>
 
-                <div class="w-full flex-1 mt-8 text-indigo-500 flex flex-col items-center">
+                <div class="w-full flex-1 mt-8 flex flex-col items-center">
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -140,7 +140,9 @@
         </div>
 
         <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
-            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat background-login"></div>
+            <div class="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat background-login flex items-center">
+                <img src="{{asset("images/auth.svg")}}" alt="Image" class="img-fluid">
+            </div>
         </div>
     </div>
 

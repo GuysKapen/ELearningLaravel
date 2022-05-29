@@ -15,7 +15,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "tinymce/tinymce": "^5.10"
+        "tinymce/tinymce": "^5.10",
+      "ext-http": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
