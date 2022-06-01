@@ -25,19 +25,23 @@
             </div>
         </div>
 
-        @if(isset($section->lessons))
-            @php
-                $lessonIndex = 1;
-            @endphp
-            @foreach($section->lessons as $key=>$lesson)
-                @include('author.course._lesson_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'lesson' => $lesson, "timeUnits" => $timeUnits])
+        <div id="input-section-content-{{$sectionIndex}}">
+            @if(isset($section->lessons))
                 @php
-                    $lessonIndex++;
+                    $lessonIndex = 1;
                 @endphp
-            @endforeach
-        @else
-            @include('author.course._lesson_form', ['lessonIndex' => 1, 'timeUnits' => $timeUnits])
-        @endif
+                @foreach($section->lessons as $key=>$lesson)
+                    @include('author.course._lesson_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'lesson' => $lesson, "timeUnits" => $timeUnits])
+                    @php
+                        $lessonIndex++;
+                    @endphp
+                @endforeach
+            @else
+                @include('author.course._lesson_form', ['lessonIndex' => 1, 'timeUnits' => $timeUnits])
+                {{--            @include('author.course._quiz_form', ['lessonIndex' => 1, 'timeUnits' => $timeUnits])--}}
+            @endif
+        </div>
+
 
     </div>
 
@@ -68,4 +72,18 @@
         </div>
     </div>
 
+    <div id="section-content-list-{{$sectionIndex}}" class="hidden flex items-center px-8 py-2">
+        <div id="section-add-lesson-{{$sectionIndex}}"
+             data-id="{{$sectionIndex}}"
+             class="btn-add-lesson bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+            <span class="icon material-icons text-sm mr-1">add</span>
+            Lesson
+        </div>
+        <div id="section-add-quiz-{{$sectionIndex}}"
+             data-id="{{$sectionIndex}}"
+             class="btn-add-quiz bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+            <span class="icon material-icons text-sm mr-1">add</span>
+            Quiz
+        </div>
+    </div>
 </div>

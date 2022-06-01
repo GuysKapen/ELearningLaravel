@@ -695,7 +695,8 @@
                                                 <label for="feature_img"
                                                        class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                     <span>Upload a file</span>
-                                                    <input id="feature_img" name="feature_img" type="file" class="sr-only">
+                                                    <input id="feature_img" name="feature_img" type="file"
+                                                           class="sr-only">
                                                 </label>
                                                 <p class="pl-1">or drag and drop</p>
                                             </div>
@@ -1052,9 +1053,153 @@
             })
         }
 
+        function initQuiz(sectionId, quizId) {
+            $(".input-section").each(function () {
+                const index = $(this).attr("data-id")
+                if (index != sectionId && sectionId != -1) return;
+                const context = this;
+
+                // btn save and cancel title
+                $(".btn-save-quiz", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == quizId || quizId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-name-${index}`, context).text($(`#input-quiz-name-${index}`, context).val());
+                            $(`#quiz-input-${index}`, context).toggleClass("hidden")
+                            $(`#quiz-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-quiz", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-input-${index}`, context).toggleClass("hidden")
+                            $(`#quiz-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                // Btn save and cancel content click listener
+                $(".btn-save-quiz-question", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == quizId || quizId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-questions-form-container-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-quiz-question", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            // $(`#quiz-questions-form-container-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-content", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-add-list-${index}`, context).toggleClass("hidden")
+                            $(`div[id^='quiz-input']`, context).addClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-text-question", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        const validId = quizId == -1 ? 1 : quizId;
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-add-list-${index}`, context).toggleClass("hidden")
+                            $(`#quiz-questions-form-container-${index}`, context).toggleClass("hidden")
+                            @php
+                                $html_lecture = json_encode(View::make('author.course._question_form')->render());
+                            @endphp
+                            let processed = {!! $html_lecture !!};
+                            const lesson = $(`#quiz-questions-form-container-${validId}`, context)
+                            const id = lesson.children().length + 1;
+                            processed = processed.replaceAll("--index--", id);
+                            processed = processed.replaceAll("--sectionIndex--", sectionId)
+                            lesson.append(processed)
+                            initQuestion(validId, id)
+                            tinymce.EditorManager.execCommand('mceAddEditor', false, `input-question-name-${id}`);
+                        })
+                    }
+                })
+
+                $(".quiz-edit", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-input-${index}`, context).toggleClass("hidden")
+                            $(`#quiz-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+            })
+        }
+
+        function initQuestion(quizId, questionId) {
+            $(".input-quiz").each(function () {
+                const index = $(this).attr("data-id")
+                if (index != quizId && quizId != -1) return;
+                const context = this;
+
+                // Btn save and cancel content click listener
+                $(".btn-save-quiz-question", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == questionId || questionId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            console.log($(`#input-question-name-${index}`));
+                            $(`#question-name-${index}`, context).html(tinymce.get(`input-question-name-${index}`).getContent());
+                            $(`#question-form-${index}`, context).toggleClass("hidden")
+                            $(`#question-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-quiz-question", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == questionId || questionId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#question-form-container-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".question-edit", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == questionId || questionId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#question-form-${index}`, context).toggleClass("hidden")
+                            $(`#question-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+            })
+        }
+
         // init curriculum with js - pass -1 to init all sections or lessons
-        function initCurriculum(sectionId, lectureId) {
+        function initCurriculum(sectionId, lectureId, quizId) {
             initLecture(sectionId, lectureId)
+            if (quizId != null) {
+                initQuiz(sectionId, quizId)
+            }
 
             $(".input-section").each(function () {
                 const index = $(this).attr("data-id")
@@ -1066,16 +1211,49 @@
                     if (index == sectionId || sectionId == -1) {
                         const validId = sectionId == -1 ? 1 : sectionId;
                         $(this).on("click", function () {
+                            $(`#section-content-list-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-lesson", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == sectionId || sectionId == -1) {
+                        const validId = sectionId == -1 ? 1 : sectionId;
+                        $(this).on("click", function () {
                             @php
                                 $html_lecture = json_encode(View::make('author.course._lesson_form', ["timeUnits" => $timeUnits])->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
-                            const lesson = $(`#input-lesson-${validId}`, context)
+                            const lesson = $(`#input-section-content-${validId}`, context)
+                            console.log(lesson)
                             const id = lesson.children().length + 1;
                             processed = processed.replaceAll("--index--", id);
                             processed = processed.replaceAll("--sectionIndex--", sectionId)
                             lesson.append(processed)
                             initLecture(sectionId, id)
+                            $(`#section-content-list-${index}`, context).addClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-quiz", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == sectionId || sectionId == -1) {
+                        const validId = sectionId == -1 ? 1 : sectionId;
+                        $(this).on("click", function () {
+                            @php
+                                $html_lecture = json_encode(View::make('author.course._quiz_form', ["timeUnits" => $timeUnits])->render());
+                            @endphp
+                            let processed = {!! $html_lecture !!};
+                            const lesson = $(`#input-section-content-${validId}`, context)
+                            console.log(lesson)
+                            const id = lesson.children().length + 1;
+                            processed = processed.replaceAll("--index--", id);
+                            processed = processed.replaceAll("--sectionIndex--", sectionId)
+                            lesson.append(processed)
+                            initQuiz(sectionId, id)
+                            $(`#section-content-list-${index}`, context).addClass("hidden")
                         })
                     }
                 })
@@ -1118,8 +1296,7 @@
             })
         }
 
-
-        initCurriculum(-1, -1)
+        initCurriculum(-1, -1, -1)
 
         $("#add-section").click(function () {
             @php
@@ -1130,7 +1307,7 @@
             const id = section.children().length + 1;
             processed = processed.replaceAll("--index--", id);
             section.append(processed)
-            initCurriculum(id, 1)
+            initCurriculum(id, 1, null)
         })
 
     </script>

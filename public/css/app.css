@@ -2312,7 +2312,7 @@ input[type="number"]:focus, input[type="text"]:focus, input[type="email"]:focus,
 
 input,
 textarea {
-    border: 0.125rem solid #cccccc;
+    border: 1px solid #cccccc;
 }
 
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
@@ -2475,6 +2475,18 @@ textarea {
 
 .placeholder-gray-500::placeholder {
     color: #a0aec0;
+}
+
+.placeholder-text-sm::-moz-placeholder {
+    font-size: 0.875rem;
+}
+
+.placeholder-text-sm:-ms-input-placeholder {
+    font-size: 0.875rem;
+}
+
+.placeholder-text-sm::placeholder {
+    font-size: 0.875rem;
 }
 
 .input {
