@@ -93,4 +93,9 @@ class Course extends SyncableModel
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function quizzes(): Relations\HasManySyncable
+    {
+        return $this->hasMany(CourseQuiz::class);
+    }
 }

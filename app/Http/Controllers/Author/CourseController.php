@@ -10,6 +10,7 @@ use App\Models\CourseAssessment;
 use App\Models\CourseDetail;
 use App\Models\CourseLesson;
 use App\Models\CoursePrice;
+use App\Models\CourseQuiz;
 use App\Models\CourseRequirement;
 use App\Models\CourseResult;
 use App\Models\CourseSection;
@@ -18,6 +19,10 @@ use App\Models\EvaluateType;
 use App\Models\LessonContent;
 use App\Models\LessonDetail;
 use App\Models\LessonResource;
+use App\Models\QuestionAnswer;
+use App\Models\QuestionDetail;
+use App\Models\QuestionOption;
+use App\Models\QuizQuestion;
 use App\Models\Tag;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -77,6 +82,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+//        return $request;
         $this->validate($request, [
             'name' => 'required|unique:categories',
         ]);
@@ -218,6 +224,7 @@ class CourseController extends Controller
 
                         $course->sections()->save($courseSection);
 
+                        // Save lessons
                         $lessons = array_values($section['lesson']);
                         for ($j = 0; $j < count($lessons); ++$j) {
                             $lesson = $lessons[$j];
@@ -267,6 +274,62 @@ class CourseController extends Controller
                             }
                         }
 
+                        // Save quizzes
+                        $quizzes = array_values($section['quizzes']);
+                        for ($j = 0; $j < count($quizzes); ++$j) {
+                            $quiz = $quizzes[$j];
+                            $quiz += ['slug' => Str::slug($quiz['name'])];
+                            $quiz += ['course_section_id' => $courseSection->id];
+
+                            $courseQuiz = new CourseQuiz($quiz);
+
+                            $course->quizzes()->save($courseQuiz);
+
+                            if (isset($quiz['questions']) && is_array($quiz['questions'])) {
+                                $questions = array_values($quiz['questions']);
+
+                                for ($k = 0; $k < count($questions); ++$k) {
+                                    $question = $questions[$k];
+                                    $question += ['slug' => Str::slug($quiz['name'])];
+                                    $question += ['quiz_id' => $courseQuiz->id];
+
+                                    $quizQuestion = new QuizQuestion($question);
+
+                                    $courseQuiz->questions()->save($quizQuestion);
+
+                                    if (isset($question['options']) && is_array($question['options'])) {
+                                        $options = array_values($question['options']);
+                                        for ($l = 0; $l < count($options); ++$l) {
+                                            $option = $options[$l];
+                                            $option += ['quiz_question_id' => $quizQuestion->id];
+
+                                            $questionOption = new QuestionOption($option);
+
+                                            $quizQuestion->options()->save($questionOption);
+
+                                            // Save answer
+                                            if (isset($option['answer'])) {
+                                                $questionAnswer = new QuestionAnswer();
+                                                $questionAnswer->question_option_id = $questionOption->id;
+                                                $questionAnswer->quiz_question_id = $quizQuestion->id;
+
+                                                $quizQuestion->answers()->save($questionAnswer);
+                                            }
+                                        }
+                                    }
+
+                                    // Save detail
+                                    if (isset($question['detail']) && !empty($question['detail'])) {
+                                        $detail = $question['detail'];
+                                        $questionDetail = new QuestionDetail($detail);
+
+                                        $quizQuestion->detail()->save($questionDetail);
+                                    }
+                                }
+
+                            }
+                        }
+
                     }
                 }
 
@@ -293,7 +356,6 @@ class CourseController extends Controller
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
-            return $e;
             // something went wrong
         }
 
@@ -575,7 +637,6 @@ class CourseController extends Controller
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
-            return $e;
             // something went wrong
         }
 

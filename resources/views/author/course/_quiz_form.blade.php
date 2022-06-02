@@ -31,24 +31,19 @@
         </div>
     </div>
 
-    <div id="quiz-add-list-{{$lessonIndex}}" class="text-sm hidden p-5">
-        <div id="quiz-add-content-{{$lessonIndex}}"
-             data-id="{{$lessonIndex}}"
-             class="btn-add-text-question bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
-            <span class="icon material-icons text-sm mr-1">add</span>
-            Multi choices
-        </div>
-    </div>
-
     <div id="quiz-input-{{$lessonIndex}}" class="text-sm hidden p-5">
         <div class="flex items-center">
             <label class="block text-sm mr-2"
                    for="input1">Quiz {{$lessonIndex}}: </label>
             <input id="input-quiz-name-{{$lessonIndex}}"
-                   name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][title]"
+                   name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][name]"
                    value="{{$lesson->title ?? "Introduction"}}"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
+            <input name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][index]"
+                   value="{{$quiz->index ?? $lessonIndex}}"
+                   type="hidden"/>
+
             @if(isset($lesson))
                 <input type="hidden" name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][id]"
                        value="{{$lesson->id}}">
@@ -70,8 +65,17 @@
         </div>
     </div>
 
-    <div id="quiz-questions-form-container-{{$lessonIndex}}" class="text-sm mt-2 p-5 hidden">
-{{--        @include("author.course._question_form", ["sectionIndex" => $sectionIndex, "lessonIndex" => $lessonIndex])--}}
+    <div id="quiz-questions-form-container-{{$lessonIndex}}" class="text-sm p-5 hidden">
+    </div>
+
+
+    <div id="quiz-add-list-{{$lessonIndex}}" class="text-sm hidden p-5">
+        <div id="quiz-add-content-{{$lessonIndex}}"
+             data-id="{{$lessonIndex}}"
+             class="btn-add-text-question bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+            <span class="icon material-icons text-sm mr-1">add</span>
+            Multi choices
+        </div>
     </div>
 
 </div>

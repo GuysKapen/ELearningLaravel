@@ -1083,27 +1083,6 @@
                     }
                 })
 
-                // Btn save and cancel content click listener
-                $(".btn-save-quiz-question", this).each(function () {
-                    const index = $(this).attr("data-id")
-                    if (index == quizId || quizId == -1) {
-                        $(this).on("click", function () {
-                            const index = $(this).attr("data-id")
-                            $(`#quiz-questions-form-container-${index}`, context).toggleClass("hidden")
-                        })
-                    }
-                })
-
-                $(".btn-cancel-quiz-question", this).each(function () {
-                    const index = $(this).attr("data-id");
-                    if (index == quizId || quizId == -1) {
-                        $(this).on("click", function () {
-                            const index = $(this).attr("data-id")
-                            // $(`#quiz-questions-form-container-${index}`, context).toggleClass("hidden")
-                        })
-                    }
-                })
-
                 $(".btn-add-content", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == quizId || quizId == -1) {
@@ -1122,14 +1101,19 @@
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
                             $(`#quiz-add-list-${index}`, context).toggleClass("hidden")
-                            $(`#quiz-questions-form-container-${index}`, context).toggleClass("hidden")
+                            $(`#quiz-questions-form-container-${index}`, context).removeClass("hidden")
                             @php
                                 $html_lecture = json_encode(View::make('author.course._question_form')->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
                             const lesson = $(`#quiz-questions-form-container-${validId}`, context)
                             const id = lesson.children().length + 1;
-                            processed = processed.replaceAll("--index--", id);
+                            console.log(id)
+                            // Question index
+                            processed = processed.replaceAll("--questionIndex--", id);
+                            // Quiz index
+                            processed = processed.replaceAll("--index--", validId);
+                            // Section index
                             processed = processed.replaceAll("--sectionIndex--", sectionId)
                             lesson.append(processed)
                             initQuestion(validId, id)
@@ -1163,7 +1147,6 @@
                     if (index == questionId || questionId == -1) {
                         $(this).on("click", function () {
                             const index = $(this).attr("data-id")
-                            console.log($(`#input-question-name-${index}`));
                             $(`#question-name-${index}`, context).html(tinymce.get(`input-question-name-${index}`).getContent());
                             $(`#question-form-${index}`, context).toggleClass("hidden")
                             $(`#question-info-${index}`, context).toggleClass("hidden")
@@ -1226,7 +1209,6 @@
                             @endphp
                             let processed = {!! $html_lecture !!};
                             const lesson = $(`#input-section-content-${validId}`, context)
-                            console.log(lesson)
                             const id = lesson.children().length + 1;
                             processed = processed.replaceAll("--index--", id);
                             processed = processed.replaceAll("--sectionIndex--", sectionId)
@@ -1240,19 +1222,18 @@
                 $(".btn-add-quiz", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == sectionId || sectionId == -1) {
-                        const validId = sectionId == -1 ? 1 : sectionId;
+                        const validSectionId = sectionId == -1 ? 1 : sectionId;
                         $(this).on("click", function () {
                             @php
                                 $html_lecture = json_encode(View::make('author.course._quiz_form', ["timeUnits" => $timeUnits])->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
-                            const lesson = $(`#input-section-content-${validId}`, context)
-                            console.log(lesson)
+                            const lesson = $(`#input-section-content-${validSectionId}`, context)
                             const id = lesson.children().length + 1;
                             processed = processed.replaceAll("--index--", id);
-                            processed = processed.replaceAll("--sectionIndex--", sectionId)
+                            processed = processed.replaceAll("--sectionIndex--", validSectionId)
                             lesson.append(processed)
-                            initQuiz(sectionId, id)
+                            initQuiz(validSectionId, id)
                             $(`#section-content-list-${index}`, context).addClass("hidden")
                         })
                     }

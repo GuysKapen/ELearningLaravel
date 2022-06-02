@@ -12,6 +12,16 @@ class QuizQuestion extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'question',
+        'course_quiz_id',
+    ];
+
     public function quiz(): BelongsTo
     {
         return $this->belongsTo(CourseQuiz::class);
