@@ -30,11 +30,11 @@
     <div id="question-form-{{$questionIndex}}" class="{{$minimize ? 'hidden' : ''}}">
         <label class="block my-2 font-semibold" for="body">Question</label>
         <textarea id="input-question-name-{{$questionIndex}}"
-                  name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][question]"
+                  name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][question]"
                   placeholder="Enter content here"></textarea>
         @if(isset($question))
             <input type="hidden"
-                   name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][id]"
+                   name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][id]"
                    value="{{$lesson->id}}">
         @endif
         <label class="block my-2 font-semibold" for="body">Options</label>
@@ -43,15 +43,15 @@
             @foreach($question->options as $key=>$option)
                 <div class="flex items-start mb-4">
                     <input
-                        name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][answer]"
+                        name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][answer]"
                         type="checkbox"
                         class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" {{$question->answers->where('question_option_id', '', $option->id)->isEmpty() ? "" : "checked"}}>
                     <textarea
                         class="w-full px-4 ml-4 placeholder-gray-500 placeholder-text-sm rounded-md bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white"
-                        name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][option]"
+                        name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][option]"
                         placeholder="Add a option">{!! $option->option !!}</textarea>
                     <input
-                        name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][id]"
+                        name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][id]"
                         type="hidden"
                         value="{{$option->id}}"
                     >
@@ -62,12 +62,12 @@
             @for($i = 0; $i < 4; $i++)
                 <div class="flex items-start mb-4">
                     <input
-                        name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][answer]"
+                        name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][answer]"
                         type="checkbox"
                         class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                     <textarea
                         class="w-full px-4 ml-4 placeholder-gray-500 placeholder-text-sm rounded-md bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white"
-                        name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][option]"
+                        name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][options][{{$i}}][option]"
                         placeholder="Add a option"></textarea>
                 </div>
             @endfor
@@ -77,7 +77,7 @@
             <label class="block my-2 font-semibold" for="body">Question Description</label>
             <textarea
                 class="w-full px-4 placeholder-gray-500 placeholder-text-sm rounded-md bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white"
-                name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][description]"
+                name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][description]"
                 placeholder="Description">{{$question->detail->description ?? ""}}</textarea>
             <span
                 class="input-desc mt-3 block">Brief description about the question</span>
@@ -89,7 +89,7 @@
                    for="input1">Mark Of Question</label>
 
             <input
-                name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][mark]"
+                name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][mark]"
                 value="{{$question->detail->mark ?? 1}}"
                 class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                 type="number"
@@ -105,7 +105,7 @@
 
             <textarea
                 class="w-full mt-2 px-4 placeholder-gray-500 placeholder-text-sm rounded-md bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white"
-                name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][explanation]"
+                name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][explanation]"
                 placeholder="Explanation">{{$question->detail->explanation ?? ""}}</textarea>
 
             <span
@@ -118,7 +118,7 @@
 
             <textarea
                 class="w-full mt-2 px-4 placeholder-gray-500 placeholder-text-sm rounded-md bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white"
-                name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][hint]"
+                name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][detail][hint]"
                 placeholder="Hint">{{$question->detail->hint ?? ""}}</textarea>
 
             <span

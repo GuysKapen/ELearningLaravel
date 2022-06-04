@@ -55,12 +55,12 @@
             <label class="block text-sm mr-2"
                    for="input">Section {{$sectionIndex}}: </label>
             <input id="input-section-title-{{$sectionIndex}}"
-                   name="section[{{$sectionIndex}}][name]"
+                   name="sections[{{$sectionIndex}}][name]"
                    value="{{$section->name ?? "Introduction"}}"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
             @if(isset($section))
-                <input type="hidden" name="section[{{$sectionIndex}}][id]" value="{{$section->id}}">
+                <input type="hidden" name="sections[{{$sectionIndex}}][id]" value="{{$section->id}}">
             @endif
         </div>
         <div class="flex-end flex items-center justify-end ml-auto">

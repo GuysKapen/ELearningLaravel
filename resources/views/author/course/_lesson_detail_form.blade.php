@@ -8,7 +8,7 @@
 
                     <div class="flex items-center">
                         <input id="duration"
-                               name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][detail][duration]"
+                               name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][detail][duration]"
                                value="{{ isset($lessonDetail) ? $lessonDetail->duration : "" }}"
                                class="string block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                type="number"
@@ -19,7 +19,7 @@
                                  x-data="Components.customSelect({ open: true, value: 4, selected: 4 })"
                                  x-init="init()">
                                 <input x-ref="input" type="hidden"
-                                       name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][detail][duration_type]"
+                                       name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][detail][duration_type]"
                                        id="duration_type" value="0">
                                 <div class="relative">
                                                 <span class="inline-block w-full rounded-md shadow-sm">
@@ -118,7 +118,7 @@
                     <input
                         class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded block"
                         type="checkbox"
-                        name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][detail][is_preview]"
+                        name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][detail][is_preview]"
                         id="is_preview" {{ (isset($lessonDetail) && $lessonDetail->is_preview) ? 'checked' : '' }}>
 
                     <span

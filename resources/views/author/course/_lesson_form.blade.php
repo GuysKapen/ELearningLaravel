@@ -57,12 +57,12 @@
             <label class="block text-sm mr-2"
                    for="input1">Lecture {{$lessonIndex}}: </label>
             <input id="input-lesson-title-{{$lessonIndex}}"
-                   name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][title]"
+                   name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][title]"
                    value="{{$lesson->title ?? "Introduction"}}"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
             @if(isset($lesson))
-                <input type="hidden" name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][id]"
+                <input type="hidden" name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][id]"
                        value="{{$lesson->id}}">
             @endif
         </div>
@@ -89,14 +89,14 @@
             <label class="block text-sm mr-2"
                    for="input1">Video: </label>
             <input id="input-lesson-resource-{{$lessonIndex}}"
-                   name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][resource][video]"
+                   name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][resource][video]"
                    placeholder="https://"
                    value="{{$lesson->resource->video ?? ""}}"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
 
             @if(isset($lesson->resource))
-                <input name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][resource][id]"
+                <input name="sections[{{$sectionIndex}}][lessons][{{$lessonIndex}}][resource][id]"
                        value="{{$lesson->resource->id}}"
                        type="hidden"/>
             @endif
@@ -118,7 +118,7 @@
     </div>
 
     <div id="lesson-input-content-{{$lessonIndex}}" class="text-sm mt-2 p-5 hidden">
-        @include("author.course._lesson_content_form", ["sectionIndex" => $sectionIndex, "lessonIndex" => $lessonIndex])
+        @include("author.course._lesson_content_form", ["sectionIndex" => $sectionIndex, "lessonIndex" => $lessonIndex,  "lessonContent" => $lesson->content ?? null])
         <div class="flex-end flex items-center justify-end ml-auto mt-2">
             <div
                 id="btn-cancel-lesson-content"

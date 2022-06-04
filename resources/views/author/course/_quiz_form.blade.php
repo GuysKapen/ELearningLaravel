@@ -36,16 +36,16 @@
             <label class="block text-sm mr-2"
                    for="input1">Quiz {{$lessonIndex}}: </label>
             <input id="input-quiz-name-{{$lessonIndex}}"
-                   name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][name]"
+                   name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][name]"
                    value="{{$lesson->title ?? "Introduction"}}"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
-            <input name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][index]"
+            <input name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][index]"
                    value="{{$quiz->index ?? $lessonIndex}}"
                    type="hidden"/>
 
             @if(isset($quiz))
-                <input type="hidden" name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][id]"
+                <input type="hidden" name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][id]"
                        value="{{$quiz->id}}">
             @endif
         </div>

@@ -82,7 +82,6 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-//        return $request;
         $this->validate($request, [
             'name' => 'required|unique:categories',
         ]);
@@ -203,10 +202,10 @@ class CourseController extends Controller
             }
 
             // Course curriculum
-            if (isset($request->section) && is_array($request->section)
-                && !empty($request->section)) {
+            if (isset($request->sections) && is_array($request->sections)
+                && !empty($request->sections)) {
 
-                $sections = array_values($request->section);
+                $sections = array_values($request['sections']);
                 foreach ($sections as $key => $value) {
                     if (empty($value)) {
                         unset($sections[$key]);
@@ -225,108 +224,114 @@ class CourseController extends Controller
                         $course->sections()->save($courseSection);
 
                         // Save lessons
-                        $lessons = array_values($section['lesson']);
-                        for ($j = 0; $j < count($lessons); ++$j) {
-                            $lesson = $lessons[$j];
-                            $lesson += ['slug' => Str::slug($lesson['title'])];
-                            $lesson += ['course_section_id' => $courseSection->id];
+                        if (isset($section['lessons']) && is_array($section['lessons'])
+                            && !empty($section['lessons'])) {
+                            $lessons = array_values($section['lessons']);
+                            for ($j = 0; $j < count($lessons); ++$j) {
+                                $lesson = $lessons[$j];
+                                $lesson += ['slug' => Str::slug($lesson['title'])];
+                                $lesson += ['course_section_id' => $courseSection->id];
 
-                            $courseLesson = new CourseLesson($lesson);
+                                $courseLesson = new CourseLesson($lesson);
 
-                            $courseSection->lessons()->save($courseLesson);
+                                $courseSection->lessons()->save($courseLesson);
 
-                            if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
-                                $resource = $lesson['resource'];
-                                $resource += ['course_lesson_id' => $courseLesson->id];
-                                $lessonResource = new LessonResource($resource);
+                                if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
+                                    $resource = $lesson['resource'];
+                                    $resource += ['course_lesson_id' => $courseLesson->id];
+                                    $lessonResource = new LessonResource($resource);
 
-                                $courseLesson->resource()->save($lessonResource);
-                            }
-
-                            if (isset($lesson['content']['content']) && !empty($lesson['content']['content'])) {
-                                $content = $lesson['content'];
-                                $lessonContent = new LessonContent($content);
-
-                                $courseLesson->content()->save($lessonContent);
-                            }
-
-                            if (isset($lesson['detail']) && !empty($lesson['detail'])) {
-                                $detail = $lesson['detail'];
-                                $lessonDetail = new LessonDetail();
-
-                                $factor = 1;
-                                switch ($request->duration_type) {
-                                    case DurationType::Sec:
-                                        $factor = 1;
-                                        break;
-                                    case DurationType::Min:
-                                        $factor = 60;
-                                        break;
-                                    case DurationType::Hour:
-                                        $factor = 3600;
-                                        break;
+                                    $courseLesson->resource()->save($lessonResource);
                                 }
 
-                                $lessonDetail->is_preview = isset($detail['is_preview']);
-                                $lessonDetail->duration = $factor * $detail['duration'];
+                                if (isset($lesson['content']['content']) && !empty($lesson['content']['content'])) {
+                                    $content = $lesson['content'];
+                                    $lessonContent = new LessonContent($content);
 
-                                $courseLesson->detail()->save($lessonDetail);
+                                    $courseLesson->content()->save($lessonContent);
+                                }
+
+                                if (isset($lesson['detail']) && !empty($lesson['detail'])) {
+                                    $detail = $lesson['detail'];
+                                    $lessonDetail = new LessonDetail();
+
+                                    $factor = 1;
+                                    switch ($request->duration_type) {
+                                        case DurationType::Sec:
+                                            $factor = 1;
+                                            break;
+                                        case DurationType::Min:
+                                            $factor = 60;
+                                            break;
+                                        case DurationType::Hour:
+                                            $factor = 3600;
+                                            break;
+                                    }
+
+                                    $lessonDetail->is_preview = isset($detail['is_preview']);
+                                    $lessonDetail->duration = $factor * $detail['duration'];
+
+                                    $courseLesson->detail()->save($lessonDetail);
+                                }
                             }
                         }
 
                         // Save quizzes
-                        $quizzes = array_values($section['quizzes']);
-                        for ($j = 0; $j < count($quizzes); ++$j) {
-                            $quiz = $quizzes[$j];
-                            $quiz += ['slug' => Str::slug($quiz['name'])];
-                            $quiz += ['course_section_id' => $courseSection->id];
+                        if (isset($section['quizzes']) && is_array($section['quizzes'])
+                            && !empty($section['quizzes'])) {
+                            $quizzes = array_values($section['quizzes']);
+                            for ($j = 0; $j < count($quizzes); ++$j) {
+                                $quiz = $quizzes[$j];
+                                $quiz += ['slug' => Str::slug($quiz['name'])];
+                                $quiz += ['course_section_id' => $courseSection->id];
 
-                            $courseQuiz = new CourseQuiz($quiz);
+                                $courseQuiz = new CourseQuiz($quiz);
 
-                            $course->quizzes()->save($courseQuiz);
+                                $course->quizzes()->save($courseQuiz);
 
-                            if (isset($quiz['questions']) && is_array($quiz['questions'])) {
-                                $questions = array_values($quiz['questions']);
+                                if (isset($quiz['questions']) && is_array($quiz['questions'])) {
+                                    $questions = array_values($quiz['questions']);
 
-                                for ($k = 0; $k < count($questions); ++$k) {
-                                    $question = $questions[$k];
-                                    $question += ['slug' => Str::slug($quiz['name'])];
-                                    $question += ['quiz_id' => $courseQuiz->id];
+                                    for ($k = 0; $k < count($questions); ++$k) {
+                                        $question = $questions[$k];
+                                        $question += ['slug' => Str::slug($quiz['name'])];
+                                        $question += ['quiz_id' => $courseQuiz->id];
 
-                                    $quizQuestion = new QuizQuestion($question);
+                                        $quizQuestion = new QuizQuestion($question);
 
-                                    $courseQuiz->questions()->save($quizQuestion);
+                                        $courseQuiz->questions()->save($quizQuestion);
 
-                                    if (isset($question['options']) && is_array($question['options'])) {
-                                        $options = array_values($question['options']);
-                                        for ($l = 0; $l < count($options); ++$l) {
-                                            $option = $options[$l];
-                                            $option += ['quiz_question_id' => $quizQuestion->id];
+                                        if (isset($question['options']) && is_array($question['options'])) {
+                                            $options = array_values($question['options']);
+                                            for ($l = 0; $l < count($options); ++$l) {
+                                                $option = $options[$l];
+                                                $option += ['quiz_question_id' => $quizQuestion->id];
 
-                                            $questionOption = new QuestionOption($option);
+                                                $questionOption = new QuestionOption($option);
 
-                                            $quizQuestion->options()->save($questionOption);
+                                                $quizQuestion->options()->save($questionOption);
 
-                                            // Save answer
-                                            if (isset($option['answer'])) {
-                                                $questionAnswer = new QuestionAnswer();
-                                                $questionAnswer->question_option_id = $questionOption->id;
-                                                $questionAnswer->quiz_question_id = $quizQuestion->id;
+                                                // Save answer
+                                                if (isset($option['answer'])) {
+                                                    $questionAnswer = new QuestionAnswer();
+                                                    $questionAnswer->question_option_id = $questionOption->id;
+                                                    $questionAnswer->quiz_question_id = $quizQuestion->id;
 
-                                                $quizQuestion->answers()->save($questionAnswer);
+                                                    $quizQuestion->answers()->save($questionAnswer);
+                                                }
                                             }
+                                        }
+
+                                        // Save detail
+                                        if (isset($question['detail']) && !empty($question['detail'])) {
+                                            $detail = $question['detail'];
+                                            $questionDetail = new QuestionDetail($detail);
+
+                                            $quizQuestion->detail()->save($questionDetail);
                                         }
                                     }
 
-                                    // Save detail
-                                    if (isset($question['detail']) && !empty($question['detail'])) {
-                                        $detail = $question['detail'];
-                                        $questionDetail = new QuestionDetail($detail);
-
-                                        $quizQuestion->detail()->save($questionDetail);
-                                    }
                                 }
-
                             }
                         }
 
@@ -560,10 +565,10 @@ class CourseController extends Controller
             }
 
             // Course curriculum
-            if (isset($request->section) && is_array($request->section)
-                && !empty($request->section)) {
+            if (isset($request['sections']) && is_array($request['sections'])
+                && !empty($request['sections'])) {
 
-                $sections = array_values($request->section);
+                $sections = array_values($request['sections']);
                 foreach ($sections as $key => $value) {
                     if (empty($value)) {
                         unset($sections[$key]);
@@ -580,89 +585,96 @@ class CourseController extends Controller
                     }
 
                     $course->sections()->sync($sections, function ($section, $model) {
-                        $lessons = array_values($section['lesson']);
-                        for ($j = 0; $j < count($lessons); ++$j) {
-                            $lesson =& $lessons[$j];
-                            $lesson += ['slug' => Str::slug($lesson['title'])];
-                            $lesson += ['course_section_id' => $model->id];
-                        }
-
-                        // Sync lessons and nested
-                        $model->lessons()->sync($lessons, function ($lesson, $model) {
-                            if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
-                                $resource =& $lesson['resource'];
-                                $lessonResource = $model->resource ?? new LessonResource();
-                                $lessonResource->video = $resource['video'];
-                                $lessonResource->course_lesson_id = $model->id;
-
-                                $model->resource()->updateOrCreate($lessonResource->attributesToArray());
+                        if (isset($section['lessons']) && is_array($section['lessons'])
+                            && !empty($section['lessons'])) {
+                            $lessons = array_values($section['lessons']);
+                            for ($j = 0; $j < count($lessons); ++$j) {
+                                $lesson =& $lessons[$j];
+                                $lesson += ['slug' => Str::slug($lesson['title'])];
+                                $lesson += ['course_section_id' => $model->id];
                             }
 
-                            if (isset($lesson['content']) && isset($lesson['content']['content'])) {
-                                $content =& $lesson['content'];
-                                $lessonContent = $model->content ?? new LessonContent($content);
+                            // Sync lessons and nested
+                            $model->lessons()->sync($lessons, function ($lesson, $model) {
+                                if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
+                                    $resource =& $lesson['resource'];
+                                    $lessonResource = $model->resource ?? new LessonResource();
+                                    $lessonResource->video = $resource['video'];
+                                    $lessonResource->course_lesson_id = $model->id;
 
-                                $model->content()->updateOrCreate($lessonContent->attributesToArray());
-                            }
-
-                            if (isset($lesson['detail']) && isset($lesson['detail']['duration'])) {
-                                $detail =& $lesson['detail'];
-                                $lessonDetail = $model->detail ?? new LessonDetail($detail);
-
-                                $model->detail()->updateOrCreate($lessonDetail->attributesToArray());
-                            }
-                        });
-
-                        // Save quizzes
-                        $quizzes = array_values($section['quizzes']);
-                        for ($j = 0; $j < count($quizzes); ++$j) {
-                            $quiz =& $quizzes[$j];
-                            $quiz += ['slug' => Str::slug($quiz['name'])];
-                            $quiz += ['course_id' => $model->course->id];
-                        }
-
-                        // Sync quizzes and nested
-                        $model->course->quizzes()->sync($quizzes, function ($quiz, $model) {
-                            if (isset($quiz['questions']) && is_array($quiz['questions'])) {
-                                $questions = array_values($quiz['questions']);
-                                for ($j = 0; $j < count($questions); ++$j) {
-                                    $question =& $questions[$j];
-                                    $question += ['course_quiz_id' => $model->id];
+                                    $model->resource()->updateOrCreate($lessonResource->attributesToArray());
                                 }
 
-                                // Sync questions
-                                $model->questions()->sync($questions, function ($question, $model) {
-                                    // Remove answers
-                                    $model->answers()->delete();
-                                    // Sync options
-                                    if (isset($question['options']) && is_array($question['options'])) {
-                                        $options = array_values($question['options']);
-                                        for ($j = 0; $j < count($options); ++$j) {
-                                            $option =& $options[$j];
-                                            $option += ['quiz_question_id' => $model->id];
-                                        }
+                                if (isset($lesson['content']) && isset($lesson['content']['content'])) {
+                                    $content =& $lesson['content'];
+                                    $lessonContent = $model->content ?? new LessonContent($content);
 
-                                        $model->options()->sync($options, function ($option, $model) {
-                                            if (isset($option['answer'])) {
-                                                $answer = ["quiz_question_id" => $option['quiz_question_id']];
-                                                $answer += ['question_option_id' => $model->id];
-                                                $questionAnswer = new QuestionAnswer($answer);
-                                                $questionAnswer->saveOrFail();
-                                            }
-                                        });
-                                    }
+                                    $model->content()->updateOrCreate($lessonContent->attributesToArray());
+                                }
 
-                                    // Sync detail
-                                    if (isset($question['detail']) && is_array($question['detail'])) {
-                                        $detail =& $question['detail'];
-                                        $questionDetail = $model->detail ?? new QuestionDetail($detail);
+                                if (isset($lesson['detail']) && isset($lesson['detail']['duration'])) {
+                                    $detail =& $lesson['detail'];
+                                    $lessonDetail = $model->detail ?? new LessonDetail($detail);
 
-                                        $model->detail()->updateOrCreate($questionDetail->attributesToArray());
-                                    }
-                                });
+                                    $model->detail()->updateOrCreate($lessonDetail->attributesToArray());
+                                }
+                            });
+                        }
+
+                        if (isset($section['quizzes']) && is_array($section['quizzes'])
+                            && !empty($section['quizzes'])) {
+
+                            // Save quizzes
+                            $quizzes = array_values($section['quizzes']);
+                            for ($j = 0; $j < count($quizzes); ++$j) {
+                                $quiz =& $quizzes[$j];
+                                $quiz += ['slug' => Str::slug($quiz['name'])];
+                                $quiz += ['course_id' => $model->course->id];
                             }
 
-                        });
+                            // Sync quizzes and nested
+                            $model->course->quizzes()->sync($quizzes, function ($quiz, $model) {
+                                if (isset($quiz['questions']) && is_array($quiz['questions'])) {
+                                    $questions = array_values($quiz['questions']);
+                                    for ($j = 0; $j < count($questions); ++$j) {
+                                        $question =& $questions[$j];
+                                        $question += ['course_quiz_id' => $model->id];
+                                    }
+
+                                    // Sync questions
+                                    $model->questions()->sync($questions, function ($question, $model) {
+                                        // Remove answers
+                                        $model->answers()->delete();
+                                        // Sync options
+                                        if (isset($question['options']) && is_array($question['options'])) {
+                                            $options = array_values($question['options']);
+                                            for ($j = 0; $j < count($options); ++$j) {
+                                                $option =& $options[$j];
+                                                $option += ['quiz_question_id' => $model->id];
+                                            }
+
+                                            $model->options()->sync($options, function ($option, $model) {
+                                                if (isset($option['answer'])) {
+                                                    $answer = ["quiz_question_id" => $option['quiz_question_id']];
+                                                    $answer += ['question_option_id' => $model->id];
+                                                    $questionAnswer = new QuestionAnswer($answer);
+                                                    $questionAnswer->saveOrFail();
+                                                }
+                                            });
+                                        }
+
+                                        // Sync detail
+                                        if (isset($question['detail']) && is_array($question['detail'])) {
+                                            $detail =& $question['detail'];
+                                            $questionDetail = $model->detail ?? new QuestionDetail($detail);
+
+                                            $model->detail()->updateOrCreate($questionDetail->attributesToArray());
+                                        }
+                                    });
+                                }
+
+                            });
+                        }
 
                     });
                 }
