@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Relations\HasManySyncable;
 use Illuminate\Database\Eloquent\Model;
 
-class SyncableModel extends Model
+class HasManySyncableModel extends Model
 {
     /**
      * Overrides the default Eloquent hasMany relationship to return a HasManySyncable.

@@ -10,7 +10,7 @@
 
 <div class="input-quiz m-8 bg-gray-50 relative" data-id="{{$lessonIndex}}">
     <div id="quiz-info-{{$lessonIndex}}" class="flex items-center text-sm shadow-sm p-3">
-        <span class="ml-2 text-sm">Quiz {{$lessonIndex}}:</span>
+        <span class="ml-2 text-sm">Quiz :</span>
         <div class="flex items-start flex-grow-1 w-8/12 ml-2">
             <span class="material-icons outlined text-sm">description</span>
             <span id="quiz-name-{{$lessonIndex}}"
@@ -44,9 +44,9 @@
                    value="{{$quiz->index ?? $lessonIndex}}"
                    type="hidden"/>
 
-            @if(isset($lesson))
-                <input type="hidden" name="section[{{$sectionIndex}}][lesson][{{$lessonIndex}}][id]"
-                       value="{{$lesson->id}}">
+            @if(isset($quiz))
+                <input type="hidden" name="section[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][id]"
+                       value="{{$quiz->id}}">
             @endif
         </div>
         <div class="flex-end flex items-center justify-end ml-auto">
@@ -65,7 +65,19 @@
         </div>
     </div>
 
-    <div id="quiz-questions-form-container-{{$lessonIndex}}" class="text-sm p-5 hidden">
+    <div id="quiz-questions-form-container-{{$lessonIndex}}" class="text-sm p-5">
+
+        @if(isset($quiz->questions))
+            @php
+                $questionIndex = 1;
+            @endphp
+            @foreach($quiz->questions as $key=>$question)
+                @include('author.course._question_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'questionIndex' => $questionIndex, 'question' => $question,])
+                @php
+                    $questionIndex++;
+                @endphp
+            @endforeach
+        @endif
     </div>
 
 

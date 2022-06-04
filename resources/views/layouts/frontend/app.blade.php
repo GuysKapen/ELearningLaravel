@@ -47,6 +47,8 @@
     </style>
 </head>
 <body>
+@stack('lib-js')
+
 <div id="app">
 
     <!-- This example requires Tailwind CSS v2.0+ -->

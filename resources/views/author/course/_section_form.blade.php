@@ -35,10 +35,15 @@
                     @php
                         $lessonIndex++;
                     @endphp
+                    @php
+                        $quiz = $section->course->quizzes->where('index', '<=', $lessonIndex)->first();
+                    @endphp
+                    @if(isset($quiz))
+                        @include('author.course._quiz_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'quiz' => $quiz, "minimize" => true])
+                    @endif
                 @endforeach
             @else
                 @include('author.course._lesson_form', ['lessonIndex' => 1, 'timeUnits' => $timeUnits])
-                {{--            @include('author.course._quiz_form', ['lessonIndex' => 1, 'timeUnits' => $timeUnits])--}}
             @endif
         </div>
 

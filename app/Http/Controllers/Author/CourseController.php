@@ -587,6 +587,7 @@ class CourseController extends Controller
                             $lesson += ['course_section_id' => $model->id];
                         }
 
+                        // Sync lessons and nested
                         $model->lessons()->sync($lessons, function ($lesson, $model) {
                             if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
                                 $resource =& $lesson['resource'];
@@ -611,6 +612,58 @@ class CourseController extends Controller
                                 $model->detail()->updateOrCreate($lessonDetail->attributesToArray());
                             }
                         });
+
+                        // Save quizzes
+                        $quizzes = array_values($section['quizzes']);
+                        for ($j = 0; $j < count($quizzes); ++$j) {
+                            $quiz =& $quizzes[$j];
+                            $quiz += ['slug' => Str::slug($quiz['name'])];
+                            $quiz += ['course_id' => $model->course->id];
+                        }
+
+                        // Sync quizzes and nested
+                        $model->course->quizzes()->sync($quizzes, function ($quiz, $model) {
+                            if (isset($quiz['questions']) && is_array($quiz['questions'])) {
+                                $questions = array_values($quiz['questions']);
+                                for ($j = 0; $j < count($questions); ++$j) {
+                                    $question =& $questions[$j];
+                                    $question += ['course_quiz_id' => $model->id];
+                                }
+
+                                // Sync questions
+                                $model->questions()->sync($questions, function ($question, $model) {
+                                    // Remove answers
+                                    $model->answers()->delete();
+                                    // Sync options
+                                    if (isset($question['options']) && is_array($question['options'])) {
+                                        $options = array_values($question['options']);
+                                        for ($j = 0; $j < count($options); ++$j) {
+                                            $option =& $options[$j];
+                                            $option += ['quiz_question_id' => $model->id];
+                                        }
+
+                                        $model->options()->sync($options, function ($option, $model) {
+                                            if (isset($option['answer'])) {
+                                                $answer = ["quiz_question_id" => $option['quiz_question_id']];
+                                                $answer += ['question_option_id' => $model->id];
+                                                $questionAnswer = new QuestionAnswer($answer);
+                                                $questionAnswer->saveOrFail();
+                                            }
+                                        });
+                                    }
+
+                                    // Sync detail
+                                    if (isset($question['detail']) && is_array($question['detail'])) {
+                                        $detail =& $question['detail'];
+                                        $questionDetail = $model->detail ?? new QuestionDetail($detail);
+
+                                        $model->detail()->updateOrCreate($questionDetail->attributesToArray());
+                                    }
+                                });
+                            }
+
+                        });
+
                     });
                 }
 

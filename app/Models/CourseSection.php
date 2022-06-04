@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $index
  * @property integer $course_id
  */
-class CourseSection extends SyncableModel
+class CourseSection extends HasManySyncableModel
 {
     use HasFactory;
 

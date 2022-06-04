@@ -5,6 +5,10 @@
     />
 @endpush
 
+@push('lib-js')
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+@endpush
+
 <section class="section">
     <form
         enctype="multipart/form-data"
@@ -830,7 +834,6 @@
 </section>
 
 @push('js')
-    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#course-desc', // Replace this CSS selector to match the placeholder element for TinyMCE
@@ -1054,6 +1057,7 @@
         }
 
         function initQuiz(sectionId, quizId) {
+            initQuestion(sectionId, quizId)
             $(".input-section").each(function () {
                 const index = $(this).attr("data-id")
                 if (index != sectionId && sectionId != -1) return;
@@ -1095,9 +1099,9 @@
                 })
 
                 $(".btn-add-text-question", this).each(function () {
+                    // id of quiz
                     const index = $(this).attr("data-id");
                     if (index == quizId || quizId == -1) {
-                        const validId = quizId == -1 ? 1 : quizId;
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
                             $(`#quiz-add-list-${index}`, context).toggleClass("hidden")
@@ -1106,18 +1110,16 @@
                                 $html_lecture = json_encode(View::make('author.course._question_form')->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
-                            const lesson = $(`#quiz-questions-form-container-${validId}`, context)
+                            const lesson = $(`#quiz-questions-form-container-${index}`, context)
                             const id = lesson.children().length + 1;
-                            console.log(id)
                             // Question index
                             processed = processed.replaceAll("--questionIndex--", id);
                             // Quiz index
-                            processed = processed.replaceAll("--index--", validId);
+                            processed = processed.replaceAll("--index--", index);
                             // Section index
                             processed = processed.replaceAll("--sectionIndex--", sectionId)
                             lesson.append(processed)
-                            initQuestion(validId, id)
-                            tinymce.EditorManager.execCommand('mceAddEditor', false, `input-question-name-${id}`);
+                            initQuestion(index, id)
                         })
                     }
                 })
@@ -1139,40 +1141,45 @@
             $(".input-quiz").each(function () {
                 const index = $(this).attr("data-id")
                 if (index != quizId && quizId != -1) return;
-                const context = this;
-
-                // Btn save and cancel content click listener
-                $(".btn-save-quiz-question", this).each(function () {
+                const outContext = this;
+                $(".question-form-container", outContext).each(function () {
+                    const context = this;
                     const index = $(this).attr("data-id")
-                    if (index == questionId || questionId == -1) {
-                        $(this).on("click", function () {
-                            const index = $(this).attr("data-id")
-                            $(`#question-name-${index}`, context).html(tinymce.get(`input-question-name-${index}`).getContent());
-                            $(`#question-form-${index}`, context).toggleClass("hidden")
-                            $(`#question-info-${index}`, context).toggleClass("hidden")
-                        })
-                    }
-                })
+                    if (index != questionId && questionId != -1) return;
+                    // Btn save and cancel content click listener
+                    $(".btn-save-quiz-question", this).each(function () {
+                        const index = $(this).attr("data-id")
+                        if (index == questionId || questionId == -1) {
+                            $(this).on("click", function () {
+                                const index = $(this).attr("data-id")
+                                $(`#question-name-${index}`, context).html(tinymce.get(`input-question-name-${index}`).getContent());
+                                $(`#question-form-${index}`, context).toggleClass("hidden")
+                                $(`#question-info-${index}`, context).toggleClass("hidden")
+                            })
+                        }
+                    })
 
-                $(".btn-cancel-quiz-question", this).each(function () {
-                    const index = $(this).attr("data-id");
-                    if (index == questionId || questionId == -1) {
-                        $(this).on("click", function () {
-                            const index = $(this).attr("data-id")
-                            $(`#question-form-container-${index}`, context).toggleClass("hidden")
-                        })
-                    }
-                })
+                    $(".btn-cancel-quiz-question", this).each(function () {
+                        const index = $(this).attr("data-id");
+                        if (index == questionId || questionId == -1) {
+                            $(this).on("click", function () {
+                                const index = $(this).attr("data-id")
+                                $(`#question-form-${index}`, context).toggleClass("hidden")
+                                $(`#question-info-${index}`, context).toggleClass("hidden")
+                            })
+                        }
+                    })
 
-                $(".question-edit", this).each(function () {
-                    const index = $(this).attr("data-id");
-                    if (index == questionId || questionId == -1) {
-                        $(this).click(function () {
-                            const index = $(this).attr("data-id")
-                            $(`#question-form-${index}`, context).toggleClass("hidden")
-                            $(`#question-info-${index}`, context).toggleClass("hidden")
-                        })
-                    }
+                    $(".question-edit", this).each(function () {
+                        const index = $(this).attr("data-id");
+                        if (index == questionId || questionId == -1) {
+                            $(this).click(function () {
+                                const index = $(this).attr("data-id")
+                                $(`#question-form-${index}`, context).toggleClass("hidden")
+                                $(`#question-info-${index}`, context).toggleClass("hidden")
+                            })
+                        }
+                    })
                 })
             })
         }
