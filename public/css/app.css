@@ -1247,8 +1247,8 @@ select{
 .h-10{
   height: 2.5rem;
 }
-.h-16{
-  height: 4rem;
+.h-6{
+  height: 1.5rem;
 }
 .h-5{
   height: 1.25rem;
@@ -1262,9 +1262,6 @@ select{
 .h-screen{
   height: 100vh;
 }
-.h-6{
-  height: 1.5rem;
-}
 .h-auto{
   height: auto;
 }
@@ -1276,6 +1273,9 @@ select{
 }
 .h-12{
   height: 3rem;
+}
+.h-16{
+  height: 4rem;
 }
 .max-h-56{
   max-height: 14rem;
@@ -1300,6 +1300,9 @@ select{
 }
 .w-12{
   width: 3rem;
+}
+.w-16{
+  width: 4rem;
 }
 .w-11\/12{
   width: 91.666667%;
@@ -1932,6 +1935,9 @@ select{
 .leading-relaxed{
   line-height: 1.625;
 }
+.leading-5{
+  line-height: 1.25rem;
+}
 .leading-6{
   line-height: 1.5rem;
 }
@@ -1940,9 +1946,6 @@ select{
 }
 .leading-4{
   line-height: 1rem;
-}
-.leading-5{
-  line-height: 1.25rem;
 }
 .tracking-wide{
   letter-spacing: 0.025em;

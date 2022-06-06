@@ -6,6 +6,8 @@ use App\Library\SortType;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Course;
+use App\Models\CourseLesson;
+use App\Models\CourseQuiz;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -158,14 +160,19 @@ class HomeController extends Controller
         return view('_courses', compact('courses'))->render();
     }
 
-    public function courseDetail(Course $course)
+    public function courseDetail(Course $course, CourseLesson $lesson = null)
     {
         if (!$course->sections->isEmpty() && !$course->sections[0]->lessons->isEmpty()) {
-            $courseLesson = $course->sections[0]->lessons[0];
+            $courseLesson = $lesson ?? $course->sections[0]->lessons[0];
             return view('course_detail', compact('courseLesson', 'course'));
         }
 
         return view('course_detail', compact('course'));
+    }
+
+    public function courseDetailQuiz(Course $course, CourseQuiz $quiz)
+    {
+            return view('course_detail_quiz', compact('quiz', 'course'));
     }
 
     public function comment(Request $request)

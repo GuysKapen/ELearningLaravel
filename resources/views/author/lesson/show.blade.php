@@ -117,7 +117,7 @@
                                            class="mx-2 text-sm">
                                             <span class="text-sm font-bold text-black">{{$lesson->title}}</span>
                                         </a>
-                                        @if($lesson->detail->is_preview)
+                                        @if($lesson->detail->is_preview ?? false)
                                             <span class="icon-wrap small mr-3 flex-end ml-auto"><span
                                                     class="icon material-icons">visibility</span></span>
                                         @endif
