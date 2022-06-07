@@ -15,7 +15,7 @@
             $minimize = false;
     }
 @endphp
-<div id="question-form-container-{{$questionIndex}}" class="mb-4 question-form-container" data-id="{{$questionIndex}}">
+<div id="question-form-container-{{$questionIndex}}" class="mb-4 question-form-container input-question" data-id="{{$questionIndex}}">
     <div id="question-info-{{$questionIndex}}" class="flex items-center text-sm {{$minimize ? '' : 'hidden'}}">
         <span class="text-sm font-bold">{{$questionIndex}}.</span>
         <div id="question-name-{{$questionIndex}}"
@@ -23,13 +23,14 @@
         <div class="flex-end flex items-center ml-auto">
         <span data-id="{{$questionIndex}}"
               class="question-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-            <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
+            <span data-id="{{$questionIndex}}"
+                  class="question-delete icon material-icons text-sm mr-1 mx-2 cursor-pointer">delete</span>
             <span class="icon material-icons text-sm mr-1 mx-2">menu</span>
         </div>
     </div>
     <div id="question-form-{{$questionIndex}}" class="{{$minimize ? 'hidden' : ''}}">
         <label class="block my-2 font-semibold" for="body">Question</label>
-        <textarea id="input-question-name-{{$questionIndex}}"
+        <textarea id="input-question-name-{{$sectionIndex}}-{{$lessonIndex}}-{{$questionIndex}}"
                   name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][questions][{{$questionIndex}}][question]"
                   placeholder="Enter content here"></textarea>
         @if(isset($question))
@@ -142,7 +143,7 @@
     </div>
     <script>
         tinymce.init({
-            selector: '#input-question-name-{{$questionIndex}}', // Replace this CSS selector to match the placeholder element for TinyMCE
+            selector: '#input-question-name-{{$sectionIndex}}-{{$lessonIndex}}-{{$questionIndex}}', // Replace this CSS selector to match the placeholder element for TinyMCE
             statusbar: false,
             menubar: false,
             image_advtab: true,

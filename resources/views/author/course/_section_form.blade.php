@@ -5,9 +5,10 @@
     $index = 1;
 
 @endphp
-<div class="input-section bg-gray-100 border py-4 px-2 relative mt-8" data-id="{{$sectionIndex}}">
+<div class="input-section bg-gray-100 border py-4 px-2 relative mt-8"
+     data-id="{{$sectionIndex}}">
 
-    <div id="section-info-{{$sectionIndex}}">
+    <div id="section-info-{{$sectionIndex}}" class="mb-4">
         <div data-id="{{$sectionIndex}}"
              class="add-lesson absolute left-0 top-10 bg-white px-2 cursor-pointer opacity-0 hover:opacity-100">
             <span class="material-icons outlined text-sm">add</span>
@@ -21,7 +22,8 @@
                       class="mx-1 text-sm flex-shrink-0">{{$section->name ?? "Introduction"}}</span>
                 <span data-id="{{$sectionIndex}}"
                       class="section-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-                <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
+                <span data-id="{{$sectionIndex}}"
+                      class="section-delete cursor-pointer icon material-icons text-sm mr-1 mx-2">delete</span>
             </div>
         </div>
 

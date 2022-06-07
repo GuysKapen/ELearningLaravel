@@ -1053,14 +1053,24 @@
                         })
                     }
                 })
+
+                $(".lesson-delete", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == lectureId || lectureId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`#lesson-form-${index}`, context).remove()
+                        })
+                    }
+                })
             })
         }
 
         function initQuiz(sectionId, quizId) {
             initQuestion(sectionId, quizId)
-            $(".input-section").each(function () {
+            $(".input-quiz").each(function () {
                 const index = $(this).attr("data-id")
-                if (index != sectionId && sectionId != -1) return;
+                if (index != quizId && quizId != -1) return;
                 const context = this;
 
                 // btn save and cancel title
@@ -1101,6 +1111,7 @@
                 $(".btn-add-text-question", this).each(function () {
                     // id of quiz
                     const index = $(this).attr("data-id");
+                    const sectionIndex = $(this).attr("data-section-id");
                     if (index == quizId || quizId == -1) {
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
@@ -1111,13 +1122,16 @@
                             @endphp
                             let processed = {!! $html_lecture !!};
                             const lesson = $(`#quiz-questions-form-container-${index}`, context)
-                            const id = lesson.children().length + 1;
+                            let id = lesson.children().length + 1;
+                            lesson.children().each((index, element) => {
+                                id = Math.max(id, parseInt($(element).attr("data-id")) + 1)
+                            })
                             // Question index
                             processed = processed.replaceAll("--questionIndex--", id);
                             // Quiz index
                             processed = processed.replaceAll("--index--", index);
                             // Section index
-                            processed = processed.replaceAll("--sectionIndex--", sectionId)
+                            processed = processed.replaceAll("--sectionIndex--", sectionIndex)
                             lesson.append(processed)
                             initQuestion(index, id)
                         })
@@ -1131,6 +1145,15 @@
                             const index = $(this).attr("data-id")
                             $(`#quiz-input-${index}`, context).toggleClass("hidden")
                             $(`#quiz-info-${index}`, context).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".quiz-delete", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).click(function () {
+                            $(context).remove()
                         })
                     }
                 })
@@ -1180,6 +1203,15 @@
                             })
                         }
                     })
+
+                    $(".question-delete", this).each(function () {
+                        const index = $(this).attr("data-id");
+                        if (index == questionId || questionId == -1) {
+                            $(this).click(function () {
+                                $(context).remove()
+                            })
+                        }
+                    })
                 })
             })
         }
@@ -1209,16 +1241,20 @@
                 $(".btn-add-lesson", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == sectionId || sectionId == -1) {
-                        const validId = sectionId == -1 ? 1 : sectionId;
+                        const validId = sectionId == -1 ? index : sectionId;
                         $(this).on("click", function () {
                             @php
                                 $html_lecture = json_encode(View::make('author.course._lesson_form', ["timeUnits" => $timeUnits])->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
                             const lesson = $(`#input-section-content-${validId}`, context)
-                            const id = lesson.children().length + 1;
+                            let id = lesson.children().length + 1;
+                            console.log(lesson)
+                            lesson.children().each((index, element) => {
+                                id = Math.max(id, parseInt($(element).attr("data-id")) + 1)
+                            })
                             processed = processed.replaceAll("--index--", id);
-                            processed = processed.replaceAll("--sectionIndex--", sectionId)
+                            processed = processed.replaceAll("--sectionIndex--", validId)
                             lesson.append(processed)
                             initLecture(sectionId, id)
                             $(`#section-content-list-${index}`, context).addClass("hidden")
@@ -1229,14 +1265,17 @@
                 $(".btn-add-quiz", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == sectionId || sectionId == -1) {
-                        const validSectionId = sectionId == -1 ? 1 : sectionId;
+                        const validSectionId = sectionId == -1 ? index : sectionId;
                         $(this).on("click", function () {
                             @php
                                 $html_lecture = json_encode(View::make('author.course._quiz_form', ["timeUnits" => $timeUnits])->render());
                             @endphp
                             let processed = {!! $html_lecture !!};
                             const lesson = $(`#input-section-content-${validSectionId}`, context)
-                            const id = lesson.children().length + 1;
+                            let id = lesson.children().length + 1;
+                            lesson.children().each((index, element) => {
+                                id = Math.max(id, parseInt($(element).attr("data-id")) + 1)
+                            })
                             processed = processed.replaceAll("--index--", id);
                             processed = processed.replaceAll("--sectionIndex--", validSectionId)
                             lesson.append(processed)
@@ -1257,6 +1296,16 @@
                     }
                 })
 
+                // Remove section
+                $(".section-delete", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == sectionId || sectionId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(context).remove()
+                        })
+                    }
+                })
 
                 $(".btn-save-section", this).each(function () {
                     const index = $(this).attr("data-id")

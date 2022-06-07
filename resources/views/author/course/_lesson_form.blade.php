@@ -8,7 +8,7 @@
     }
 @endphp
 
-<div class="m-8 bg-gray-50 relative">
+<div id="lesson-form-{{$lessonIndex}}" class="m-8 bg-gray-50 relative" data-id="{{$lessonIndex}}">
     <div id="lesson-info-{{$lessonIndex}}" class="flex items-center text-sm shadow-sm p-3">
         <span class="ml-2 text-sm">Lecture {{$lessonIndex}}:</span>
         <div class="flex items-start flex-grow-1 w-8/12 ml-2">
@@ -17,7 +17,7 @@
                   class="mx-1 text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{$lesson->title ?? "Introduction"}}</span>
             <span data-id="{{$lessonIndex}}"
                   class="lesson-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-            <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
+            <span data-id="{{$lessonIndex}}" class="lesson-delete icon material-icons text-sm mr-1 mx-2 cursor-pointer">delete</span>
         </div>
         <div class="flex-end flex items-center ml-auto">
             <div

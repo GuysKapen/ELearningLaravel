@@ -17,7 +17,7 @@
                   class="mx-1 text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{$quiz->name ?? "Quiz"}}</span>
             <span data-id="{{$lessonIndex}}"
                   class="quiz-edit icon material-icons text-sm mr-1 mx-2 cursor-pointer">edit</span>
-            <span class="icon material-icons text-sm mr-1 mx-2">delete</span>
+            <span data-id="{{$lessonIndex}}" class="quiz-delete icon material-icons text-sm mr-1 mx-2 cursor-pointer">delete</span>
         </div>
         <div class="flex-end flex items-center ml-auto">
             <div
@@ -37,7 +37,7 @@
                    for="input1">Quiz {{$lessonIndex}}: </label>
             <input id="input-quiz-name-{{$lessonIndex}}"
                    name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][name]"
-                   value="{{$lesson->title ?? "Introduction"}}"
+                   value="{{$quiz->name ?? "Quiz " . $lessonIndex}}"
                    class="flex-grow required block px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                    type="text"/>
             <input name="sections[{{$sectionIndex}}][quizzes][{{$lessonIndex}}][index]"
@@ -84,6 +84,7 @@
     <div id="quiz-add-list-{{$lessonIndex}}" class="text-sm hidden p-5">
         <div id="quiz-add-content-{{$lessonIndex}}"
              data-id="{{$lessonIndex}}"
+             data-section-id="{{$sectionIndex}}"
              class="btn-add-text-question bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
             <span class="icon material-icons text-sm mr-1">add</span>
             Multi choices
