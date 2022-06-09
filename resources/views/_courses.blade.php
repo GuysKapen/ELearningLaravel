@@ -30,7 +30,7 @@
             </div>
             <div class="flex border-t text-sm mt-4">
                 <div class="py-4 px-4"><span
-                        class="fa fa-users"></span> {{$course->detail->student_enrolled ?? 0}}</div>
+                        class="fa fa-users"></span> {{($course->detail->student_enrolled ?? 0) + $course->enrollments->count()}}</div>
                 <div class="py-4"><span class="fa fa-comment"></span>&nbsp; {{$course->comments->count()}}</div>
                 <div
                     class="py-4 px-4 ml-auto text-indigo-500 font-black">{{isset($course->coursePrice->price) ? "$" . $course->coursePrice->price : "Free"}}</div>

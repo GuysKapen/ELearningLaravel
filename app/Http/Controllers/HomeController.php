@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Course;
 use App\Models\CourseLesson;
 use App\Models\CourseQuiz;
+use App\Models\Enrollment;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -172,7 +173,7 @@ class HomeController extends Controller
 
     public function courseDetailQuiz(Course $course, CourseQuiz $quiz)
     {
-            return view('course_detail_quiz', compact('quiz', 'course'));
+        return view('course_detail_quiz', compact('quiz', 'course'));
     }
 
     public function comment(Request $request)
@@ -192,5 +193,21 @@ class HomeController extends Controller
         }
 
         Toastr::warning('Add comment failed', 'Failed');
+    }
+
+    public function enroll(Request $request)
+    {
+        $this->validate($request, [
+            'course_id' => 'required',
+        ]);
+
+        $enrollment = new Enrollment(["course_id" => $request->course_id]);
+
+        if (Auth::user()->enrollments()->save($enrollment)) {
+            Toastr::success('Enroll successfully', 'Succeed');
+        }
+
+        Toastr::warning('Enroll failed', 'Failed');
+        return redirect()->route('course.detail', $request->course_id);
     }
 }

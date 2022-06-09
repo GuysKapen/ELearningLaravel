@@ -61,12 +61,18 @@
                                                 <p class="text-sm font-medium text-gray-500">Eeaned this month</p>
                                             </div>
                                             <div class="w-3/12">
-                                                <h3 class="text-indigo-600">@php echo rand(0, 24) @endphp</h3>
+                                                <h3 class="text-indigo-600">{{$course->enrollments->where("created_at", ">", \Carbon\Carbon::now()->firstOfMonth())->count()}}</h3>
                                                 <p class="text-sm font-medium text-gray-500">Entrollment this month</p>
                                             </div>
                                             <div class="w-2/12">
-                                                <h3 class="text-indigo-600">@php echo number_format(mt_rand() / mt_getrandmax() * 5, 2) @endphp</h3>
-                                                <p class="text-sm font-medium text-gray-500">Course rating</p>
+                                                @if(!$course->comments->isEmpty())
+                                                    <h3 class="text-indigo-600">{{$course->comments->avg('rating')}}</h3>
+                                                    <p class="text-sm font-medium text-gray-500">Course rating</p>
+                                                @else
+                                                    <h3 class="text-indigo-600">No rating</h3>
+                                                    <p class="text-sm font-medium text-gray-500">Course rating</p>
+                                                @endif
+
                                             </div>
                                         </div>
                                     @endforeach

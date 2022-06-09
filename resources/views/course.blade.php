@@ -63,7 +63,7 @@
                     </div>
                 @endif
 
-                @if(!$course->comments->empty())
+                @if(!$course->comments->isEmpty())
                     <div class="px-4">
                         <div class="text-sm text-gray-500">Review</div>
                         <div class="mt-1">
@@ -83,11 +83,17 @@
                     </button>
                 @else
                     <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
-                    <a href="{{route('course.detail', ['course' => $course])}}"
-                       class="px-6 rounded-lg font-black flex items-center text-sm text-white bg-indigo-600 ml-8">Take
-                        this
-                        course
-                    </a>
+                    <form action="{{route('course.enroll')}}" class="h-full" method="POST">
+                        @csrf
+                        <input type="hidden" name="course_id" value="{{$course->id}}">
+                        <button
+                            type="submit"
+                            class="px-6 rounded-lg h-full font-black flex items-center text-sm text-white bg-indigo-600 ml-8">
+                            Take
+                            this
+                            course
+                        </button>
+                    </form>
                 @endif
             </div>
         </div>

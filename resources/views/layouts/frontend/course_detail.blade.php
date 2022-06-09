@@ -43,22 +43,33 @@
                         class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$course->name}}</span>
                 </div>
             </li>
-            <li aria-current="page">
-                <div class="flex items-center">
-                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
-                    <span
-                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->section->name ?? ""}}</span>
-                </div>
-            </li>
 
-            <li aria-current="page">
-                <div class="flex items-center">
-                    <span class="material-icons text-base outlined mx-2">chevron_right</span>
-                    <span
-                        class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->title ?? ""}}</span>
-                </div>
-            </li>
-        </ol>
+            @if(isset($courseLesson))
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <span
+                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->section->name ?? ""}}</span>
+                    </div>
+                </li>
+
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <span
+                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$courseLesson->title ?? ""}}</span>
+                    </div>
+                </li>
+            @elseif(isset($quiz))
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <span
+                            class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$quiz->name}}</span>
+                    </div>
+                </li>
+            @endif
+       </ol>
     </nav>
 </div>
 
