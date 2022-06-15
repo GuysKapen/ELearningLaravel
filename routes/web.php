@@ -28,8 +28,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/courses/sort', [HomeController::class, 'sort'])->name("course.sort");
     Route::post('/courses/comment', [HomeController::class, 'comment'])->name("course.comment");
     Route::post('/courses/enroll', [HomeController::class, 'enroll'])->name("course.enroll");
+    Route::post('/course/purchase', [HomeController::class, 'purchase'])->name('course.purchase');
     Route::get('/course/detail/{course}/lesson/{lesson?}', [HomeController::class, 'courseDetail'])->name('course.detail');
     Route::get('/course/detail/{course}/quiz/{quiz}', [HomeController::class, 'courseDetailQuiz'])->name('course.detail.quiz');
+    Route::get('/course/checkout/{course}', [HomeController::class, 'checkout'])->name('course.checkout');
 });
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth', 'admin']], function () {

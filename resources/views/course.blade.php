@@ -76,11 +76,14 @@
             </div>
             <div class="flex item-centers">
                 @if(isset($course->coursePrice) && $course->coursePrice->price != 0)
-                    <h2 class="text-black fw-900 font-black text-2xl font-mul ">
-                        $@convert($course->coursePrice->price)
-                    </h2>
-                    <button class="px-6 rounded-lg font-black text-sm text-white bg-indigo-600 ml-8">Buy this course
-                    </button>
+                    <a href="{{route('course.checkout', $course)}}" class="h-full flex items-center">
+                        <h2 class="text-black fw-900 font-black text-2xl font-mul ">
+                            $@convert($course->coursePrice->price)
+                        </h2>
+                        <button class="px-6 rounded-lg h-full font-black text-sm text-white bg-indigo-600 ml-8">Buy this course
+                        </button>
+                    </a>
+
                 @else
                     <h2 class="text-black fw-900 font-black text-2xl font-mul ">Free</h2>
                     <form action="{{route('course.enroll')}}" class="h-full" method="POST">

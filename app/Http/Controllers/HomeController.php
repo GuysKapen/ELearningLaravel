@@ -210,4 +210,45 @@ class HomeController extends Controller
         Toastr::warning('Enroll failed', 'Failed');
         return redirect()->route('course.detail', $request->course_id);
     }
+
+    public function checkout(Course $course)
+    {
+        return view('checkout', compact('course'));
+    }
+
+    public function purchase(Request $request)
+    {
+        $this->validate($request, [
+            'course_id' => 'required',
+            'payment_method_id' => 'required'
+        ]);
+
+        $course = Course::find($request->course_id);
+        if ($course == null) return response()->json(['success' => false, 'message' => "Invalid course"]);
+
+        DB::beginTransaction();
+        try {
+            // Save enroll before charge, if fail rollback
+            $enrollment = new Enrollment(["course_id" => $request->course_id]);
+            if (Auth::user()->enrollments()->save($enrollment)) {
+                if ($request->user()->stripe_id === null) {
+                    $request->user()->createAsStripeCustomer();
+                }
+
+                $request->user()->addPaymentMethod($request->input('payment_method_id'));
+
+                $stripeCharge = $request->user()->charge(
+                    $course->coursePrice->stripePrice(), $request->payment_method_id,
+                );
+
+                DB::commit();
+                return response()->json(['success' => true, 'message' => "Charge successfully!", 'data' => $stripeCharge]);
+            }
+
+            return response()->json(['success' => false, 'message' => "Failed to purchase course!"]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => "Charge Failed!", 'data' => $e->getMessage()]);
+        }
+    }
 }
