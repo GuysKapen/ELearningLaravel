@@ -46,7 +46,7 @@
                         <a href="{{route('courses')}}"
                            class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("courses") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Courses</a>
 
-                        <a href="{{route('author.course.index')}}"
+                        <a href="{{route('author.dashboard')}}"
                            class="inline-block py-4 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 {{Request::is("author/*") ? "text-blue-600 border-blue-600" : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"}}">Author</a>
 
                         <a href="{{route('admin.course.index')}}"

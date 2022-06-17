@@ -22,6 +22,7 @@ use App\Models\LessonResource;
 use App\Models\QuestionAnswer;
 use App\Models\QuestionDetail;
 use App\Models\QuestionOption;
+use App\Models\QuizDetail;
 use App\Models\QuizQuestion;
 use App\Models\Tag;
 use App\Models\User;
@@ -256,7 +257,7 @@ class CourseController extends Controller
                                     $lessonDetail = new LessonDetail();
 
                                     $factor = 1;
-                                    switch ($request->duration_type) {
+                                    switch ($detail['duration_type']) {
                                         case DurationType::Sec:
                                             $factor = 1;
                                             break;
@@ -288,6 +289,30 @@ class CourseController extends Controller
                                 $courseQuiz = new CourseQuiz($quiz);
 
                                 $course->quizzes()->save($courseQuiz);
+
+                                if (isset($quiz['detail']) && !empty($quiz['detail'])) {
+                                    $detail = $quiz['detail'];
+                                    $quizDetail = new QuizDetail();
+
+                                    $factor = 1;
+                                    switch ($detail['duration_type']) {
+                                        case DurationType::Sec:
+                                            $factor = 1;
+                                            break;
+                                        case DurationType::Min:
+                                            $factor = 60;
+                                            break;
+                                        case DurationType::Hour:
+                                            $factor = 3600;
+                                            break;
+                                    }
+
+                                    $quizDetail->allow_num_attempt = $detail['allow_num_attempt'];
+                                    $quizDetail->duration = $factor * $detail['duration'];
+                                    $quizDetail->description = $detail['description'];
+
+                                    $courseQuiz->detail()->save($quizDetail);
+                                }
 
                                 if (isset($quiz['questions']) && is_array($quiz['questions'])) {
                                     $questions = array_values($quiz['questions']);
@@ -602,21 +627,42 @@ class CourseController extends Controller
                                     $lessonResource->video = $resource['video'];
                                     $lessonResource->course_lesson_id = $model->id;
 
-                                    $model->resource()->updateOrCreate($lessonResource->attributesToArray());
+                                    $lessonResource->saveOrFail();
                                 }
 
                                 if (isset($lesson['content']) && isset($lesson['content']['content'])) {
                                     $content =& $lesson['content'];
+                                    $content += ['course_lesson_id' => $model->id];
                                     $lessonContent = $model->content ?? new LessonContent($content);
 
-                                    $model->content()->updateOrCreate($lessonContent->attributesToArray());
+                                    $lessonContent->saveOrFail();
                                 }
 
                                 if (isset($lesson['detail']) && isset($lesson['detail']['duration'])) {
                                     $detail =& $lesson['detail'];
-                                    $lessonDetail = $model->detail ?? new LessonDetail($detail);
+                                    $detail += ['course_lesson_id' => $model->id];
 
-                                    $model->detail()->updateOrCreate($lessonDetail->attributesToArray());
+                                    $factor = 1;
+                                    switch ($detail['duration_type']) {
+                                        case DurationType::Sec:
+                                            $factor = 1;
+                                            break;
+                                        case DurationType::Min:
+                                            $factor = 60;
+                                            break;
+                                        case DurationType::Hour:
+                                            $factor = 3600;
+                                            break;
+                                    }
+
+                                    $detail['duration'] = $factor * $detail['duration'];
+
+                                    $lessonDetail = $model->detail ?? new LessonDetail($detail);
+                                    $lessonDetail->duration = $detail['duration'];
+                                    $lessonDetail->is_preview = isset($detail['is_preview']);
+                                    $lessonDetail->course_lesson_id = $model->id;
+
+                                    $lessonDetail->saveOrFail();
                                 }
                             });
                         }
@@ -634,6 +680,33 @@ class CourseController extends Controller
 
                             // Sync quizzes and nested
                             $model->course->quizzes()->sync($quizzes, function ($quiz, $model) {
+                                if (isset($quiz['detail']) && isset($quiz['detail']['duration'])) {
+                                    $detail =& $quiz['detail'];
+                                    $detail += ['course_quiz_id' => $model->id];
+
+                                    $factor = 1;
+                                    switch ($detail['duration_type']) {
+                                        case DurationType::Sec:
+                                            $factor = 1;
+                                            break;
+                                        case DurationType::Min:
+                                            $factor = 60;
+                                            break;
+                                        case DurationType::Hour:
+                                            $factor = 3600;
+                                            break;
+                                    }
+
+                                    $detail['duration'] = $factor * $detail['duration'];
+
+                                    $lessonDetail = $model->detail ?? new QuizDetail($detail);
+                                    $lessonDetail->duration = $detail['duration'];
+                                    $lessonDetail->description = $detail['description'];
+                                    $lessonDetail->allow_num_attempt = $detail['allow_num_attempt'];
+
+                                    $lessonDetail->saveOrFail();
+                                }
+
                                 if (isset($quiz['questions']) && is_array($quiz['questions'])) {
                                     $questions = array_values($quiz['questions']);
                                     for ($j = 0; $j < count($questions); ++$j) {
@@ -702,6 +775,7 @@ class CourseController extends Controller
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
+            return $e;
             // something went wrong
         }
 

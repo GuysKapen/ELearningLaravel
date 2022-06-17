@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CourseQuiz extends HasManySyncableModel
 {
@@ -31,5 +32,10 @@ class CourseQuiz extends HasManySyncableModel
     public function questions(): HasMany
     {
         return $this->hasMany(QuizQuestion::class);
+    }
+
+    public function detail(): HasOne
+    {
+        return $this->hasOne(QuizDetail::class);
     }
 }

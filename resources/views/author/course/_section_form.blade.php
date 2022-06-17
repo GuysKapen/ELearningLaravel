@@ -31,6 +31,7 @@
             @if(isset($section->lessons))
                 @php
                     $lessonIndex = 1;
+                    $quizIndex = 0;
                 @endphp
                 @foreach($section->lessons as $key=>$lesson)
                     @include('author.course._lesson_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'lesson' => $lesson, "timeUnits" => $timeUnits])
@@ -38,9 +39,12 @@
                         $lessonIndex++;
                     @endphp
                     @php
-                        $quiz = $section->course->quizzes->where('index', '<=', $lessonIndex)->first();
+                        $quiz = $section->course->quizzes->where('index', '<=', $lessonIndex)->where('index', '>', $quizIndex)->first();
                     @endphp
                     @if(isset($quiz))
+                        @php
+                            $quizIndex = $quiz->index;
+                        @endphp
                         @include('author.course._quiz_form', ['sectionIndex' => $sectionIndex, 'lessonIndex' => $lessonIndex, 'quiz' => $quiz, "minimize" => true])
                     @endif
                 @endforeach

@@ -30,6 +30,9 @@ class HomeController extends Controller
 
     public function course(Course $course)
     {
+        if (Enrollment::query()->where([['user_id', '=', Auth::user()->id], ['course_id', '=', $course->id]])->exists()) {
+            return view('course_detail', compact('course'));
+        }
         return view('course', compact('course'));
     }
 

@@ -1097,7 +1097,7 @@
                     }
                 })
 
-                $(".btn-add-content", this).each(function () {
+                $(".btn-add-quiz-content", this).each(function () {
                     const index = $(this).attr("data-id");
                     if (index == quizId || quizId == -1) {
                         $(this).click(function () {
@@ -1108,14 +1108,38 @@
                     }
                 })
 
-                $(".btn-add-text-question", this).each(function () {
+                $(".btn-add-quiz-question", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`div[id^='quiz-add-list']`, context).addClass("hidden")
+                            $(`#quiz-add-list-question-${index}`, context).toggleClass("hidden")
+                            $(`div[id^='quiz-input']`, context).addClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-quiz-detail", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).click(function () {
+                            const index = $(this).attr("data-id")
+                            $(`div[id^='quiz-input']`, context).addClass("hidden")
+                            $(`div[id^='quiz-add-list']`, context).addClass("hidden")
+                            $(`#quiz-input-detail-${index}`).toggleClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-add-text-question-multi-choices", this).each(function () {
                     // id of quiz
                     const index = $(this).attr("data-id");
                     const sectionIndex = $(this).attr("data-section-id");
                     if (index == quizId || quizId == -1) {
                         $(this).click(function () {
                             const index = $(this).attr("data-id")
-                            $(`#quiz-add-list-${index}`, context).toggleClass("hidden")
+                            $(`div[id^='quiz-add-list']`, context).addClass("hidden")
                             $(`#quiz-questions-form-container-${index}`, context).removeClass("hidden")
                             @php
                                 $html_lecture = json_encode(View::make('author.course._question_form')->render());
@@ -1157,6 +1181,28 @@
                         })
                     }
                 })
+
+                // btns save and cancel detail listener
+                $(".btn-save-quiz-detail", this).each(function () {
+                    const index = $(this).attr("data-id")
+                    if (index == quizId || quizId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-input-detail-${index}`, context).addClass("hidden")
+                        })
+                    }
+                })
+
+                $(".btn-cancel-lesson-detail", this).each(function () {
+                    const index = $(this).attr("data-id");
+                    if (index == quizId || quizId == -1) {
+                        $(this).on("click", function () {
+                            const index = $(this).attr("data-id")
+                            $(`#quiz-input-detail-${index}`, context).addClass("hidden")
+                        })
+                    }
+                })
+
             })
         }
 

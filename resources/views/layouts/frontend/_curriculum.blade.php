@@ -35,6 +35,7 @@
              data-parent="#accordionExample-{{$i}}">
             @php
                 $index = 0;
+                $quizIndex = 0; // Track what quiz has added
             @endphp
             <div class="bg-gray-100 px-4 py-2">
                 @foreach($section->lessons as $key=>$lesson)
@@ -60,9 +61,12 @@
                     </div>
                     @php
                         $index++;
-                        $quiz = $section->course->quizzes->where('index', '<=', $index+1)->first();
+                        $quiz = $section->course->quizzes->where('index', '<=', $index+1)->where('index', '>', $quizIndex)->first();
                     @endphp
                     @if(isset($quiz))
+                        @php
+                        $quizIndex = $quiz->index;
+                        @endphp
                         @include('course._quiz_curr', ["quiz" => $quiz])
                     @endif
                 @endforeach

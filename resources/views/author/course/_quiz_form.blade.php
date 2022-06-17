@@ -22,9 +22,9 @@
         <div class="flex-end flex items-center ml-auto">
             <div
                 data-id="{{$lessonIndex}}"
-                class="btn-add-content cursor-pointer bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center mr-2">
+                class="btn-add-quiz-content cursor-pointer bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center mr-2">
                 <span class="icon material-icons text-sm mr-1">add</span>
-                Question
+                Content
             </div>
             <span class="icon material-icons text-sm mr-1 mr-2">expand_more</span>
             <span class="icon material-icons text-sm mr-1">menu</span>
@@ -81,13 +81,49 @@
     </div>
 
 
-    <div id="quiz-add-list-{{$lessonIndex}}" class="text-sm hidden p-5">
+    <div id="quiz-add-list-question-{{$lessonIndex}}" class="text-sm hidden p-5">
         <div id="quiz-add-content-{{$lessonIndex}}"
              data-id="{{$lessonIndex}}"
              data-section-id="{{$sectionIndex}}"
-             class="btn-add-text-question bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+             class="btn-add-text-question-multi-choices bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
             <span class="icon material-icons text-sm mr-1">add</span>
             Multi choices
+        </div>
+    </div>
+
+    <div id="quiz-add-list-{{$lessonIndex}}" class="text-sm hidden p-5">
+        <div id="quiz-add-question-{{$lessonIndex}}"
+             data-id="{{$lessonIndex}}"
+             data-section-id="{{$sectionIndex}}"
+             class="btn-add-quiz-question bg-indigo-600 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+            <span class="icon material-icons text-sm mr-1">add</span>
+            Question
+        </div>
+
+        <div id="btn-add-quiz-detail-{{$lessonIndex}}"
+             data-id="{{$lessonIndex}}"
+             data-section-id="{{$sectionIndex}}"
+             class="btn-add-quiz-detail bg-indigo-600 mt-2 text-white text-xxs px-2 py-1 flex items-center w-max mr-2 cursor-pointer">
+            <span class="icon material-icons text-sm mr-1">add</span>
+            Detail
+        </div>
+    </div>
+
+    <div id="quiz-input-detail-{{$lessonIndex}}" class="text-sm mt-2 p-5 hidden">
+        @include("author.course._quiz_detail_form", ["sectionIndex" => $sectionIndex, "lessonIndex" => $lessonIndex, "timeUnits" => $timeUnits, "quizDetail" => $quiz->detail ?? null])
+        <div class="flex-end flex items-center justify-end ml-auto mt-2">
+            <div
+                id="btn-cancel-quiz-detail"
+                data-id="{{$lessonIndex}}"
+                class="btn-cancel-quiz-detail text-xxs px-2 py-1 flex items-center mr-2 cursor-pointer">
+                Cancel
+            </div>
+            <div
+                id="btn-save-quiz-detail"
+                data-id="{{$lessonIndex}}"
+                class="btn-save-quiz-detail bg-indigo-600 cursor-pointer text-white text-xxs px-2 py-1 flex items-center">
+                Save
+            </div>
         </div>
     </div>
 

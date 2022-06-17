@@ -31,16 +31,20 @@
                 <li aria-current="page">
                     <div class="flex items-center">
                         <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                        <a href="{{ route('courses', ['cats[]' => $course->categories[0]->id]) }}">
                         <span
                             class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$course->categories[0]->name}}</span>
+                        </a>
                     </div>
                 </li>
             @endif
             <li aria-current="page">
                 <div class="flex items-center">
                     <span class="material-icons text-base outlined mx-2">chevron_right</span>
+                    <a href="{{route("course", [$course->id])}}" class="text-gray-800 hover:text-indigo-500">
                     <span
                         class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{{$course->name}}</span>
+                    </a>
                 </div>
             </li>
 
@@ -69,7 +73,7 @@
                     </div>
                 </li>
             @endif
-       </ol>
+        </ol>
     </nav>
 </div>
 
@@ -79,14 +83,21 @@
         <div class="md:w-3/12">
             <div class="px-4 mb-4">
                 <div class="flex items-center text-sm font-black text-indigo-400">
-                    <h3>COURSE</h3>
+                    <a href="{{route("courses")}}" class="hover:text-indigo-500">
+                        <h3>COURSE</h3>
+                    </a>
                     <span class="material-icons mx-2 outlined text-sm">chevron_right</span>
                     @if(!$course->categories->isEmpty())
-                        <h3 class="text-uppercase">{{$course->categories[0]->name}}</h3>
+                        <a href="{{ route('courses', ['cats[]' => $course->categories[0]->id]) }}"
+                           class="hover:text-indigo-500">
+                            <h3 class="text-uppercase">{{$course->categories[0]->name}}</h3>
+                        </a>
                         <span class="material-icons mx-2 outlined text-sm">chevron_right</span>
                     @endif
                 </div>
-                <p class="block text-gray-500 text-sm font-bold md:text-left mb-1 md:mb-0 pr-4">{{$course->name}}</p>
+                <a href="{{route("course", [$course->id])}}" class="text-gray-500 hover:text-indigo-500">
+                    <p class="block text-sm font-bold md:text-left mb-1 md:mb-0 pr-4">{{$course->name}}</p>
+                </a>
             </div>
 
             @include('layouts.frontend._curriculum', ['course' => $course])

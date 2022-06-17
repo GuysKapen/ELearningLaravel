@@ -187,7 +187,7 @@
 </div>
 
 {{--  Our program  --}}
-<div class="py-16 relative">
+<div id="programs-section" class="py-16 relative">
     <div class="w-11/12 mx-auto">
         <div class="flex justify-center">
             <div class="lg:w-7/12 text-center" data-aos="fade-up" data-aos-delay="">
