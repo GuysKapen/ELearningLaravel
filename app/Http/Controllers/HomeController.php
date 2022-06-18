@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\CourseLesson;
 use App\Models\CourseQuiz;
 use App\Models\Enrollment;
+use App\Models\QuizAttempt;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -253,5 +254,32 @@ class HomeController extends Controller
             DB::rollback();
             return response()->json(['success' => false, 'message' => "Charge Failed!", 'data' => $e->getMessage()]);
         }
+    }
+
+    public function attemptQuiz(Request $request)
+    {
+        $this->validate($request, ['quiz_id' => 'required']);
+
+        $quiz = CourseQuiz::find($request->quiz_id);
+
+        if ($quiz == null) {
+            return redirect()->back();
+        }
+
+        $course = $quiz->course;
+
+        $attempt = new QuizAttempt();
+        $attempt->course_quiz_id = $request->quiz_id;
+
+        if (request()->user()->quizAttempts()->save($attempt)) {
+            return redirect()->route('course.detail.quiz.attempt', ["course" => $course, "attempt" => $attempt]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function courseDetailQuizAttempt(Course $course, QuizAttempt $attempt)
+    {
+        return view('course_detail_do_quiz', compact('attempt', 'course'));
     }
 }

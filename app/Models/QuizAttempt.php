@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Carbon\Traits\Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class QuizAttempt extends Pivot
+/**
+ * @property mixed $course_quiz_id
+ * @property integer $user_id
+ * @property Date $created_at
+ */
+class QuizAttempt extends Model
 {
     use HasFactory;
 
@@ -24,11 +31,16 @@ class QuizAttempt extends Pivot
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function quiz(): BelongsTo
     {
-        return $this->belongsTo(CourseQuiz::class);
+        return $this->belongsTo(CourseQuiz::class, 'course_quiz_id');
+    }
+
+    public function timeLeft(): float
+    {
+        return ($this->created_at->getPreciseTimestamp(0) + $this->quiz->detail->duration) - Carbon::now()->getPreciseTimestamp(0);
     }
 }
