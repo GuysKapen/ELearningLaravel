@@ -242,7 +242,8 @@ class HomeController extends Controller
                 $request->user()->addPaymentMethod($request->input('payment_method_id'));
 
                 $stripeCharge = $request->user()->charge(
-                    $course->coursePrice->stripePrice(), $request->payment_method_id,
+                    $course->coursePrice->stripePrice(),
+                    $request->payment_method_id,
                 );
 
                 DB::commit();
@@ -281,5 +282,69 @@ class HomeController extends Controller
     public function courseDetailQuizAttempt(Course $course, QuizAttempt $attempt)
     {
         return view('course_detail_do_quiz', compact('attempt', 'course'));
+    }
+
+    public function submitQuiz(Request $request)
+    {
+        $this->validate($request, ['answers' => 'required', 'attempt_id' => 'required']);
+        $attempt = QuizAttempt::find($request->attempt_id);
+        $quiz  = $attempt->quiz;
+
+        // Init
+        $array = array();
+        $array['correct'] = 0;
+        $array['incorrect'] = count($quiz->questions);
+
+        $user_answers = $request->answers;
+        $correct = 0;
+        $incorrect = 0;
+
+        // For each question check
+        foreach ($quiz->questions as $question) {
+            $options = $question->options;
+            $answers = $question->answers;
+
+            $option_correct = true;
+
+            // No answers for this question
+            if (!isset($user_answers[$question['id']])) {
+                // No answers is correct
+                if (count($answers) == 0) {
+                    $correct++;
+                } else {
+                    $incorrect++;
+                }
+                continue;
+            }
+
+            // Cheating, more answers submited than options
+            if (count($user_answers[$question->id]) > count($options)) {
+                print_r("Cheating ...! 0 mark!");
+                $array = array();
+                $array['correct'] = $correct;
+                $array['incorrect'] = $incorrect;
+                return $array;
+            }
+
+            // For each answers of this question check if there is any missing answer, if yes -> incorrect, otherwise is correct
+            for ($i = 0; $i < count($answers); $i++) {
+                if (!isset($user_answers[$question['id']][$answers[$i]->question_option_id])) {
+                    $option_correct = false;
+                }
+            }
+
+            if ($option_correct) {
+                $correct++;
+            } else {
+                $incorrect++;
+            }
+        }
+
+        $answers = array();                //creating an array
+        $answers['correct'] = $correct;         // putting the values inside the array
+        $answers['incorrect'] = $incorrect;
+
+        $course = $quiz->course;
+        return view('course_detail_result_quiz', compact('answers', 'course'));
     }
 }
