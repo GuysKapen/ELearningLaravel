@@ -78,10 +78,10 @@
             } else {
                 document.getElementById("time-out").innerHTML = min + ":" + sec; //else diplay the time
             }
-            timeleft--; //decrease time each time
-            let tm = setTimeout(function() {
+            var tm = setTimeout(function() {
                 timeout()
             }, 1000); //after each 1 minute the function timeout will called automatically
+            timeleft--; //decrease time each time
         }
 
         function checkSec(second) //convert from  0:5 to 0:05
@@ -102,5 +102,33 @@
 
         let timeleft = {{ $attempt->timeLeft() }};
         timeout();
+    </script>
+
+    <script>
+        $("input[type='checkbox']").each(function() {
+            $(this).click(function() {
+                console.log("ksjfskfs");
+                const optionId = $(this).attr("name").match(/\[([^\[\]]*)\]$/)[1];
+
+                // Save answer
+                const formData = {
+                    _token: "{{ csrf_token() }}",
+                    attempt_id: "{{ $attempt->id }}",
+                    option_id: optionId,
+                    is_save: $(this).is(":checked")
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "{!! route('quiz.attempt.answer.submit') !!}",
+                    data: formData,
+                    success: function(response) {
+                        $("#courses-container").html(response)
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            })
+        })
     </script>
 @endpush

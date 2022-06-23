@@ -10,7 +10,9 @@ use App\Models\CourseLesson;
 use App\Models\CourseQuiz;
 use App\Models\Enrollment;
 use App\Models\QuizAttempt;
+use App\Models\QuizAttemptResult;
 use Brian2694\Toastr\Facades\Toastr;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -286,7 +288,7 @@ class HomeController extends Controller
 
     public function submitQuiz(Request $request)
     {
-        $this->validate($request, ['answers' => 'required', 'attempt_id' => 'required']);
+        $this->validate($request, ['attempt_id' => 'required']);
         $attempt = QuizAttempt::find($request->attempt_id);
         $quiz  = $attempt->quiz;
 
@@ -345,6 +347,31 @@ class HomeController extends Controller
         $answers['incorrect'] = $incorrect;
 
         $course = $quiz->course;
+
+        $attemptResult = new QuizAttemptResult();
+        $attemptResult->score = $correct / ($correct + $incorrect);
+        $attempt->result()->save($attemptResult);
+
         return view('course_detail_result_quiz', compact('answers', 'course'));
+    }
+
+    public function submitAttemptAnswer(Request $request)
+    {
+        $this->validate($request, ['attempt_id' => 'required', 'option_id' => 'required']);
+        $attempt = QuizAttempt::find($request->attempt_id);
+        if ($attempt == null) {
+            return response()->json(['success' => false, 'message' => "Invalid request"]);
+        }
+        try {
+            if ($request->is_save == "true") {
+                $attempt->answers()->attach($request->option_id);
+            } else {
+                $attempt->answers()->detach($request->option_id);
+            }
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+
+        return response()->json(['success' => true, 'message' => "Save success"]);
     }
 }

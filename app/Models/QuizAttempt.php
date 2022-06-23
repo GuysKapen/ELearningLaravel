@@ -43,4 +43,14 @@ class QuizAttempt extends Model
     {
         return ($this->created_at->getPreciseTimestamp(0) + $this->quiz->detail->duration) - Carbon::now()->getPreciseTimestamp(0);
     }
+
+    public function answers()
+    {
+        return $this->belongsToMany(QuestionOption::class, "answer_attempt")->withTimestamps();
+    }
+
+    public function result()
+    {
+        return $this->hasOne(QuizAttemptResult::class);
+    }
 }
