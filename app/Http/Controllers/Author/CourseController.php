@@ -655,10 +655,10 @@ class CourseController extends Controller
                                             break;
                                     }
 
-                                    $detail['duration'] = $factor * $detail['duration'];
+                                    $duration = $factor * $detail['duration'];
 
                                     $lessonDetail = $model->detail ?? new LessonDetail($detail);
-                                    $lessonDetail->duration = $detail['duration'];
+                                    $lessonDetail->duration = $duration;
                                     $lessonDetail->is_preview = isset($detail['is_preview']);
                                     $lessonDetail->course_lesson_id = $model->id;
 

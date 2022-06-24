@@ -11,6 +11,6 @@
     </div>
     <div class="flex mt-1">
         <div class="w-16"></div>
-        <p class="ml-2 text-gray-500 text-sm">{{timeText($lesson->detail->duration ?? 0)}}</p>
+        <p class="ml-2 text-gray-500 text-sm">{{timeText($quiz->detail->duration ?? 0)}}</p>
     </div>
 </div>
