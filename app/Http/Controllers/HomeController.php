@@ -297,7 +297,7 @@ class HomeController extends Controller
         $array['correct'] = 0;
         $array['incorrect'] = count($quiz->questions);
 
-        $user_answers = $request->answers;
+        $user_answers = $attempt->answers;
         $correct = 0;
         $incorrect = 0;
 
@@ -308,9 +308,13 @@ class HomeController extends Controller
 
             $option_correct = true;
 
+            // Num answer not match -> incorrect
+            if (count($user_answers->where('quiz_question_id', '=', $question->id)) != count($answers)) {
+                $incorrect++;
+                continue;
+            }
             // No answers for this question
-            if (!isset($user_answers[$question['id']])) {
-                // No answers is correct
+            if ($user_answers->where('quiz_question_id', '=', $question->id)->isEmpty()) {
                 if (count($answers) == 0) {
                     $correct++;
                 } else {
@@ -320,7 +324,7 @@ class HomeController extends Controller
             }
 
             // Cheating, more answers submited than options
-            if (count($user_answers[$question->id]) > count($options)) {
+            if (count($user_answers->where('quiz_question_id', '=', $question->id)) > count($options)) {
                 print_r("Cheating ...! 0 mark!");
                 $array = array();
                 $array['correct'] = $correct;
@@ -330,7 +334,7 @@ class HomeController extends Controller
 
             // For each answers of this question check if there is any missing answer, if yes -> incorrect, otherwise is correct
             for ($i = 0; $i < count($answers); $i++) {
-                if (!isset($user_answers[$question['id']][$answers[$i]->question_option_id])) {
+                if ($user_answers->where('quiz_question_id', '=', $question->id)->where('id', '=', $answers[$i]->question_option_id)->isEmpty()) {
                     $option_correct = false;
                 }
             }

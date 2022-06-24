@@ -4,7 +4,7 @@
 @section('detail')
 
     <div class="w-11/12 mx-auto text-center shadow-md p-8 mt-8 border">
-        <h3 class="px-6 py-3 text-base text-gray-700 font-medium text-gray-500 tracking-wider">
+        <h3 class="px-6 py-3 text-base text-gray-700 font-medium tracking-wider">
             Quiz: {{$quiz->name}}
         </h3>
         <p class="px-6 py-3 text-xs font-medium text-gray-500 tracking-wider">
