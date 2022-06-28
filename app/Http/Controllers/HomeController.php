@@ -31,14 +31,22 @@ class HomeController extends Controller
         return view('home', compact('courses'));
     }
 
+    /**
+     * Detail course page
+     * If user has bought (take the course), redirect to detail course page
+     * @Todo: Can just change buy or take course to view course instead of redirect
+     */
     public function course(Course $course)
     {
         if (Enrollment::query()->where([['user_id', '=', Auth::user()->id], ['course_id', '=', $course->id]])->exists()) {
-            return view('course_detail', compact('course'));
+            return redirect()->route('course.detail', ['course' => $course]);
         }
         return view('course', compact('course'));
     }
 
+    /**
+     * View all courses page for searching, filter, ...
+     */
     public function courses(Request $request)
     {
         $params = [];
@@ -105,6 +113,9 @@ class HomeController extends Controller
         return view('courses', compact('courses', 'categories', 'authors', 'sortTypes', 'latestCourses'));
     }
 
+    /**
+     * Filter courses based on categories, authors, prices, ...
+     */
     public function filter(Request $request)
     {
         $categories = $request->categories;
@@ -128,12 +139,19 @@ class HomeController extends Controller
         return view('_courses', compact('courses'))->render();
     }
 
+    /**
+     * Search course, current only support search by name
+     * @Todo: enhance search course with content, summary, description, ...
+     */
     public function search(Request $request): string
     {
         $courses = Course::whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->keyword) . '%'])->simplePaginate(12)->withPath("/courses")->appends(['search' => $request->keyword]);
         return view('_courses', compact('courses'))->render();
     }
 
+    /**
+     * Sort the courses based on SortType
+     */
     public function sort(Request $request)
     {
         $col = 'updated';
@@ -167,6 +185,9 @@ class HomeController extends Controller
         return view('_courses', compact('courses'))->render();
     }
 
+    /**
+     * Course detail page for learning the course
+     */
     public function courseDetail(Course $course, CourseLesson $lesson = null)
     {
         if (!$course->sections->isEmpty() && !$course->sections[0]->lessons->isEmpty()) {
@@ -177,11 +198,18 @@ class HomeController extends Controller
         return view('course_detail', compact('course'));
     }
 
+    /**
+     * Course detail page with quiz section
+     */
     public function courseDetailQuiz(Course $course, CourseQuiz $quiz)
     {
-        return view('course_detail_quiz', compact('quiz', 'course'));
+        $attempts = Auth::user()->attempts->where("course_quiz_id", '=', $quiz->id);
+        return view('course_detail_quiz', compact('quiz', 'course', 'attempts'));
     }
 
+    /**
+     * Commenting the course
+     */
     public function comment(Request $request)
     {
         $this->validate($request, [
@@ -201,6 +229,9 @@ class HomeController extends Controller
         Toastr::warning('Add comment failed', 'Failed');
     }
 
+    /**
+     * Enroll or take the course (buy if it is prerium)
+     */
     public function enroll(Request $request)
     {
         $this->validate($request, [
@@ -217,11 +248,17 @@ class HomeController extends Controller
         return redirect()->route('course.detail', $request->course_id);
     }
 
+    /**
+     * Go to checkout for buy the course
+     */
     public function checkout(Course $course)
     {
         return view('checkout', compact('course'));
     }
 
+    /**
+     * Execute transfer money for purchase with paypal
+     */
     public function purchase(Request $request)
     {
         $this->validate($request, [
@@ -259,6 +296,9 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Attempt the quiz to know when user has do the quiz (user can do it even after logout and login again)
+     */
     public function attemptQuiz(Request $request)
     {
         $this->validate($request, ['quiz_id' => 'required']);
@@ -281,11 +321,17 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Do quiz
+     */
     public function courseDetailQuizAttempt(Course $course, QuizAttempt $attempt)
     {
         return view('course_detail_do_quiz', compact('attempt', 'course'));
     }
 
+    /**
+     * Save and calculate the result of the quiz attempt
+     */
     public function submitQuiz(Request $request)
     {
         $this->validate($request, ['attempt_id' => 'required']);
@@ -359,6 +405,9 @@ class HomeController extends Controller
         return view('course_detail_result_quiz', compact('answers', 'course'));
     }
 
+    /**
+     * Save quiz attempt answer
+     */
     public function submitAttemptAnswer(Request $request)
     {
         $this->validate($request, ['attempt_id' => 'required', 'option_id' => 'required']);
@@ -377,5 +426,15 @@ class HomeController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => "Save success"]);
+    }
+
+
+    /**
+     * Review quiz attempt page
+     */
+    public function quizAttemptReview(QuizAttempt $attempt)
+    {
+        $course = $attempt->quiz->course;
+        return view("course_detail_review_quiz_attempt", compact('attempt', 'course'));
     }
 }

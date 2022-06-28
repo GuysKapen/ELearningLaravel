@@ -53,4 +53,43 @@ class QuizAttempt extends Model
     {
         return $this->hasOne(QuizAttemptResult::class);
     }
+
+    public function isAnswerCorrect(QuizQuestion $question)
+    {
+        $options = $question->options;
+        $answers = $question->answers;
+
+        $option_correct = true;
+
+        // Num answer not match -> incorrect
+        if (count($this->answers->where('quiz_question_id', '=', $question->id)) != count($answers)) {
+            return false;
+        }
+        // No answers for this question
+        if ($this->answers->where('quiz_question_id', '=', $question->id)->isEmpty()) {
+            if (count($answers) == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // Cheating, more answers submited than options
+        if (count($this->answers->where('quiz_question_id', '=', $question->id)) > count($options)) {
+            return false;
+        }
+
+        // For each answers of this question check if there is any missing answer, if yes -> incorrect, otherwise is correct
+        for ($i = 0; $i < count($answers); $i++) {
+            if ($this->answers->where('quiz_question_id', '=', $question->id)->where('id', '=', $answers[$i]->question_option_id)->isEmpty()) {
+                $option_correct = false;
+            }
+        }
+
+        if ($option_correct) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

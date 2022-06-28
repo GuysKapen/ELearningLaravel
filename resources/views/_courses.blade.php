@@ -1,6 +1,6 @@
 <div class="grid grid-cols-3 gap-4 mt-8">
     @foreach($courses as $key=>$course)
-        <div class="relative overflow-hidden self-start top-0 relative border rounded-md">
+        <div class="overflow-hidden self-start top-0 relative border rounded-md">
             <figure class="m-0">
                 <img
                     src="{{ asset("storage/course/". ($course->feature_img ?? "default.png") ) }}"

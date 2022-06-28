@@ -89,6 +89,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function attempts() {
-        return $this->belongsToMany(QuizAttempt::class, "answer_attempt_user")->withPivot("question_option_id");
+        return $this->hasMany(QuizAttempt::class);
     }
 }

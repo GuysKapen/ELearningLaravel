@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/course/detail/{course}/lesson/{lesson?}', [HomeController::class, 'courseDetail'])->name('course.detail');
     Route::get('/course/detail/{course}/quiz/{quiz}', [HomeController::class, 'courseDetailQuiz'])->name('course.detail.quiz');
     Route::get('/course/checkout/{course}', [HomeController::class, 'checkout'])->name('course.checkout');
+    Route::get('/quiz/attempt/{attempt}/review', [HomeController::class, 'quizAttemptReview'])->name('quiz.attempt.review');
     Route::post('/quiz/attempt', [HomeController::class, 'attemptQuiz'])->name('quiz.attempt');
     Route::post('/quiz/submit', [HomeController::class, 'submitQuiz'])->name('quiz.submit');
     Route::post('/quiz/attempt/answer/submit', [HomeController::class, 'submitAttemptAnswer'])->name('quiz.attempt.answer.submit');
