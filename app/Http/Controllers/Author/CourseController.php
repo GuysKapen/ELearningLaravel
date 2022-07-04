@@ -26,17 +26,17 @@ use App\Models\QuizDetail;
 use App\Models\QuizQuestion;
 use App\Models\Tag;
 use App\Models\User;
+use App\Notifications\NewAuthorCourse;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use function PHPUnit\Framework\callback;
 
 class CourseController extends Controller
 {
@@ -383,9 +383,15 @@ class CourseController extends Controller
             // all good
             DB::commit();
             Toastr::success('Save course successfully', 'Succeed');
+
+            // Send email for approved course
+            $users = User::where('role_id', 1)->get();
+            Notification::send($users, new NewAuthorCourse($course));
+
             return redirect()->route('author.course.index');
         } catch (\Throwable $e) {
             DB::rollback();
+            return $e;
             // something went wrong
         }
 

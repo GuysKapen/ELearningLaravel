@@ -45,6 +45,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Co
     Route::resource('sub-category', 'SubCategoryController');
     Route::resource('language', 'LanguageController');
     Route::get('course/', 'CourseController@index')->name('course.index');
+    Route::put("course/{id}/approve", 'CourseController@approve')->name('course.approve');
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\Controllers\Author', 'middleware' => ['auth', 'author']], function () {
