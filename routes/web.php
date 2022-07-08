@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatBoxController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
 
+Route::get('/chatbox/courses', [ChatBoxController::class, 'courses'])->name("chatbox.courses");
+Route::post('/chatbox/show-courses', [ChatBoxController::class, 'showCourses'])->name('chatbox.courses.show');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/course/{course}', [HomeController::class, 'course'])->name('course');
     Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
@@ -37,6 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/quiz/submit', [HomeController::class, 'submitQuiz'])->name('quiz.submit');
     Route::post('/quiz/attempt/answer/submit', [HomeController::class, 'submitAttemptAnswer'])->name('quiz.attempt.answer.submit');
     Route::get('/course/detail/{course}/quiz/attempt/{attempt}', [HomeController::class, 'courseDetailQuizAttempt'])->name('course.detail.quiz.attempt');
+    Route::get('/request-author', [HomeController::class, 'requestAuthor'])->name('author.request');
 });
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth', 'admin']], function () {

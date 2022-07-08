@@ -437,4 +437,12 @@ class HomeController extends Controller
         $course = $attempt->quiz->course;
         return view("course_detail_review_quiz_attempt", compact('attempt', 'course'));
     }
+
+    /**
+     * Become author page
+     */
+    public function requestAuthor()
+    {
+        return view("request_author");
+    }
 }

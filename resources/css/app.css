@@ -23,6 +23,14 @@ body {
     overflow-x: hidden;
 }
 
+#dropdown {
+    z-index: 99;
+}
+
+.focus\:shadow-none {
+    box-shadow: none !important;
+}
+
 .active ~ #dropdown {
     opacity: 1;
     transform: scale(1);
