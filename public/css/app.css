@@ -1293,6 +1293,9 @@ select{
 .h-48{
   height: 12rem;
 }
+.h-3\/4{
+  height: 75%;
+}
 .h-16{
   height: 4rem;
 }
@@ -1369,6 +1372,15 @@ select{
 }
 .w-56{
   width: 14rem;
+}
+.w-48{
+  width: 12rem;
+}
+.w-96{
+  width: 24rem;
+}
+.w-80{
+  width: 20rem;
 }
 .min-w-full{
   min-width: 100%;

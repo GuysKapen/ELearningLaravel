@@ -1,8 +1,11 @@
-<div class="z-50 fixed bottom-4 left-4 flex flex-col justify-end h-screen">
+@php
+use Illuminate\Support\Facades\View;
+@endphp
+<div class="fixed bottom-4 left-4 flex flex-col justify-end h-screen" style="z-index: 999">
 
 
-    <div
-        style="background-color: rgb(255, 255, 255); border-radius: 8px; border-width: 1px; border-color: rgb(221, 226, 239); overflow: hidden; margin-bottom: 14px; width: 375px; height: 75%; border-style: solid;">
+    <div id="chatbox-container" class="collapse h-3/4 w-96"
+        style="background-color: rgb(255, 255, 255); border-radius: 8px; border-width: 1px; border-color: rgb(221, 226, 239); overflow: hidden; margin-bottom: 14px; border-style: solid;">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Noto Sans');
         </style>
@@ -43,11 +46,11 @@
     </div>
 
 
-    <button class="bg-indigo-600 font-base text-center w-16 h-16 rounded-full text-white cursor-pointer flex justify-center"
-        data-dashlane-rid="57d77adfa879d39a" data-dashlane-label="true" data-form-type=""><svg aria-hidden="true"
-            focusable="false" data-prefix="fas" data-icon="comment-dots"
-            class="svg-inline--fa fa-comment-dots fa-w-16 css-1fcbxrh" role="img" xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512" style="width: 1em;">
+    <button
+        class="bg-indigo-600 font-base text-center w-16 h-16 rounded-full text-white cursor-pointer flex justify-center"
+        data-toggle="collapse" data-target="#chatbox-container"><svg aria-hidden="true" focusable="false"
+            data-prefix="fas" data-icon="comment-dots" class="svg-inline--fa fa-comment-dots fa-w-16 css-1fcbxrh"
+            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em;">
             <path fill="currentColor"
                 d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z">
             </path>
@@ -58,7 +61,78 @@
 </div>
 
 <script>
+    // Click outside to hide
+    $('html').on("click", function() {
+        $("#chatbox-container").removeClass("show")
+    });
+
+    // Prevent click inside element from hide
+    $('#chatbox-container').click(function(event) {
+        event.stopPropagation();
+    });
+
     jQuery(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:5005/conversations/12/tracker",
+            success: function(response) {
+                for (const event of response["events"]) {
+                    if (event["event"] === "user") {
+                        @php
+                            $html = json_encode(View::make('chatbox._chatbox_user_message')->render());
+                        @endphp
+                        let processed = {!! $html !!};
+                        const section = $("#chatbox-conversation-container")
+                        processed = processed.replaceAll("--message--", event["text"]);
+                        section.append(processed)
+                    }
+
+                    if (event["event"] === "bot") {
+
+                        @php
+                            $html = json_encode(View::make('chatbox._chatbox_bot_response')->render());
+                        @endphp
+                        let processed = {!! $html !!};
+                        const section = $("#chatbox-conversation-container")
+                        let btnsHtml = [];
+
+                        // Custom json response
+                        if ("custom" in event["data"] && event["data"]["custom"] != null) {
+                            let custom = event["data"]["custom"]
+                            processed = processed.replaceAll("--message--", custom["text"]);
+
+                            if ("link" in event["data"]["custom"]) {
+                                @php
+                                    $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
+                                @endphp
+                                let btnHtml = {!! $html !!};
+                                btnHtml = btnHtml.replaceAll("--title--", custom["link"]
+                                    ["title"])
+                                btnHtml = btnHtml.replaceAll("--url--", custom["link"][
+                                    "url"
+                                ])
+
+                                btnsHtml.push(btnHtml)
+                            }
+                        } else {
+                            processed = processed.replaceAll("--message--", event[
+                                "text"]);
+                        }
+                        
+                        processed = processed.replaceAll("--buttons--", btnsHtml
+                            .join());
+                        section.append(processed)
+                    }
+                }
+
+                console.log(response["events"]);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        })
+
+
         $("#chatbox-input").on("keydown", function(e) {
             if (e.keyCode == 13) {
                 e.preventDefault()
@@ -69,7 +143,6 @@
 
                 // Insert user message
                 @php
-                    use Illuminate\Support\Facades\View;
                     $html = json_encode(View::make('chatbox._chatbox_user_message')->render());
                 @endphp
                 let processed = {!! $html !!};
@@ -79,7 +152,7 @@
 
 
                 const data = JSON.stringify({
-                    "sender": "test user",
+                    "sender": "12",
                     "message": message
                 })
 
@@ -115,6 +188,11 @@
 
                                     btnsHtml.push(btnHtml)
                                 }
+
+                                if ("redirect" in custom) {
+                                    window.location.replace("{{ route('courses') }}");
+                                }
+
                             } else {
                                 processed = processed.replaceAll("--message--", utter[
                                     "text"]);
@@ -137,7 +215,6 @@
                             processed = processed.replaceAll("--buttons--", btnsHtml
                                 .join());
                             section.append(processed)
-                            console.log(utter);
                         }
 
                     },

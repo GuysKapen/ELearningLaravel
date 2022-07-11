@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
+use App\Traits\CourseTrait;
 use Illuminate\Http\Request;
 
 class ChatBoxController extends Controller
 {
+    use CourseTrait;
     /**
      * View all courses page for searching, filter, ...
      */
     public function courses(Request $request)
     {
-        $courses = Course::latest()->get(["name"]);
+        $courses = $this->searchCourses($request, false);
         return response()->json(["data" => $courses]);
     }
 

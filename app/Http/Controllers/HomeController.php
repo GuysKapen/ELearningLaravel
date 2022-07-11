@@ -11,6 +11,7 @@ use App\Models\CourseQuiz;
 use App\Models\Enrollment;
 use App\Models\QuizAttempt;
 use App\Models\QuizAttemptResult;
+use App\Traits\CourseTrait;
 use Brian2694\Toastr\Facades\Toastr;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
 
+    use CourseTrait;
     /**
      * Show the application dashboard.
      *
@@ -49,58 +51,7 @@ class HomeController extends Controller
      */
     public function courses(Request $request)
     {
-        $params = [];
-        if (isset($request->search)) {
-            $courses_query = Course::query()
-                ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id")
-                ->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request->search) . '%']);
-
-            $params[] = ['search' => $request->search];
-        } else {
-            $courses_query = Course::query()
-                ->leftJoin("course_prices as cp", "cp.course_id", "=", "courses.id");
-        }
-
-        $categories = $request->cats;
-        if (isset($categories) && !empty($categories)) {
-            $courses_query = $courses_query
-                ->leftJoin("category_course as cc", "cc.course_id", "=", "courses.id");
-            $courses_query = $courses_query->whereIn("cc.category_id", $categories);
-            $params += ['cats' => $categories];
-        }
-
-        $authors = $request->authors;
-        if (isset($authors) && !empty($authors)) {
-            $courses_query = $courses_query->whereIn("courses.user_id", $authors);
-            $params += ['authors' => $authors];
-        }
-
-        $col = 'updated_at';
-        $direction = 'desc';
-        if (isset($request->sort)) {
-            switch ($request->sort) {
-                case SortType::Newest:
-                    $col = 'updated_at';
-                    $direction = 'desc';
-                    break;
-                case SortType::Oldest:
-                    $col = 'updated_at';
-                    $direction = 'asc';
-                    break;
-                case SortType::Cheapest:
-                    $col = 'price';
-                    $direction = 'desc';
-                    break;
-                case SortType::Expest:
-                    $col = 'price';
-                    $direction = 'asc';
-                    break;
-            }
-
-            $params += ['sort' => $request->sort];
-        }
-
-        $courses = $courses_query->select("courses.*")->distinct()->orderBy($col, $direction)->simplePaginate(12)->appends($params);
+        $courses = $this->searchCourses($request, true);
 
         $latestCourses = Course::latest()->take(5)->get();
         $categories = Category::latest()->get();
