@@ -128,51 +128,17 @@
 
 
 @push('js')
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         function deleteCategory(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
+            showConfirmPopup(function() {
+                document.getElementById('delete-form-' + id).submit();
             })
         }
 
         function approve(id) {
-            swal.fire({
-                title: 'Are you sure?',
-                text: "You went to approve this post ",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, approve it!',
-                cancelButtonText: 'No, cancel!',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    event.preventDefault();
-                    document.getElementById('approval-form-' + id).submit();
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    swal(
-                        'Cancelled',
-                        'The post remain pending :)',
-                        'info'
-                    )
-                }
-            })
+            showConfirmPopup(function() {
+                document.getElementById('approval-form-' + id).submit();
+            }, "Do you want to approve the course? You won't be able to revert it")
         }
     </script>
 @endpush

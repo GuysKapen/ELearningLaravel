@@ -3,7 +3,6 @@
 @section('title', 'Tag')
 
 @push('css')
-
 @endpush
 
 
@@ -23,7 +22,7 @@
                         </div>
 
                         <a href="{{ route('admin.sub-category.create') }}"
-                           class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-black rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-black rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             New
                         </a>
                     </div>
@@ -35,69 +34,72 @@
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
-                                        <tr>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                No
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Name
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Main
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Status
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Created At
-                                            </th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Action
-                                            </th>
-                                        </tr>
+                                            <tr>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    No
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Name
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Main
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Status
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Created At
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Action
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                        @php
-                                        $i = 1;
-                                        @endphp
-                                        @foreach($sub_categories as $key=>$category)
-                                            <tr>
-                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $i++  }}</td>
-                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $category->name }}</td>
-                                                <td class="text-sm font-medium text-gray-900 px-6">{{ $category->category->name }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <span
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        Active
-                                                    </span>
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->created_at->format('d/m/Y') }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <a href="{{ route('admin.sub-category.edit',$category->id) }}"
-                                                       class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($sub_categories as $key => $category)
+                                                <tr>
+                                                    <td class="text-sm font-medium text-gray-900 px-6">{{ $i++ }}
+                                                    </td>
+                                                    <td class="text-sm font-medium text-gray-900 px-6">
+                                                        {{ $category->name }}</td>
+                                                    <td class="text-sm font-medium text-gray-900 px-6">
+                                                        {{ $category->category->name }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Active
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $category->created_at->format('d/m/Y') }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a href="{{ route('admin.sub-category.edit', $category->id) }}"
+                                                            class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
 
-                                                    <button class="text-red-600 hover:text-red-900" type="button"
+                                                        <button class="text-red-600 hover:text-red-900" type="button"
                                                             onclick="deleteCategory({{ $category->id }})">
-                                                        Delete
-                                                    </button>
-                                                    <form id="delete-form-{{ $category->id }}"
-                                                          action="{{ route('admin.sub-category.destroy',$category->id) }}"
-                                                          method="POST"
-                                                          style="display: none;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                            Delete
+                                                        </button>
+                                                        <form id="delete-form-{{ $category->id }}"
+                                                            action="{{ route('admin.sub-category.destroy', $category->id) }}"
+                                                            method="POST" style="display: none;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
 
-                                        <!-- More people... -->
+                                            <!-- More people... -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -116,18 +118,8 @@
 @push('js')
     <script type="text/javascript">
         function deleteCategory(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
+            showConfirmPopup(function() {
+                document.getElementById('delete-form-' + id).submit();
             })
         }
     </script>

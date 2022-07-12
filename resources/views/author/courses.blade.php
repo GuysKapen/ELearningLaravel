@@ -90,21 +90,10 @@
 
 
 @push('js')
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         function deleteCategory(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
+            showConfirmPopup(function() {
+                document.getElementById('delete-form-' + id).submit();
             })
         }
     </script>
