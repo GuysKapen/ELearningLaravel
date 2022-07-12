@@ -49,6 +49,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Co
     Route::resource('category', 'CategoryController');
     Route::resource('sub-category', 'SubCategoryController');
     Route::resource('language', 'LanguageController');
+    Route::resource('programming-language', 'ProgrammingLanguageController');
     Route::get('course/', 'CourseController@index')->name('course.index');
     Route::put("course/{id}/approve", 'CourseController@approve')->name('course.approve');
 });

@@ -103,4 +103,9 @@ class Course extends HasManySyncableModel
     {
         return $this->hasMany(Enrollment::class);
     }
+
+    public function programmingLanguages() : BelongsToMany
+    {
+        return $this->belongsToMany(ProgrammingLanguage::class, "course_programming_language");
+    }
 }

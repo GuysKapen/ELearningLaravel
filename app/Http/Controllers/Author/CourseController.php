@@ -19,6 +19,7 @@ use App\Models\EvaluateType;
 use App\Models\LessonContent;
 use App\Models\LessonDetail;
 use App\Models\LessonResource;
+use App\Models\ProgrammingLanguage;
 use App\Models\QuestionAnswer;
 use App\Models\QuestionDetail;
 use App\Models\QuestionOption;
@@ -64,6 +65,7 @@ class CourseController extends Controller
         $evaluateTypes = EvaluateType::all();
         $categories = Category::all();
         $tags = Tag::all();
+        $programmingLanguages = ProgrammingLanguage::all();
         $timeUnits = DurationType::toCollection();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
@@ -72,7 +74,7 @@ class CourseController extends Controller
             ->get();
 
         $coAuthors = $authors->where("id", "!=", Auth::user()->id);
-        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors', 'coAuthors', 'tags', 'timeUnits'));
+        return view('author.course.create', compact('courseDetail', 'evaluateTypes', 'courseAssessment', 'categories', 'authors', 'coAuthors', 'tags', 'timeUnits', 'programmingLanguages'));
     }
 
     /**
@@ -116,8 +118,10 @@ class CourseController extends Controller
 
 
             // Course results info
-            if (isset($request->results)
-                && !empty($request->results)) {
+            if (
+                isset($request->results)
+                && !empty($request->results)
+            ) {
                 $results = $request->results;
 
                 foreach ($results as $key => $value) {
@@ -137,12 +141,13 @@ class CourseController extends Controller
 
                     $course->results()->saveMany($courseResults);
                 }
-
             }
 
             // Course requirements info
-            if (isset($request->requirements)
-                && !empty($request->requirements)) {
+            if (
+                isset($request->requirements)
+                && !empty($request->requirements)
+            ) {
                 $requirements = $request->requirements;
 
                 foreach ($requirements as $key => $value) {
@@ -164,8 +169,10 @@ class CourseController extends Controller
             }
 
             // Course targets info
-            if (isset($request->targets)
-                && !empty($request->targets)) {
+            if (
+                isset($request->targets)
+                && !empty($request->targets)
+            ) {
                 $targets = $request->targets;
 
                 foreach ($targets as $key => $value) {
@@ -187,8 +194,10 @@ class CourseController extends Controller
             }
 
             // Course evaluate
-            if (isset($request->evaluate_type_id)
-                && isset($request->pass_condition)) {
+            if (
+                isset($request->evaluate_type_id)
+                && isset($request->pass_condition)
+            ) {
                 $courseAssessment = new CourseAssessment();
                 $courseAssessment->evaluate_type_id = $request->evaluate_type_id;
                 $courseAssessment->pass_condition = $request->pass_condition;
@@ -203,8 +212,10 @@ class CourseController extends Controller
             }
 
             // Course curriculum
-            if (isset($request->sections) && is_array($request->sections)
-                && !empty($request->sections)) {
+            if (
+                isset($request->sections) && is_array($request->sections)
+                && !empty($request->sections)
+            ) {
 
                 $sections = array_values($request['sections']);
                 foreach ($sections as $key => $value) {
@@ -215,7 +226,7 @@ class CourseController extends Controller
 
                 if (!empty($sections)) {
                     for ($i = 0; $i < count($sections); ++$i) {
-                        $section =& $sections[$i];
+                        $section = &$sections[$i];
                         $section += array('slug' => Str::slug($section['name']));
                         $section += array('course_id' => $course->id);
                         $section += array('index' => $i);
@@ -225,8 +236,10 @@ class CourseController extends Controller
                         $course->sections()->save($courseSection);
 
                         // Save lessons
-                        if (isset($section['lessons']) && is_array($section['lessons'])
-                            && !empty($section['lessons'])) {
+                        if (
+                            isset($section['lessons']) && is_array($section['lessons'])
+                            && !empty($section['lessons'])
+                        ) {
                             $lessons = array_values($section['lessons']);
                             for ($j = 0; $j < count($lessons); ++$j) {
                                 $lesson = $lessons[$j];
@@ -278,8 +291,10 @@ class CourseController extends Controller
                         }
 
                         // Save quizzes
-                        if (isset($section['quizzes']) && is_array($section['quizzes'])
-                            && !empty($section['quizzes'])) {
+                        if (
+                            isset($section['quizzes']) && is_array($section['quizzes'])
+                            && !empty($section['quizzes'])
+                        ) {
                             $quizzes = array_values($section['quizzes']);
                             for ($j = 0; $j < count($quizzes); ++$j) {
                                 $quiz = $quizzes[$j];
@@ -355,14 +370,11 @@ class CourseController extends Controller
                                             $quizQuestion->detail()->save($questionDetail);
                                         }
                                     }
-
                                 }
                             }
                         }
-
                     }
                 }
-
             }
 
             // Course categories
@@ -373,6 +385,11 @@ class CourseController extends Controller
             // Course tags
             if (isset($request->tags) && is_array($request->tags)) {
                 $course->tags()->sync($request->tags);
+            }
+
+            // Course programming languages
+            if (isset($request->programming_languages) && is_array($request->programming_languages)) {
+                $course->programmingLanguages()->sync($request->programming_languages);
             }
 
             // Course co_author
@@ -397,7 +414,6 @@ class CourseController extends Controller
 
         Toastr::warning('Failed to save course', 'Failed');
         return redirect()->back();
-
     }
 
     /**
@@ -440,6 +456,7 @@ class CourseController extends Controller
         $courseDetail = $course->detail ?? new CourseDetail();
         $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
         $categories = Category::all();
+        $programmingLanguages = ProgrammingLanguage::all();
         $timeUnits = DurationType::toCollection();
         $authors = DB::table("users")
             ->join('roles', 'roles.id', '=', 'users.role_id')
@@ -448,7 +465,7 @@ class CourseController extends Controller
             ->get();
         $tags = Tag::all();
         $coAuthors = $authors->where("id", "!=", Auth::user()->id);
-        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors', 'coAuthors', 'tags', 'timeUnits'));
+        return view('author.course.edit', compact('course', 'courseDetail', 'courseAssessment', 'evaluateTypes', 'categories', 'authors', 'coAuthors', 'tags', 'timeUnits', 'programmingLanguages'));
     }
 
     /**
@@ -510,8 +527,10 @@ class CourseController extends Controller
                 $courseDetail->save();
             }
 
-            if (isset($request->results)
-                && !empty($request->results)) {
+            if (
+                isset($request->results)
+                && !empty($request->results)
+            ) {
                 $results = $request->results;
 
                 foreach ($results as $key => $value) {
@@ -533,8 +552,10 @@ class CourseController extends Controller
                 }
             }
 
-            if (isset($request->requirements)
-                && !empty($request->requirements)) {
+            if (
+                isset($request->requirements)
+                && !empty($request->requirements)
+            ) {
                 $requirements = $request->requirements;
 
                 foreach ($requirements as $key => $value) {
@@ -556,8 +577,10 @@ class CourseController extends Controller
                 }
             }
 
-            if (isset($request->targets)
-                && !empty($request->targets)) {
+            if (
+                isset($request->targets)
+                && !empty($request->targets)
+            ) {
                 $targets = $request->targets;
 
                 foreach ($targets as $key => $value) {
@@ -579,8 +602,10 @@ class CourseController extends Controller
                 }
             }
 
-            if (isset($request->evaluate_type_id)
-                && isset($request->pass_condition)) {
+            if (
+                isset($request->evaluate_type_id)
+                && isset($request->pass_condition)
+            ) {
                 $courseAssessment = $course->courseAssessment ?? new CourseAssessment();
                 $courseAssessment->evaluate_type_id = $request->evaluate_type_id;
                 $courseAssessment->pass_condition = $request->pass_condition;
@@ -596,8 +621,10 @@ class CourseController extends Controller
             }
 
             // Course curriculum
-            if (isset($request['sections']) && is_array($request['sections'])
-                && !empty($request['sections'])) {
+            if (
+                isset($request['sections']) && is_array($request['sections'])
+                && !empty($request['sections'])
+            ) {
 
                 $sections = array_values($request['sections']);
                 foreach ($sections as $key => $value) {
@@ -608,19 +635,20 @@ class CourseController extends Controller
 
                 if (!empty($sections)) {
                     for ($i = 0; $i < count($sections); ++$i) {
-                        $section =& $sections[$i];
+                        $section = &$sections[$i];
                         $section += array('slug' => Str::slug($section['name']));
                         $section += array('course_id' => $course->id);
                         $section += array('index' => $i);
-
                     }
 
                     $course->sections()->sync($sections, function ($section, $model) {
-                        if (isset($section['lessons']) && is_array($section['lessons'])
-                            && !empty($section['lessons'])) {
+                        if (
+                            isset($section['lessons']) && is_array($section['lessons'])
+                            && !empty($section['lessons'])
+                        ) {
                             $lessons = array_values($section['lessons']);
                             for ($j = 0; $j < count($lessons); ++$j) {
-                                $lesson =& $lessons[$j];
+                                $lesson = &$lessons[$j];
                                 $lesson += ['slug' => Str::slug($lesson['title'])];
                                 $lesson += ['course_section_id' => $model->id];
                             }
@@ -628,7 +656,7 @@ class CourseController extends Controller
                             // Sync lessons and nested
                             $model->lessons()->sync($lessons, function ($lesson, $model) {
                                 if (isset($lesson['resource']) && isset($lesson['resource']['video'])) {
-                                    $resource =& $lesson['resource'];
+                                    $resource = &$lesson['resource'];
                                     $lessonResource = $model->resource ?? new LessonResource();
                                     $lessonResource->video = $resource['video'];
                                     $lessonResource->course_lesson_id = $model->id;
@@ -637,7 +665,7 @@ class CourseController extends Controller
                                 }
 
                                 if (isset($lesson['content']) && isset($lesson['content']['content'])) {
-                                    $content =& $lesson['content'];
+                                    $content = &$lesson['content'];
                                     $content += ['course_lesson_id' => $model->id];
                                     $lessonContent = $model->content ?? new LessonContent($content);
 
@@ -645,7 +673,7 @@ class CourseController extends Controller
                                 }
 
                                 if (isset($lesson['detail']) && isset($lesson['detail']['duration'])) {
-                                    $detail =& $lesson['detail'];
+                                    $detail = &$lesson['detail'];
                                     $detail += ['course_lesson_id' => $model->id];
 
                                     $factor = 1;
@@ -673,13 +701,15 @@ class CourseController extends Controller
                             });
                         }
 
-                        if (isset($section['quizzes']) && is_array($section['quizzes'])
-                            && !empty($section['quizzes'])) {
+                        if (
+                            isset($section['quizzes']) && is_array($section['quizzes'])
+                            && !empty($section['quizzes'])
+                        ) {
 
                             // Save quizzes
                             $quizzes = array_values($section['quizzes']);
                             for ($j = 0; $j < count($quizzes); ++$j) {
-                                $quiz =& $quizzes[$j];
+                                $quiz = &$quizzes[$j];
                                 $quiz += ['slug' => Str::slug($quiz['name'])];
                                 $quiz += ['course_id' => $model->course->id];
                             }
@@ -687,7 +717,7 @@ class CourseController extends Controller
                             // Sync quizzes and nested
                             $model->course->quizzes()->sync($quizzes, function ($quiz, $model) {
                                 if (isset($quiz['detail']) && isset($quiz['detail']['duration'])) {
-                                    $detail =& $quiz['detail'];
+                                    $detail = &$quiz['detail'];
                                     $detail += ['course_quiz_id' => $model->id];
 
                                     $factor = 1;
@@ -716,7 +746,7 @@ class CourseController extends Controller
                                 if (isset($quiz['questions']) && is_array($quiz['questions'])) {
                                     $questions = array_values($quiz['questions']);
                                     for ($j = 0; $j < count($questions); ++$j) {
-                                        $question =& $questions[$j];
+                                        $question = &$questions[$j];
                                         $question += ['course_quiz_id' => $model->id];
                                     }
 
@@ -728,7 +758,7 @@ class CourseController extends Controller
                                         if (isset($question['options']) && is_array($question['options'])) {
                                             $options = array_values($question['options']);
                                             for ($j = 0; $j < count($options); ++$j) {
-                                                $option =& $options[$j];
+                                                $option = &$options[$j];
                                                 $option += ['quiz_question_id' => $model->id];
                                             }
 
@@ -744,20 +774,17 @@ class CourseController extends Controller
 
                                         // Sync detail
                                         if (isset($question['detail']) && is_array($question['detail'])) {
-                                            $detail =& $question['detail'];
+                                            $detail = &$question['detail'];
                                             $questionDetail = $model->detail ?? new QuestionDetail($detail);
 
                                             $model->detail()->updateOrCreate($questionDetail->attributesToArray());
                                         }
                                     });
                                 }
-
                             });
                         }
-
                     });
                 }
-
             }
 
             // Course categories
@@ -768,6 +795,11 @@ class CourseController extends Controller
             // Course tags
             if (isset($request->tags) && is_array($request->tags)) {
                 $course->tags()->sync($request->tags);
+            }
+
+            // Course programming languages
+            if (isset($request->programming_languages) && is_array($request->programming_languages)) {
+                $course->programmingLanguages()->sync($request->programming_languages);
             }
 
             // Course co_author
@@ -787,7 +819,6 @@ class CourseController extends Controller
 
         Toastr::warning('Failed to save course', 'Failed');
         return redirect()->back();
-
     }
 
 

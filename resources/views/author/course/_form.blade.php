@@ -674,6 +674,35 @@
 
                         </div>
 
+                        <div class="field mt-4">
+                            <div class="control flex flex-wrap mt-2 justify-start">
+                                <label class="block font-semibold text-sm mt-2 w-4/12"
+                                       for="input1">Programming languages</label>
+                                <div class="w-8/12">
+
+                                    <div class="relative flex w-full">
+                                        <select
+                                            id="select-programming-language"
+                                            name="programming_languages[]"
+                                            placeholder="Select programming languages..."
+                                            autocomplete="off"
+                                            class="block w-full rounded-sm cursor-pointer focus:outline-none"
+                                            multiple
+                                        >
+                                            @foreach($programmingLanguages as $key=>$proLanguage)
+                                                <option
+                                                    value="{{$proLanguage->id}}" {{($course->programmingLanguages ?? collect())->contains("id", $proLanguage->id) ? "selected" : ""}}>{{$proLanguage->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <span
+                                        class="input-desc">The tags of the course</span>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                     <!-- !Meta -->
 
@@ -1399,6 +1428,7 @@
     <script>
         new TomSelect('#select-category');
         new TomSelect('#select-tag');
+        new TomSelect('#select-programming-language');
         new TomSelect("#select-co-author");
     </script>
 
