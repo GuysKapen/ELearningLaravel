@@ -26,7 +26,7 @@ if (!isset($buttons)) {
         <div>
             <div class="css-463jce"></div>
             <div class="mx-2 flex justify-end">
-                <div style="max-width: 320px;" class="m-0 flex flex-col" aria-describedby="tooltip-2">
+                <div style="max-width: 240px;" class="m-0 flex flex-col" aria-describedby="tooltip-2">
                     <div data-qa="conversation-message-bubbles_div"
                         class="m-0 bg-slate-100 text-gray-800 px-4 py-2 align-self-end text-sm rounded-tl-md rounded-bl-2xl rounded-br-2xl rounded-tr-2xl">
                         <div><span data-qa="markdown-text" class="text-xs"

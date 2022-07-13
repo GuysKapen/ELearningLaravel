@@ -13,7 +13,7 @@ class ChatBoxController extends Controller
      */
     public function courses(Request $request)
     {
-        $courses = $this->searchCourses($request, false);
+        $courses = $this->searchCourses($request, false, false)->pluck("name");
         return response()->json(["data" => $courses]);
     }
 

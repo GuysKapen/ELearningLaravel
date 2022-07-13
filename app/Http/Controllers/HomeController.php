@@ -85,6 +85,8 @@ class HomeController extends Controller
             $params += ['authors' => $authors];
         }
 
+        // Add strict mode for search with and instead or
+        $params += ["strict" => true];
         $courses = $courses_query->distinct()->simplePaginate(12)->withPath('/courses')->appends($params);
 
         return view('_courses', compact('courses'))->render();

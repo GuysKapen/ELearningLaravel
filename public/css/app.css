@@ -2524,9 +2524,6 @@ select{
 .bottom-4{
   bottom: 1rem;
 }
-.left-4{
-  left: 1rem;
-}
 .top-10{
   top: 2.5rem;
 }
@@ -2832,6 +2829,9 @@ select{
 .w-16{
   width: 4rem;
 }
+.w-10\/12{
+  width: 83.333333%;
+}
 .w-max{
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -2953,6 +2953,9 @@ select{
 }
 .items-start{
   align-items: flex-start;
+}
+.items-end{
+  align-items: flex-end;
 }
 .items-center{
   align-items: center;

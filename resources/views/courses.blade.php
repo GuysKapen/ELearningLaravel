@@ -281,7 +281,6 @@
                 let formData = new FormData($(this)[0]);
                 let authors = formData.getAll('authors[]');
                 let cats = formData.getAll('categories[]');
-                console.log(authors, cats)
                 const url = new URL("http://127.0.0.1:8000/courses");
                 for (const cat of cats) {
                     url.searchParams.append("cats[]", cat)
@@ -289,14 +288,13 @@
                 for (const author of authors) {
                     url.searchParams.append("authors[]", author)
                 }
-                console.log(url.href)
+                url.searchParams.append("strict", true)
                 window.history.pushState(null, "", url.href);
                 $.ajax({
                     type: "POST",
                     url: "{!! route('course.filter') !!}",
                     data: $("#form-filter").serialize(),
                     success: function (response) {
-                        console.log($("#form-filter").serializeArray()[0])
                         $("#courses-container").html(response)
                     },
                     error: function (error) {

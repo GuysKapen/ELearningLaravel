@@ -1,7 +1,7 @@
 @php
 use Illuminate\Support\Facades\View;
 @endphp
-<div class="fixed bottom-4 left-4 flex flex-col justify-end h-screen" style="z-index: 999">
+<div class="fixed bottom-4 right-4 flex flex-col justify-end items-end h-screen" style="z-index: 999">
 
 
     <div id="chatbox-container" class="collapse h-3/4 w-96"
@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\View;
                 <div class="pl-2 pr-0 h-20 items-center flex border-t">
                     <div class="flex-grow m-0">
                         <textarea id="chatbox-input"
-                            class="border-none overflow-y-auto py-4 flex overflow-hidden text-ellipsis h-16 items-center justify-between  px-8 w-full font-base rounded-lg resize-none focus:shadow-none"
+                            class="border-none text-base overflow-y-auto py-4 flex overflow-hidden text-ellipsis h-16 items-center justify-between  px-8 w-full font-base rounded-lg resize-none focus:shadow-none"
                             data-qa="chat-input_textarea" placeholder="Start typing a message..." rows="1" spellcheck="false"></textarea>
                     </div>
                     <div class="m-0"><button
@@ -118,14 +118,13 @@ use Illuminate\Support\Facades\View;
                             processed = processed.replaceAll("--message--", event[
                                 "text"]);
                         }
-                        
+
                         processed = processed.replaceAll("--buttons--", btnsHtml
                             .join());
                         section.append(processed)
                     }
                 }
 
-                console.log(response["events"]);
             },
             error: function(error) {
                 console.log(error);
@@ -190,7 +189,7 @@ use Illuminate\Support\Facades\View;
                                 }
 
                                 if ("redirect" in custom) {
-                                    window.location.replace("{{ route('courses') }}");
+                                    window.location.replace(custom["redirect"]["url"]);
                                 }
 
                             } else {
