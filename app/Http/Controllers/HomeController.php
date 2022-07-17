@@ -33,6 +33,11 @@ class HomeController extends Controller
         return view('home', compact('courses'));
     }
 
+    public function about()
+    {
+        return view("about");
+    }
+
     /**
      * Detail course page
      * If user has bought (take the course), redirect to detail course page
@@ -191,13 +196,12 @@ class HomeController extends Controller
             'course_id' => 'required',
         ]);
 
-        $enrollment = new Enrollment(["course_id" => $request->course_id]);
-
-        if (Auth::user()->enrollments()->save($enrollment)) {
+        if ($this->internalEnroll($request["course_id"])) {
             Toastr::success('Enroll successfully', 'Succeed');
+        } else {
+            Toastr::warning('Enroll failed', 'Failed');
         }
 
-        Toastr::warning('Enroll failed', 'Failed');
         return redirect()->route('course.detail', $request->course_id);
     }
 

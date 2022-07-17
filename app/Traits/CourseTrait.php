@@ -5,9 +5,11 @@ namespace App\Traits;
 use App\Library\SortType;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\ProgrammingLanguage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * A helper trait to for course model
@@ -164,5 +166,41 @@ trait CourseTrait
         }
 
         return $courses;
+    }
+
+    public function similarNameCourses($name, $paginate = false)
+    {
+
+        $col = "name";
+        if (isset($name)) {
+            // Need to use expression instead of similarity to work
+            $courses_query = Course::selectRaw("courses.*, levenshtein(name, ?) as similarity", [$name])
+                ->whereRaw("levenshtein(name, ?) < greatest(length(?) / 2, 10)", [$name, $name]);
+            $col = "similarity";
+        } else {
+            $courses_query = Course::query();
+        }
+
+        if ($paginate) {
+            $courses = $courses_query->orderBy($col)->simplePaginate(12);
+        } else {
+            $courses = $courses_query->orderBy($col)->get();
+        }
+
+        return $courses;
+    }
+
+    /**
+     * Enroll or take the course (buy if it is prerium)
+     */
+    public function internalEnroll($course_id)
+    {
+        $enrollment = new Enrollment(["course_id" => $course_id]);
+
+        if (Auth::user()->enrollments()->save($enrollment)) {
+            return true;
+        }
+
+        return false;
     }
 }

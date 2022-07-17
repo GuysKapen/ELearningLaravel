@@ -20,27 +20,29 @@ Route::get("/", [HomeController::class, 'index'])->name("index");
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/about', [App\Http\Controllers\HomeController::class, 'about'])->name('about');
 Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
 
 Route::get('/chatbox/courses', [ChatBoxController::class, 'courses'])->name("chatbox.courses");
+Route::get('/chatbox/similar-name-courses', [ChatBoxController::class, 'searchSimilarName'])->name("chatbox.similar-name-courses");
 Route::post('/chatbox/show-courses', [ChatBoxController::class, 'showCourses'])->name('chatbox.courses.show');
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/course/{course}', [HomeController::class, 'course'])->name('course');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/courses/{course}', [HomeController::class, 'course'])->name('course');
     Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
     Route::post('/courses/search', [HomeController::class, 'search'])->name("course.search");
     Route::post('/courses/sort', [HomeController::class, 'sort'])->name("course.sort");
     Route::post('/courses/comment', [HomeController::class, 'comment'])->name("course.comment");
     Route::post('/courses/enroll', [HomeController::class, 'enroll'])->name("course.enroll");
-    Route::post('/course/purchase', [HomeController::class, 'purchase'])->name('course.purchase');
-    Route::get('/course/detail/{course}/lesson/{lesson?}', [HomeController::class, 'courseDetail'])->name('course.detail');
-    Route::get('/course/detail/{course}/quiz/{quiz}', [HomeController::class, 'courseDetailQuiz'])->name('course.detail.quiz');
-    Route::get('/course/checkout/{course}', [HomeController::class, 'checkout'])->name('course.checkout');
-    Route::get('/quiz/attempt/{attempt}/review', [HomeController::class, 'quizAttemptReview'])->name('quiz.attempt.review');
-    Route::post('/quiz/attempt', [HomeController::class, 'attemptQuiz'])->name('quiz.attempt');
-    Route::post('/quiz/submit', [HomeController::class, 'submitQuiz'])->name('quiz.submit');
-    Route::post('/quiz/attempt/answer/submit', [HomeController::class, 'submitAttemptAnswer'])->name('quiz.attempt.answer.submit');
-    Route::get('/course/detail/{course}/quiz/attempt/{attempt}', [HomeController::class, 'courseDetailQuizAttempt'])->name('course.detail.quiz.attempt');
+    Route::post('/courses/purchase', [HomeController::class, 'purchase'])->name('course.purchase');
+    Route::get('/courses/detail/{course}/lesson/{lesson?}', [HomeController::class, 'courseDetail'])->name('course.detail');
+    Route::get('/courses/detail/{course}/quiz/{quiz}', [HomeController::class, 'courseDetailQuiz'])->name('course.detail.quiz');
+    Route::get('/courses/checkout/{course}', [HomeController::class, 'checkout'])->name('course.checkout');
+    Route::get('/quizzes/attempt/{attempt}/review', [HomeController::class, 'quizAttemptReview'])->name('quiz.attempt.review');
+    Route::post('/quizzes/attempt', [HomeController::class, 'attemptQuiz'])->name('quiz.attempt');
+    Route::post('/quizzes/submit', [HomeController::class, 'submitQuiz'])->name('quiz.submit');
+    Route::post('/quizzes/attempt/answer/submit', [HomeController::class, 'submitAttemptAnswer'])->name('quiz.attempt.answer.submit');
+    Route::get('/courses/detail/{course}/quiz/attempt/{attempt}', [HomeController::class, 'courseDetailQuizAttempt'])->name('course.detail.quiz.attempt');
     Route::get('/request-author', [HomeController::class, 'requestAuthor'])->name('author.request');
 });
 
