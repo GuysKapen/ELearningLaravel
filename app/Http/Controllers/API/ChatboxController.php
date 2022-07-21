@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use App\Traits\CourseTrait;
 use Illuminate\Http\Request;
@@ -14,9 +15,8 @@ class ChatboxController extends BaseController
      */
     public function courses(Request $request)
     {
-        $courses = $this->searchCourses($request, false, false)->pluck("name");
-        return $this->sendResponse($courses, "Success");
-        return response()->json(["data" => $courses]);
+        $courses = $this->searchCourses($request, false, false);
+        return $this->sendResponse(CourseResource::collection($courses), "Success");
     }
 
     public function showCourses()
@@ -32,14 +32,14 @@ class ChatboxController extends BaseController
         $name = $request["course_name"];
         $course = Course::query()->whereRaw("UPPER(name) = ?", [strtoupper($name)])->first();
         if (isset($course)) {
-            return $this->sendResponse(["course" => $course->pluck("name"), "extras" => null], "Success");
+            return $this->sendResponse(["course" => new CourseResource($course), "extras" => null], "Success");
         }
-        $courses = Course::query()->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($name) . '%'])->get()->pluck("name");
+        $courses = Course::query()->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($name) . '%'])->get();
         if (isset($courses) && !$courses->isEmpty()) {
-            return $this->sendResponse(["course" => null, "extras" => $courses], "Not found");
+            return $this->sendResponse(["course" => null, "extras" => CourseResource::collection($courses)], "Not found");
         }
         $courses = $this->similarNameCourses($name, false)->pluck("name");
-        return $this->sendResponse(["course" => null, "extras" => $courses], "Not found");
+        return $this->sendResponse(["course" => null, "extras" => CourseResource::collection($courses)], "Not found");
     }
     /**
      * Enroll or take the course (buy if it is prerium)
@@ -48,13 +48,13 @@ class ChatboxController extends BaseController
     {
         // Enroll by course name for chatbox
         if (isset($request["course_name"])) {
-            $model = Course::query()->whereRaw("UPPER(name) LIKE ?", [strtoupper($request["course_name"])])->first();
+            $model = Course::query()->whereRaw("UPPER(name) = ?", [strtoupper($request["course_name"])])->first();
             if (!isset($model)) {
-                $similarCourses = Course::query()->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request["course_name"]) . '%'])->get()->pluck("name");
-                if (isset($model)) {
-                    return $this->sendError("Not a valid course", extras: $similarCourses);
+                $similarCourses = Course::query()->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($request["course_name"]) . '%'])->get();
+                if (isset($similarCourses) && !$similarCourses->isEmpty()) {
+                    return $this->sendError("Not a valid course", extras: CourseResource::collection($similarCourses));
                 }
-                return $this->sendError("Not a valid course", extras: $this->similarNameCourses($request["course_name"])->pluck("name"));
+                return $this->sendError("Not a valid course", extras: CourseResource::collection($this->similarNameCourses($request["course_name"])));
             }
 
             if ($this->internalEnroll($model->id)) {
