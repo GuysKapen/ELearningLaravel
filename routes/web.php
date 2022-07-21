@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ChatBoxController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,16 +21,12 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/about', [App\Http\Controllers\HomeController::class, 'about'])->name('about');
 Route::get('/courses/', [HomeController::class, 'courses'])->name('courses');
-
-Route::get('/chatbox/courses', [ChatBoxController::class, 'courses'])->name("chatbox.courses");
-Route::get('/chatbox/similar-name-courses', [ChatBoxController::class, 'searchSimilarName'])->name("chatbox.similar-name-courses");
-Route::post('/chatbox/show-courses', [ChatBoxController::class, 'showCourses'])->name('chatbox.courses.show');
+Route::get('/courses/{course}', [HomeController::class, 'course'])->name('course');
+Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
+Route::post('/courses/search', [HomeController::class, 'search'])->name("course.search");
+Route::post('/courses/sort', [HomeController::class, 'sort'])->name("course.sort");
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/courses/{course}', [HomeController::class, 'course'])->name('course');
-    Route::post('/courses/filter', [HomeController::class, 'filter'])->name("course.filter");
-    Route::post('/courses/search', [HomeController::class, 'search'])->name("course.search");
-    Route::post('/courses/sort', [HomeController::class, 'sort'])->name("course.sort");
     Route::post('/courses/comment', [HomeController::class, 'comment'])->name("course.comment");
     Route::post('/courses/enroll', [HomeController::class, 'enroll'])->name("course.enroll");
     Route::post('/courses/purchase', [HomeController::class, 'purchase'])->name('course.purchase');

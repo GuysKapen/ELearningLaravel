@@ -372,7 +372,6 @@
                 selected: 0,
                 value: 0,
                 choose(index, value) {
-                    console.log(value)
                     this.value = index
                     this.open = false
                     this.$refs.input.value = value;

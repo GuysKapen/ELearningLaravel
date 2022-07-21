@@ -172,6 +172,8 @@ trait CourseTrait
     {
 
         $col = "name";
+
+        error_log($name);
         if (isset($name)) {
             // Need to use expression instead of similarity to work
             $courses_query = Course::selectRaw("courses.*, levenshtein(name, ?) as similarity", [$name])
@@ -186,6 +188,7 @@ trait CourseTrait
         } else {
             $courses = $courses_query->orderBy($col)->get();
         }
+        error_log(dump($courses));
 
         return $courses;
     }
@@ -195,9 +198,9 @@ trait CourseTrait
      */
     public function internalEnroll($course_id)
     {
-        $enrollment = new Enrollment(["course_id" => $course_id]);
+        $enrollment = Enrollment::firstOrNew(["course_id" => $course_id, "user_id" => Auth::user()->id]);
 
-        if (Auth::user()->enrollments()->save($enrollment)) {
+        if ($enrollment->save()) {
             return true;
         }
 

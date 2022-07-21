@@ -45,7 +45,7 @@ class HomeController extends Controller
      */
     public function course(Course $course)
     {
-        if (Enrollment::query()->where([['user_id', '=', Auth::user()->id], ['course_id', '=', $course->id]])->exists()) {
+        if (Enrollment::query()->where([['user_id', '=', Auth::user()->id ?? -1], ['course_id', '=', $course->id]])->exists()) {
             return redirect()->route('course.detail', ['course' => $course]);
         }
         return view('course', compact('course'));
