@@ -32,7 +32,7 @@ body {
     box-shadow: none !important;
 }
 
-.active ~ #dropdown {
+.active~#dropdown {
     opacity: 1;
     transform: scale(1);
 }
@@ -61,7 +61,7 @@ body {
     transition: transform .35s ease;
 }
 
-.child-link-blue > a {
+.child-link-blue>a {
     color: #007bff;
 }
 
@@ -223,16 +223,16 @@ textarea {
     padding: 0;
 }
 
-.expand ~ .title-expand {
+.expand~.title-expand {
     color: red;
 }
 
 
-.tab-content > .tab-pane {
+.tab-content>.tab-pane {
     display: none;
 }
 
-.tab-content > .active {
+.tab-content>.active {
     display: block;
 }
 
@@ -336,7 +336,7 @@ textarea {
     transition: all 0.2s;
 }
 
-.rating-input span:hover ~ span label::before, .rating-input span:hover label::before, .rating-input span.checked label::before, .rating-input span.checked ~ span label::before {
+.rating-input span:hover~span label::before, .rating-input span:hover label::before, .rating-input span.checked label::before, .rating-input span.checked~span label::before {
     color: #ff5000;
     content: 'star';
 }
@@ -388,8 +388,10 @@ span.rating-stars {
 span.rating-stars, span.rating-stars span {
     display: block;
     background: url("/images/star.svg") 0 0 repeat-x;
-    width: 90px; /* width of a star multiplied by 5 */
-    height: 18px; /* the height of the star */
+    width: 90px;
+    /* width of a star multiplied by 5 */
+    height: 18px;
+    /* the height of the star */
     background-size: 18px 18px;
 }
 
@@ -406,21 +408,21 @@ span.rating-stars span {
     font-size: 0.875rem;
 }
 
-.tabs-content > div {
+.tabs-content>div {
     display: none;
 }
 
-.tabs-content > div.active {
+.tabs-content>div.active {
     top: 0;
     display: inherit;
 
 }
 
-.tabs-content-vertical > div {
+.tabs-content-vertical>div {
     display: none;
 }
 
-.tabs-content-vertical > div.active {
+.tabs-content-vertical>div.active {
     bottom: inherit;
     top: inherit;
     display: inherit;
@@ -436,12 +438,12 @@ span.rating-stars span {
     font-style: italic;
 }
 
-.child-mx-2 > * {
+.child-mx-2>* {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
 
-.child-mx-4 > * {
+.child-mx-4>* {
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -450,7 +452,7 @@ span.rating-stars span {
     margin: 0 !important;
 }
 
-.child-my-2 > *:not(:first-child) {
+.child-my-2>*:not(:first-child) {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
@@ -482,4 +484,64 @@ span.rating-stars span {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
     border-color: transparent;
     background-color: currentcolor;
+}
+
+/**
+ * ==============================================
+ * Dot Flashing
+ * ==============================================
+ */
+.dot-flashing {
+    position: relative;
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: .5s;
+    left: 50%;
+    top: 15000%;
+    transform: translate(-50%, -50%);
+}
+
+.dot-flashing::before, .dot-flashing::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+}
+
+.dot-flashing::before {
+    left: -0.5rem;
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: 0s;
+}
+
+.dot-flashing::after {
+    left: 0.5rem;
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
+    0% {
+        /* background-color: #9880ff; */
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        /* background-color: #ebe6ff; */
+        opacity: 0.5;
+    }
 }

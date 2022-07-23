@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/quizzes/attempt/answer/submit', [HomeController::class, 'submitAttemptAnswer'])->name('quiz.attempt.answer.submit');
     Route::get('/courses/detail/{course}/quiz/attempt/{attempt}', [HomeController::class, 'courseDetailQuizAttempt'])->name('course.detail.quiz.attempt');
     Route::get('/request-author', [HomeController::class, 'requestAuthor'])->name('author.request');
+    Route::post('/courses/lesson/complete', [HomeController::class, 'completeCourseLesson'])->name('course.lesson.complete');
 });
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth', 'admin']], function () {

@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\View;
 
 
 
-
-
                     </div>
                 </div>
             </div>
@@ -188,10 +186,6 @@ use Illuminate\Support\Facades\View;
                                     btnsHtml.push(btnHtml)
                                 }
 
-                                if ("redirect" in custom) {
-                                    window.location.replace(custom["redirect"]["url"]);
-                                }
-
                             } else {
                                 processed = processed.replaceAll("--message--", utter[
                                     "text"]);
@@ -214,6 +208,31 @@ use Illuminate\Support\Facades\View;
                             processed = processed.replaceAll("--buttons--", btnsHtml
                                 .join());
                             section.append(processed)
+
+
+                            if ("custom" in utter) {
+                                let custom = utter["custom"]
+                                // Link
+                                if ("redirect" in custom) {
+                                    @php
+                                        $loading = json_encode(View::make('chatbox._chatbox_bot_response')->render());
+                                    @endphp
+                                    let loading = {!! $loading !!};
+                                    loading = loading.replaceAll("--message--", "")
+                                    loading = loading.replaceAll("--buttons--", "")
+                                    loading = loading.replaceAll("--class--",
+                                        "dot-flashing")
+
+                                    section.append(loading)
+
+                                    setTimeout(() => {
+                                        window.location.replace(custom["redirect"][
+                                            "url"
+                                        ]);
+                                    }, 1000);
+
+                                }
+                            }
                         }
 
                     },

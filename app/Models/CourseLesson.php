@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 /**
  * @property string $title
  * @property string $slug
+ * @property boolean $is_complete
  * @property int $course_section_id
  */
 class CourseLesson extends Model

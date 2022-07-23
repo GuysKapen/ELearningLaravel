@@ -70,7 +70,7 @@ function setupRating() {
         });
     }
 
-    $(document).onready(function () {
+    $(function () {
         $('span.rating-stars').stars();
     });
 }

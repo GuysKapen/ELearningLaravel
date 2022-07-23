@@ -402,4 +402,24 @@ class HomeController extends Controller
     {
         return view("request_author");
     }
+
+    /**
+     * Complete course lesson
+     */
+    public function completeCourseLesson(Request $request)
+    {
+        $this->validate($request, ['lesson_id' => 'required', 'course_id' => 'required']);
+        $courseLesson = CourseLesson::find($request["lesson_id"]);
+
+        if ($courseLesson == null) {
+            return redirect()->back();
+        }
+
+        $courseLesson->is_complete = true;
+        $courseLesson->saveOrFail();
+
+        $nextLesson = $courseLesson->section->lessons->where('id', '>', $courseLesson->id)->min();
+
+        return redirect()->route('course.detail', ["course" => $request["course_id"], "lesson" => $nextLesson]);
+    }
 }
