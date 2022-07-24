@@ -173,7 +173,6 @@ trait CourseTrait
 
         $col = "name";
 
-        error_log($name);
         if (isset($name)) {
             // Need to use expression instead of similarity to work
             $courses_query = Course::selectRaw("courses.*, levenshtein(name, ?) as similarity", [$name])
@@ -205,5 +204,42 @@ trait CourseTrait
         }
 
         return false;
+    }
+
+    public function keywordsToId($keywords)
+    {
+        $categories = [];
+        $authors = [];
+        $programmingLanguages = [];
+        $tags = [];
+
+        // Keyword for filter
+        if (isset($keywords) && is_array($keywords) && !empty($keywords)) {
+            // Check if keyword is category
+            foreach ($keywords as $key => $value) {
+                $model = Category::query()->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($value) . '%'])->first();
+                if (isset($model)) {
+                    $categories[$key] = $model->id;
+                }
+            }
+
+            // Check if keyword is programming language
+            foreach ($keywords as $key => $value) {
+                $model = ProgrammingLanguage::query()->whereRaw("UPPER(name) LIKE ?", ['%' . strtoupper($value) . '%'])->first();
+                if (isset($model)) {
+                    $programmingLanguages[$key] = $model->id;
+                }
+            }
+
+            // Check if keyword is tag
+            foreach ($keywords as $key => $value) {
+                $model = Tag::query()->whereRaw("UPPER(tag) LIKE ?", ['%' . strtoupper($value) . '%'])->first();
+                if (isset($model)) {
+                    $tags[$key] = $model->id;
+                }
+            }
+        }
+
+        return ["categories" => $categories, "tags" => $tags, "authors" => $authors, "programmingLanguages" => $programmingLanguages];
     }
 }

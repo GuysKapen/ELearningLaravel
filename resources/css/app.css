@@ -259,6 +259,9 @@ textarea {
     width: calc(50% - (2.4rem / 2));
 }
 
+.h-112 {
+    height: 26rem;
+}
 
 .bg-f {
     background: #3b5998;

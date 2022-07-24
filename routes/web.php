@@ -67,3 +67,8 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\
     Route::get("resources", "AuthorController@resources")->name("resources");
     Route::get("courses", "AuthorController@courses")->name("courses");
 });
+
+Route::group(['as' => 'student.', 'prefix' => 'student', 'namespace' => 'App\Http\Controllers\Student', 'middleware' => ['auth']], function () {
+    Route::get("courses", "StudentController@courses")->name("courses");
+    Route::get("courses", "StudentController@courses")->name("dashboard");
+});

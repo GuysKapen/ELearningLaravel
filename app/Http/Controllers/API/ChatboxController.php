@@ -6,6 +6,7 @@ use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use App\Traits\CourseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatboxController extends BaseController
 {
@@ -74,5 +75,15 @@ class ChatboxController extends BaseController
         } else {
             return $this->sendError("Failed to enroll course");
         }
+    }
+
+    public function myCourses(Request $request)
+    {
+        $entities = [];
+        if (isset($request["keywords"])) {
+            $entities = $this->keywordsToId($request["keywords"]);
+        }
+        $courses = Auth::user()->enrolledCourses;
+        return $this->sendResponse(CourseResource::collection($courses), "Success");
     }
 }

@@ -1,10 +1,10 @@
 @php
 use Illuminate\Support\Facades\View;
 @endphp
-<div class="fixed bottom-4 right-4 flex flex-col justify-end items-end h-screen" style="z-index: 999">
+<div class="fixed bottom-4 right-4 flex flex-col justify-end items-end" style="z-index: 999">
 
 
-    <div id="chatbox-container" class="collapse h-3/4 w-96"
+    <div id="chatbox-container" class="collapse w-96 h-112"
         style="background-color: rgb(255, 255, 255); border-radius: 8px; border-width: 1px; border-color: rgb(221, 226, 239); overflow: hidden; margin-bottom: 14px; border-style: solid;">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Noto Sans');

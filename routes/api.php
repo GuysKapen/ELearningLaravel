@@ -32,4 +32,5 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum'], 'as' => 'api.'], function () {
     Route::post('/courses/enroll', [ChatboxController::class, 'enroll'])->name("course.enroll");
+    Route::get('/courses/my-courses', [ChatboxController::class, 'myCourses'])->name("course.my-courses");
 });
