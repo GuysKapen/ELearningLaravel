@@ -86,4 +86,20 @@ class ChatboxController extends BaseController
         $courses = Auth::user()->enrolledCourses;
         return $this->sendResponse(CourseResource::collection($courses), "Success");
     }
+
+    public function courseProgress(Request $request)
+    {
+        $this->validate($request,
+         [
+            'course_id' => 'required',
+        ]);
+        $course = Auth::user()->enrolledCourses->where("id", '=', $request["course_id"])->first();
+        if ($course == null) {
+            return $this->sendError("Invalid request");
+        }
+
+        $complete = $course->lessons->where("is_complete", "=", true)->count();
+        $total = $course->lessons->count();
+        return $this->sendResponse(["complete" => $complete, "total" => $total], "Succeed");
+    }
 }
