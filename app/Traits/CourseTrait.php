@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\ProgrammingLanguage;
 use App\Models\Tag;
+use App\Notifications\AuthorCourseApproved;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -187,7 +188,6 @@ trait CourseTrait
         } else {
             $courses = $courses_query->orderBy($col)->get();
         }
-        error_log(dump($courses));
 
         return $courses;
     }
@@ -241,5 +241,24 @@ trait CourseTrait
         }
 
         return ["categories" => $categories, "tags" => $tags, "authors" => $authors, "programmingLanguages" => $programmingLanguages];
+    }
+
+    public function approveCourse($id, $notify = true)
+    {
+        $course = Course::find($id);
+        if ($course->is_approved == false) {
+            try {
+                $course->is_approved = true;
+                $course->save();
+                return true;
+            } catch (\Exception $e) {
+                return false;
+            }
+            if ($notify) {
+                $course->user->notify(new AuthorCourseApproved($course));
+            }
+        }
+
+        return true;
     }
 }

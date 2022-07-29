@@ -39,7 +39,7 @@ class ChatboxController extends BaseController
         if (isset($courses) && !$courses->isEmpty()) {
             return $this->sendResponse(["course" => null, "extras" => CourseResource::collection($courses)], "Not found");
         }
-        $courses = $this->similarNameCourses($name, false)->pluck("name");
+        $courses = $this->similarNameCourses($name, false);
         return $this->sendResponse(["course" => null, "extras" => CourseResource::collection($courses)], "Not found");
     }
     /**

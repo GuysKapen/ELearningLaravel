@@ -63,4 +63,9 @@ class AuthController extends BaseController
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
     }
+
+    public function isAdmin(Request $request)
+    {
+        return $this->sendResponse(Auth::user()->isAdmin(), "Succeed");
+    }
 }

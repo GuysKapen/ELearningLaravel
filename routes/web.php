@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ViewUtilsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,8 +49,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'App\Http\Co
     Route::resource('sub-category', 'SubCategoryController');
     Route::resource('language', 'LanguageController');
     Route::resource('programming-language', 'ProgrammingLanguageController');
-    Route::get('course/', 'CourseController@index')->name('course.index');
-    Route::put("course/{id}/approve", 'CourseController@approve')->name('course.approve');
+    Route::get('courses/', 'CourseController@index')->name('course.index');
+    Route::put("courses/{id}/approve", 'CourseController@approve')->name('course.approve');
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'App\Http\Controllers\Author', 'middleware' => ['auth', 'author']], function () {

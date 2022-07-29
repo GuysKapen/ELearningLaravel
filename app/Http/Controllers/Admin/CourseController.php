@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Notifications\AuthorCourseApproved;
+use App\Traits\CourseTrait;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
+    use CourseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -25,24 +27,11 @@ class CourseController extends Controller
 
     public function approve($id)
     {
-        $course = Course::find($id);
-        if ($course->is_approved == false) {
-            try {
-                $course->is_approved = true;
-                $course->save();
-                Toastr::success('Course approved successfully', 'Succeed');
-            } catch(\Exception $e) {
-                return $e;
-            }
-            $course->user->notify(new AuthorCourseApproved($course));
-
-            // $subscribers = Subscriber::all();
-            // foreach ($subscribers as $subscriber) {
-                // Notification::route('mail', $subscriber->email)
-                    // ->notify(new NewPostNotify($post));
-            // }
+        if ($this->approveCourse($id)) {
+            Toastr::success('Course approved successfully', 'Succeed');
+        } else {
+            Toastr::failed('Course approved failed', 'Failed');
         }
-
         return redirect()->back();
     }
 }

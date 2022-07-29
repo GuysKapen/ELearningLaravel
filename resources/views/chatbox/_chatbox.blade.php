@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\View;
 
 
 
+
                     </div>
                 </div>
             </div>
@@ -70,6 +71,7 @@ use Illuminate\Support\Facades\View;
     });
 
     jQuery(document).ready(function() {
+
         $.ajax({
             type: "GET",
             url: "http://localhost:5005/conversations/12/tracker",
@@ -86,7 +88,6 @@ use Illuminate\Support\Facades\View;
                     }
 
                     if (event["event"] === "bot") {
-
                         @php
                             $html = json_encode(View::make('chatbox._chatbox_bot_response')->render());
                         @endphp
@@ -112,6 +113,29 @@ use Illuminate\Support\Facades\View;
 
                                 btnsHtml.push(btnHtml)
                             }
+
+                            if ("table" in custom) {
+                                let tableData = custom["table"];
+                                if ("data" in tableData && tableData["data"].length > 0) {
+                                    // Post to chatbox and get result
+                                    $.ajax({
+                                        type: "GET",
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: "http://localhost:8000/api/render-table",
+                                        data: {
+                                            "table": tableData
+                                        },
+                                        success: function(response) {
+                                            section.append(response)
+                                        },
+                                        error: function(error) {
+                                            console.log(error);
+                                        }
+                                    })
+                                }
+                            }
+
                         } else {
                             processed = processed.replaceAll("--message--", event[
                                 "text"]);
@@ -154,94 +178,125 @@ use Illuminate\Support\Facades\View;
                 })
 
                 // Post to chatbox and get result
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:5005/webhooks/rest/webhook",
-                    data: data,
-                    success: function(response) {
-                        for (const utter of response) {
-                            @php
-                                $html = json_encode(View::make('chatbox._chatbox_bot_response')->render());
-                            @endphp
-                            let processed = {!! $html !!};
-                            const section = $("#chatbox-conversation-container")
-                            let btnsHtml = [];
-
-                            if ("custom" in utter) {
-                                const custom = utter["custom"]
-                                processed = processed.replaceAll("--message--", custom[
-                                    "text"])
-
-                                if ("link" in custom) {
-                                    @php
-                                        $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
-                                    @endphp
-                                    let btnHtml = {!! $html !!};
-                                    btnHtml = btnHtml.replaceAll("--title--", custom["link"]
-                                        ["title"])
-                                    btnHtml = btnHtml.replaceAll("--url--", custom["link"][
-                                        "url"
-                                    ])
-
-                                    btnsHtml.push(btnHtml)
-                                }
-
-                            } else {
-                                processed = processed.replaceAll("--message--", utter[
-                                    "text"]);
-                            }
-
-
-                            // Buttons response
-                            if ("buttons" in utter) {
-                                for (const btn of utter["buttons"]) {
-                                    @php
-                                        $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
-                                    @endphp
-                                    let btnHtml = {!! $html !!};
-                                    btnHtml = btnHtml.replaceAll("--title--", btn["title"])
-
-                                    btnsHtml.push(btnHtml)
-                                }
-
-                            }
-                            processed = processed.replaceAll("--buttons--", btnsHtml
-                                .join());
-                            section.append(processed)
-
-
-                            if ("custom" in utter) {
-                                let custom = utter["custom"]
-                                // Link
-                                if ("redirect" in custom) {
-                                    @php
-                                        $loading = json_encode(View::make('chatbox._chatbox_bot_response')->render());
-                                    @endphp
-                                    let loading = {!! $loading !!};
-                                    loading = loading.replaceAll("--message--", "")
-                                    loading = loading.replaceAll("--buttons--", "")
-                                    loading = loading.replaceAll("--class--",
-                                        "dot-flashing")
-
-                                    section.append(loading)
-
-                                    setTimeout(() => {
-                                        window.location.replace(custom["redirect"][
-                                            "url"
-                                        ]);
-                                    }, 1000);
-
-                                }
-                            }
-                        }
-
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                })
+                sendChatboxMessage(data)
             }
 
         })
+
+        $("#chatbox-container").on("click", ".chatbox-payload", function(e) {
+            let data = $(this).attr("data-payload");
+            sendChatboxMessage(data)
+        })
     })
+
+    function sendChatboxMessage(data) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5005/webhooks/rest/webhook",
+            data: data,
+            success: function(response) {
+                for (const utter of response) {
+                    @php
+                        $html = json_encode(View::make('chatbox._chatbox_bot_response')->render());
+                    @endphp
+                    let processed = {!! $html !!};
+                    const section = $("#chatbox-conversation-container")
+                    let btnsHtml = [];
+
+                    if ("custom" in utter) {
+                        const custom = utter["custom"]
+                        processed = processed.replaceAll("--message--", custom[
+                            "text"])
+
+                        if ("link" in custom) {
+                            @php
+                                $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
+                            @endphp
+                            let btnHtml = {!! $html !!};
+                            btnHtml = btnHtml.replaceAll("--title--", custom["link"]
+                                ["title"])
+                            btnHtml = btnHtml.replaceAll("--url--", custom["link"][
+                                "url"
+                            ])
+
+                            btnsHtml.push(btnHtml)
+                        }
+
+                        if ("table" in custom) {
+                            let tableData = custom["table"];
+
+                            if ("data" in tableData && tableData["data"].length > 0) {
+                                // Post to chatbox and get result
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: "http://localhost:8000/api/render-table",
+                                    data: {
+                                        "table": tableData
+                                    },
+                                    success: function(response) {
+                                        section.append(response)
+
+                                    },
+                                    error: function(error) {
+                                        console.log(error);
+                                    }
+                                })
+                            }
+                        }
+
+                    } else {
+                        processed = processed.replaceAll("--message--", utter[
+                            "text"]);
+                    }
+
+                    // Buttons response
+                    if ("buttons" in utter) {
+                        for (const btn of utter["buttons"]) {
+                            @php
+                                $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
+                            @endphp
+                            let btnHtml = {!! $html !!};
+                            btnHtml = btnHtml.replaceAll("--title--", btn["title"])
+
+                            btnsHtml.push(btnHtml)
+                        }
+
+                    }
+                    processed = processed.replaceAll("--buttons--", btnsHtml
+                        .join());
+                    section.append(processed)
+
+                    if ("custom" in utter) {
+                        let custom = utter["custom"]
+                        // Link
+                        if ("redirect" in custom) {
+                            @php
+                                $loading = json_encode(View::make('chatbox._chatbox_bot_response')->render());
+                            @endphp
+                            let loading = {!! $loading !!};
+                            loading = loading.replaceAll("--message--", "")
+                            loading = loading.replaceAll("--buttons--", "")
+                            loading = loading.replaceAll("--class--",
+                                "dot-flashing")
+
+                            section.append(loading)
+
+                            setTimeout(() => {
+                                window.location.replace(custom["redirect"][
+                                    "url"
+                                ]);
+                            }, 1000);
+
+                        }
+                    }
+                }
+
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        })
+    }
 </script>
