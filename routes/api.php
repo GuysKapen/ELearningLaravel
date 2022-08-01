@@ -44,7 +44,13 @@ Route::group(['middleware' => ['auth:sanctum'], 'as' => 'api.'], function () {
     Route::get('/courses/progress', [ChatboxController::class, 'courseProgress'])->name("course.progress");
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'admin'], 'as' => 'api.admin.'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'admin'], 'as' => 'api.admin.', 'prefix' => 'admin'], function () {
     Route::get('/courses/pending', [AdminController::class, 'pendingCourses'])->name("course.pending");
     Route::put('/courses/approve', [AdminController::class, 'approve'])->name("course.approve");
+
+    Route::get('/categories', [AdminController::class, 'listCategory'])->name("category.index");
+    Route::get('/category', [AdminController::class, 'getCategory'])->name("category.show");
+    Route::get('/category/similar', [AdminController::class, 'searchSimilarCategories'])->name("category.similar");
+    Route::post('/category', [AdminController::class, 'saveCategory'])->name("category.store");
+    Route::delete('/category', [AdminController::class, 'deleteCategory'])->name("category.destroy");
 });

@@ -82,7 +82,7 @@
 
                             <div class="w-full d-flex justify-content-center">
                                 <button type="submit"
-                                        class="d-flex d-inline-block text-sm font-roboto font-black outline-none-imp align-items-center duration-500 mt-2 tracking-wide bg-indigo-500 text-gray-100 w-full p-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                                        class="d-flex d-inline-block text-sm font-roboto font-black outline-none-imp align-items-center mt-2 tracking-wide bg-indigo-500 text-gray-100 w-full p-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                     <i class="fa fa-sign-in mr-3 duration-500"></i>{{ __('Register') }}
                                 </button>
 
@@ -109,7 +109,7 @@
                    href="/users/sign_up">
                     <div class="w-full flex justify-center">
                         <button type="submit"
-                                class="flex inline-block f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
+                                class="flex f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
                             <i class="fa fa-facebook mr-3 duration-500"></i>Sign In With Facebook
                         </button>
                     </div>
@@ -119,7 +119,7 @@
                    href="/users/sign_up">
                     <div class="w-full flex justify-center">
                         <button type="submit"
-                                class="flex inline-block f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
+                                class="flex f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
                             <i class="fa fa-google mr-3 duration-500"></i>Sign In With Google
                         </button>
                     </div>
@@ -129,7 +129,7 @@
                    href="{{route('login')}}">
                     <div class="w-full flex justify-center">
                         <button type="submit"
-                                class="flex inline-block f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
+                                class="flex f6 font-roboto outline-none-imp font-bold items-center duration-500 text-gray-800">
                             <i class="fa fa-user-plus mr-3 duration-500"></i>Sign In
                         </button>
                     </div>

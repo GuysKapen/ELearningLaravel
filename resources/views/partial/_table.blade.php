@@ -25,19 +25,12 @@
                                                     {{ $value['data'] }}
                                                 </a>
                                             @elseif (isset($value['json_payload']))
-                                                {{-- <form method="post" action="{{ $value['form']['url'] }}"> --}}
-                                                {{-- @method($value['form']['method'] ?? 'POST') --}}
-                                                {{-- @if (isset($value['form']['inputs']))
-                                                        @foreach ($value['form']['inputs'] as $key => $input)
-                                                            <input type="hidden" name="{{ $input['name'] }}"
-                                                                value="{{ $input['value'] }}" />
-                                                        @endforeach
-                                                    @endif --}}
                                                 <button type="submit" data-payload='{{ $value['json_payload'] ?? "" }}'
-                                                    class="text-green-600 text-sm hover:text-green-700 chatbox-payload {{ $value['class'] }}">
-                                                    {{ $value['data'] }}
+                                                    class="text-green-600 text-sm hover:text-green-700 chatbox-payload mr-2">
+                                                    <span class="{{ $value['class'] }}">
+                                                        {{ $value['data'] }}
+                                                    </span>
                                                 </button>
-                                                {{-- </form> --}}
                                             @else
                                                 <span class="{{ $value['class'] }}">
                                                     {{ $value['data'] }}
