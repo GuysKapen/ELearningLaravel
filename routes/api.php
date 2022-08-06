@@ -53,4 +53,17 @@ Route::group(['middleware' => ['auth:sanctum', 'admin'], 'as' => 'api.admin.', '
     Route::get('/category/similar', [AdminController::class, 'searchSimilarCategories'])->name("category.similar");
     Route::post('/category', [AdminController::class, 'saveCategory'])->name("category.store");
     Route::delete('/category', [AdminController::class, 'deleteCategory'])->name("category.destroy");
+
+    Route::get('/languages', [AdminController::class, 'listLanguage'])->name("language.index");
+    Route::get('/language', [AdminController::class, 'getLanguage'])->name("language.show");
+    Route::get('/language/similar', [AdminController::class, 'searchSimilarLanguages'])->name("language.similar");
+    Route::post('/language', [AdminController::class, 'saveLanguage'])->name("langauge.store");
+    Route::delete('/language', [AdminController::class, 'deleteLanguage'])->name("language.destroy");
+
+    Route::get('/programming-languages', [AdminController::class, 'listProgrammingLanguage'])->name("programming-language.index");
+    Route::get('/programming-language', [AdminController::class, 'getProgrammingLanguage'])->name("programming-language.show");
+    Route::get('/programming-language/similar', [AdminController::class, 'searchSimilarProgrammingLanguages'])->name("programming-language.similar");
+    Route::post('/programming-language', [AdminController::class, 'saveProgrammingLanguage'])->name("programming-langauge.store");
+    Route::delete('/programming-language', [AdminController::class, 'deleteProgrammingLanguage'])->name("programming-language.destroy");
+
 });
