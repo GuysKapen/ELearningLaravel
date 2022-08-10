@@ -7,7 +7,7 @@
                         <tr>
                             @foreach ($headers as $key => $head)
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider {{ $head['class'] ?? '' }}">
+                                    class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider {{ $head['class'] ?? '' }}">
                                     {{ $head['data'] }}
                                 </th>
                             @endforeach
@@ -27,12 +27,12 @@
                                             @elseif (isset($value['json_payload']))
                                                 <button type="submit" data-payload='{{ $value['json_payload'] ?? "" }}'
                                                     class="text-green-600 text-sm hover:text-green-700 chatbox-payload mr-2">
-                                                    <span class="{{ $value['class'] }}">
+                                                    <span class="block {{ $value['class'] }}">
                                                         {{ $value['data'] }}
                                                     </span>
                                                 </button>
                                             @else
-                                                <span class="{{ $value['class'] }}">
+                                                <span class="block {{ $value['class'] }}">
                                                     {{ $value['data'] }}
                                                 </span>
                                             @endif

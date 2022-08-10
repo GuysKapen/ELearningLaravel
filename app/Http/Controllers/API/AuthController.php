@@ -68,4 +68,9 @@ class AuthController extends BaseController
     {
         return $this->sendResponse(Auth::user()->isAdmin(), "Succeed");
     }
+
+    public function isAuthor(Request $request)
+    {
+        return $this->sendResponse(Auth::user()->isAuthor(), "Succeed");
+    }
 }

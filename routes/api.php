@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\ChatboxController;
 use App\Http\Controllers\API\ViewUtilsController;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ Route::controller(ViewUtilsController::class)->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum'], 'as' => 'api.'], function () {
     Route::get('/is-admin', [AuthController::class, "isAdmin"])->name("is-admin");
+    Route::get('/is-author', [AuthController::class, "isAuthor"])->name("is-author");
     Route::post('/courses/enroll', [ChatboxController::class, 'enroll'])->name("course.enroll");
     Route::get('/courses/my-courses', [ChatboxController::class, 'myCourses'])->name("course.my-courses");
     Route::get('/courses/progress', [ChatboxController::class, 'courseProgress'])->name("course.progress");
@@ -65,5 +67,9 @@ Route::group(['middleware' => ['auth:sanctum', 'admin'], 'as' => 'api.admin.', '
     Route::get('/programming-language/similar', [AdminController::class, 'searchSimilarProgrammingLanguages'])->name("programming-language.similar");
     Route::post('/programming-language', [AdminController::class, 'saveProgrammingLanguage'])->name("programming-langauge.store");
     Route::delete('/programming-language', [AdminController::class, 'deleteProgrammingLanguage'])->name("programming-language.destroy");
+});
 
+
+Route::group(['middleware' => ['auth:sanctum', 'author'], 'as' => 'api.author.', 'prefix' => 'author'], function () {
+    Route::get('/courses/statistic', [AuthorController::class, 'courseStatistic'])->name("course.statistic");
 });

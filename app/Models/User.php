@@ -99,6 +99,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAuthor()
     {
-        return $this->role_id == 2;
+        return $this->role_id == 2 || $this->isAdmin();
     }
 }
