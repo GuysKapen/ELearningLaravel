@@ -2,4 +2,7 @@
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
+* text=auto eol=lf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
 CHANGELOG.md export-ignore
