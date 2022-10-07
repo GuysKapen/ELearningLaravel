@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\View;
 
 
     <button
-        class="bg-indigo-600 font-base text-center w-16 h-16 rounded-full text-white cursor-pointer flex justify-center"
+        class="bg-indigo-600 font-base text-center w-16 h-16 rounded-full text-white cursor-pointer flex justify-center items-center"
         data-toggle="collapse" data-target="#chatbox-container"><svg aria-hidden="true" focusable="false"
             data-prefix="fas" data-icon="comment-dots" class="svg-inline--fa fa-comment-dots fa-w-16 css-1fcbxrh"
             role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em;">
