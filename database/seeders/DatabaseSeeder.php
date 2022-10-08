@@ -50,5 +50,12 @@ class DatabaseSeeder extends Seeder
             'role_id' => '2',
             'email' => 'author@gmail.com'
         ])->create();
+
+        $this->call([
+            CategorySeeder::class,
+            LanguageSeeder::class,
+            ProgrammingLanguageSeeder::class,
+            TagSeeder::class,
+        ]);
     }
 }
