@@ -34,6 +34,11 @@ class Course extends HasManySyncableModel
         return $this->belongsTo(User::class);
     }
 
+    public function author(): BelongsTo
+    {
+        return $this->user();
+    }
+
     public function detail(): HasOne
     {
         return $this->hasOne(CourseDetail::class);
@@ -104,7 +109,7 @@ class Course extends HasManySyncableModel
         return $this->hasMany(Enrollment::class);
     }
 
-    public function programmingLanguages() : BelongsToMany
+    public function programmingLanguages(): BelongsToMany
     {
         return $this->belongsToMany(ProgrammingLanguage::class, "course_programming_language");
     }
