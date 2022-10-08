@@ -16,7 +16,7 @@ class TagFactory extends Factory
     {
         $name = $this->faker->name();
         return [
-            'name' => $name,
+            'tag' => $name,
             'slug' => Str::slug($name),
         ];
     }

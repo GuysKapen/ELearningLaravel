@@ -18,7 +18,7 @@ class TagSeeder extends Seeder
         $tags = ["React", "Angular", "NodeJs", "TypeScript"];
         foreach ($tags as $key => $tag) {
             Tag::factory()->state([
-                'name' => $tag,
+                'tag' => $tag,
                 'slug' => Str::slug($tag)
             ])->create();
         }
