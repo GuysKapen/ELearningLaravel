@@ -3,10 +3,10 @@ window.onload = function () {
     setupRating()
 }
 
-window.showConfirmPopup = function (callback, message = 'Do you really want to delete? You wont be able to revert it.') {
+window.showConfirmPopup = function (callback, message = 'Do you really want to delete? You wont be able to revert it.', confirmText = "Confirm", cancelText = "Cancel") {
     new jBox('Confirm', {
-        confirmButton: 'Delete', // Text for the submit button
-        cancelButton: 'Cancel', // Text for the cancel button
+        confirmButton: confirmText, // Text for the submit button
+        cancelButton: cancelText, // Text for the cancel button
         confirm: callback, // Function to execute when clicking the submit button. By default jBox will use the onclick or href attribute in that order if found
         cancel: null, // Function to execute when clicking the cancel button
         closeOnConfirm: true, // Close jBox when the user clicks the confirm button
