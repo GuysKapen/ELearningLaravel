@@ -86,7 +86,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:categories',
+            'name' => 'required|unique:courses',
         ]);
 
         DB::beginTransaction();
