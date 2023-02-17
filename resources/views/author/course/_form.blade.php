@@ -879,7 +879,7 @@
             height: "480",
             setup: function (editor) {
                 editor.on('init', function () {
-                    editor.setContent('{!! preg_replace("/[\n\r|\r\n|\r|\n]/m", "", $course->description ?? "") !!}');
+                    editor.setContent({!! json_encode(preg_replace("/[\n\r|\r\n|\r|\n]/m", "", $course->description ?? "")) !!});
                 });
             }
         });
