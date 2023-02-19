@@ -1,4 +1,4 @@
-# fly.toml file generated for ilearning on 2022-09-16T12:42:22+07:00
+# fly.toml file generated for ilearning on 2023-02-19T15:50:56+07:00
 
 app = "ilearning"
 kill_signal = "SIGINT"
@@ -17,7 +17,6 @@ processes = []
   LOG_STDERR_FORMATTER = "Monolog\\Formatter\\JsonFormatter"
 
 [experimental]
-  allowed_public_ports = []
   auto_rollback = true
 
 [[services]]

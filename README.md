@@ -139,6 +139,30 @@ Download and install Composer by following the official instructions.
    ```sh
    php artisan serve
    ```
+
+### Deployment (On Fly)
+
+1. Create and link a new postgres database
+
+    ```sh
+    flyctl postgres create
+    flyctl postgres link <database-name>
+    ```
+
+2. Config env variables with flyctl (database connections, mail connections, etc ...)
+
+    ```sh
+    flyctl secrets set ...
+    ```
+
+3. Connect to the app to run migrate, link storage
+
+    ```sh
+    flyctl ssh console
+    cd /var/www/html
+    php artisan migrate
+    php artisan storage:link
+    ```
 <!-- USAGE EXAMPLES -->
 ## Usage
 

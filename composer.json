@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "ext-http": "*",
         "brian2694/laravel-toastr": "^5.56",
         "doctrine/dbal": "^3.3",
         "ducks-project/spl-types": "^1.1",
