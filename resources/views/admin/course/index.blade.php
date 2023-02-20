@@ -158,7 +158,7 @@
         function approve(id) {
             showConfirmPopup(function() {
                 document.getElementById('approval-form-' + id).submit();
-            }, "Do you want to approve the course? You won't be able to revert it")
+            }, "Do you want to approve the course? You won't be able to revert it", "Confirm")
         }
     </script>
 @endpush
