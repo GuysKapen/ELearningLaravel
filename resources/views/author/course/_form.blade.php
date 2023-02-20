@@ -208,7 +208,7 @@
                         </div>
 
 
-                        <div id="add-section" class="cursor-pointer opacity-0 my-4 hover:opacity-100">
+                        <div id="add-section" class="cursor-pointer px-2 my-4 inline-block hover:text-white hover:bg-indigo-600">
                             <span class="material-icons outlined text-base">add</span>
                         </div>
 

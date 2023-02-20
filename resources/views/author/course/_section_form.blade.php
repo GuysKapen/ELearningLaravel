@@ -10,7 +10,7 @@
 
     <div id="section-info-{{$sectionIndex}}" class="mb-4">
         <div data-id="{{$sectionIndex}}"
-             class="add-lesson absolute left-0 top-10 bg-white px-2 cursor-pointer opacity-0 hover:opacity-100">
+             class="add-lesson absolute left-0 top-10 bg-white px-2 cursor-pointer hover:bg-indigo-600 hover:text-white">
             <span class="material-icons outlined text-sm">add</span>
         </div>
 
