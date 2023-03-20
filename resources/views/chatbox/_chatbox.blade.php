@@ -60,7 +60,7 @@ use Illuminate\Support\Facades\View;
 </div>
 
 <script>
-    const chatbotUrl = {{ config('app.chatbot_url') }}
+    const chatbotUrl = '{{ config('app.chatbot_url') }}'
     // Click outside to hide
     $('html').on("click", function() {
         $("#chatbox-container").removeClass("show")
