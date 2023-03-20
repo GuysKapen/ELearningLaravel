@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\View;
 </div>
 
 <script>
+    const chatbotUrl = {{ config('app.chatbot_url') }}
     // Click outside to hide
     $('html').on("click", function() {
         $("#chatbox-container").removeClass("show")
@@ -74,7 +75,7 @@ use Illuminate\Support\Facades\View;
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:5005/conversations/12/tracker",
+            url: `${chatbotUrl}/conversations/12/tracker`,
             success: function(response) {
                 for (const event of response["events"]) {
                     if (event["event"] === "user") {
@@ -192,7 +193,7 @@ use Illuminate\Support\Facades\View;
     function sendChatboxMessage(data) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:5005/webhooks/rest/webhook",
+            url: `${chatbotUrl}/webhooks/rest/webhook`,
             data: data,
             success: function(response) {
                 for (const utter of response) {

@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'chatbot_url' => env('CHATBOT_URL', 'http://localhost:5005'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
