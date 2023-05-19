@@ -2964,6 +2964,9 @@ select{
 .grid-cols-3{
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
 .grid-cols-6{
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
@@ -2975,6 +2978,9 @@ select{
 }
 .flex-col{
   flex-direction: column;
+}
+.flex-col-reverse{
+  flex-direction: column-reverse;
 }
 .flex-wrap{
   flex-wrap: wrap;
@@ -4737,10 +4743,6 @@ span.rating-stars span {
     width: 58.333333%;
   }
 
-  .md\:w-full{
-    width: 100%;
-  }
-
   .md\:w-5\/12{
     width: 41.666667%;
   }
@@ -4751,6 +4753,10 @@ span.rating-stars span {
 
   .md\:w-3\/12{
     width: 25%;
+  }
+
+  .md\:w-full{
+    width: 100%;
   }
 
   .md\:w-9\/12{
@@ -4775,8 +4781,19 @@ span.rating-stars span {
     margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
+  .md\:space-x-8 > :not([hidden]) ~ :not([hidden]){
+    --tw-space-x-reverse: 0;
+    margin-right: calc(2rem * var(--tw-space-x-reverse));
+    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
   .md\:overflow-y-auto{
     overflow-y: auto;
+  }
+
+  .md\:px-8{
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   .md\:pb-0{
@@ -4807,6 +4824,14 @@ span.rating-stars span {
     margin-right: -2rem;
   }
 
+  .lg\:ml-auto{
+    margin-left: auto;
+  }
+
+  .lg\:mr-auto{
+    margin-right: auto;
+  }
+
   .lg\:block{
     display: block;
   }
@@ -4831,6 +4856,14 @@ span.rating-stars span {
     width: 50%;
   }
 
+  .lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:flex-row{
+    flex-direction: row;
+  }
+
   .lg\:p-16{
     padding: 4rem;
   }
@@ -4843,12 +4876,41 @@ span.rating-stars span {
 
 @media (min-width: 1280px){
 
+  .xl\:visible{
+    visibility: visible;
+  }
+
   .xl\:m-16{
     margin: 4rem;
   }
 
+  .xl\:mt-0{
+    margin-top: 0px;
+  }
+
+  .xl\:w-6\/12{
+    width: 50%;
+  }
+
+  .xl\:w-4\/12{
+    width: 33.333333%;
+  }
+
   .xl\:w-5\/12{
     width: 41.666667%;
+  }
+
+  .xl\:w-1\/2{
+    width: 50%;
+  }
+
+  .xl\:flex-row{
+    flex-direction: row;
+  }
+
+  .xl\:px-24{
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 
   .xl\:text-3xl{

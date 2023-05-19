@@ -55,13 +55,13 @@
             <header class="z-10 absolute js-sticky-header py-4 w-full site-navbar transition duration-200"
                 role="banner">
 
-                <div class="w-full px-24">
+                <div class="w-full xl:px-24 md:px-8 px-4">
                     <div class="flex items-center">
                         <div class="relative font-black text-xl w-1/4 mr-auto"><a href="index.php"
                                 class="text-white">ILearning</a>
                         </div>
 
-                        <div class="mx-auto text-center">
+                        <div class="mx-auto text-center hidden xl:visible">
                             <nav class="block position-relative text-right" role="navigation">
                                 <ul class="lg:block p-0 m-0 mx-auto">
                                     <li class="inline-block"><a href="#home-section"
@@ -106,14 +106,14 @@
                     style="background-image: url('images/hero_1.jpg'); background-position: 50% -25px; background-size: cover; height: 100vh"
                     data-stellar-background-ratio="0.5">
                     <div class="flex items-center h-full">
-                        <div class="w-full z-10 flex items-center px-24 space-x-16">
-                            <div class="w-1/2">
-                                <h1 class="text-6xl text-white font-black">Online learning you can access anywhere
+                        <div class="w-full z-10 flex flex-col-reverse xl:flex-row items-center xl:px-24 md:px-8 px-4 space-x-16">
+                            <div class="xl:w-1/2 w-full">
+                                <h1 class="text-6xl text-white font-black hidden xl:visible">Online learning you can access anywhere
                                     easily</h1>
                                 <p class="text-gray-100 text-sm my-8">a Solution for easy and flexible online learning,
                                     you
                                     can study anywhere through this platform</p>
-                                <div class="flex space-x-8">
+                                <div class="flex flex-col md:flex-row md:space-x-8">
                                     <a href="{{ route('register') }}" class="py-2 inline-block nav-link flex-grow">
                                         <span
                                             class="w-full block text-white bg-indigo-600 hover:bg-indigo-900 text-center px-8 py-3 rounded-full text-xxs font-black transition-all">Get
@@ -126,7 +126,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="text-right w-1/2">
+                            <div class="text-right xl:w-1/2 w-full">
                                 <img src="{{ asset('images/undraw_youtube_tutorial.svg') }}" alt="">
                             </div>
                         </div>
@@ -151,10 +151,10 @@
         <div class="w-11/12 mx-auto">
             <div class="flex">
 
-                <div class="w-full flex flex-auto flex-wrap block z-10 relative owl-carousel nonloop-block-14">
+                <div class="w-full flex flex-auto flex-wrap z-10 relative owl-carousel nonloop-block-14">
 
                     @foreach ($courses as $key => $course)
-                        <div class="relative overflow-hidden self-start top-0 relative border">
+                        <div class="relative overflow-hidden self-start top-0 border">
                             <figure class="m-0">
                                 <img src="{{ asset('storage/course/' . ($course->feature_img ?? 'default.png')) }}"
                                     alt="Image" class="w-full block object-cover">
@@ -216,11 +216,11 @@
                         the world in one place.</p>
                 </div>
             </div>
-            <div class="flex mb-8 items-center">
+            <div class="flex lg:flex-row flex-col mb-8 items-center">
                 <div class="lg:w-7/12 mb-8" data-aos="fade-up" data-aos-delay="100">
                     <img src="{{ asset('images/undraw_youtube_tutorial.svg') }}" alt="Image" class="img-fluid">
                 </div>
-                <div class="lg:w-4/12 ml-auto" data-aos="fade-up" data-aos-delay="200">
+                <div class="lg:w-4/12 lg:ml-auto" data-aos="fade-up" data-aos-delay="200">
                     <h2 class="text-black mb-4 text-3xl font-medium">We Are Excellent In Education</h2>
                     <p class="mb-4">Education is an art and we are the artists.</p>
 
@@ -241,11 +241,11 @@
                 </div>
             </div>
 
-            <div class="flex mb-8 items-center">
+            <div class="flex lg:flex-row flex-col mb-8 items-center">
                 <div class="lg:w-7/12 mb-8 order-1 lg:order-2" data-aos="fade-up" data-aos-delay="100">
                     <img src="{{ asset('images/undraw_teaching.svg') }}" alt="Image" class="img-fluid">
                 </div>
-                <div class="lg:w-4/12 mr-auto order-2 lg:order-1" data-aos="fade-up" data-aos-delay="200">
+                <div class="lg:w-4/12 lg:mr-auto order-2 lg:order-1" data-aos="fade-up" data-aos-delay="200">
                     <h2 class="text-black mb-4 text-3xl font-medium">Strive for Excellent</h2>
                     <p class="mb-4">Our goal is your success.</p>
 
@@ -266,7 +266,7 @@
                 </div>
             </div>
 
-            <div class="flex mb-8 items-center">
+            <div class="flex lg:flex-row flex-col mb-8 items-center">
                 <div class="lg:w-7/12 mb-8" data-aos="fade-up" data-aos-delay="100">
                     <img src={{ asset('images/undraw_teacher.svg') }} class="img-fluid" alt="Image">
                 </div>
@@ -305,7 +305,7 @@
                 </div>
             </div>
 
-            <div class="flex">
+            <div class="flex xl:flex-row flex-col">
 
                 <div class="md:w-6/12 lg:w-4/12 mb-8 px-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="border p-8">
@@ -355,11 +355,11 @@
                     <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Join With Us</h2>
                 </div>
             </div>
-            <div class="flex items-center space-x-8 px-24">
-                <div class="lg:w-6/12 align-end pl-8" data-aos="fade-left" data-aos-delay="200">
+            <div class="flex xl:flex-row flex-col items-center space-x-8 xl:px-24">
+                <div class="xl:w-6/12 w-full align-end pl-8" data-aos="fade-left" data-aos-delay="200">
                     <img src="images/person_transparent.png" alt="Image" class="img-fluid">
                 </div>
-                <div class="w-4/12">
+                <div class="xl:w-4/12 mt-8 xl:mt-0 w-full">
                     <h3 class="text-2xl font-black text-indigo-600">Easy to join with us</h3>
                     <h2 class="text-4xl font-black mt-4 text-gray-800">Let's become an instructor</h2>
                     <p class="my-8 text-gray-400 text-sm">
@@ -393,7 +393,7 @@
                     <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Why Choose Us</h2>
                 </div>
             </div>
-            <div class="flex">
+            <div class="flex xl:flex-row flex-col">
                 <div class="lg:w-4/12 ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
 
                     <div class="p-8 rounded bg-white shadow-full">
@@ -464,7 +464,7 @@
                     <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">People Say About Us</h2>
                 </div>
             </div>
-            <div class="grid grid-cols-3 gap-6">
+            <div class="grid lg:grid-cols-3 grid-cols-1 gap-6">
                 <div class="ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
 
                     <div class="bg-white rounded-lg p-4">
@@ -596,9 +596,9 @@
         <div class="w-11/12 mx-auto">
 
             <div class="flex justify-center px-8">
-                <div class="md:w-7/12    col-md-7">
+                <div class="md:w-7/12 col-md-7">
 
-                    <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8     section-title mb-3">Message
+                    <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8 section-title">Message
                         Us</h2>
                     <p class="mb-8">We are more than happy to receive your suggestions.</p>
                     <!-- Beginning of the php for the contact form -->
@@ -668,7 +668,7 @@
                     <!-- End of the php for the contact form -->
                     <form method="post" action="index.php#contact-section" data-aos="fade" id="contact_form">
                         <div class="flex mb-4">
-                            <div class="md:w-full">
+                            <div class="w-full">
                                 <div id="error_contact_fullname"></div>
                                 <input type="text" name="name" id="contact_fullname"
                                     class="form-control h-12-imp" placeholder="Full name"
@@ -677,7 +677,7 @@
                         </div>
 
                         <div class="flex mb-4">
-                            <div class="md:w-full">
+                            <div class="w-full">
                                 <div id="error_contact_subject"></div>
                                 <input type="text" id="contact_subject" name="subject"
                                     class="form-control h-12-imp" placeholder="Subject">
@@ -685,7 +685,7 @@
                         </div>
 
                         <div class="flex mb-4">
-                            <div class="md:w-full">
+                            <div class="w-full">
                                 <div id="error_contact_email"></div>
                                 <input type="email" id="contact_email" name="email"
                                     class="form-control h-12-imp" placeholder="Email" value="<?php echo isset($_POST['email']) ? $email : ''; ?>">
@@ -693,7 +693,7 @@
                         </div>
 
                         <div class="flex mb-4">
-                            <div class="md:w-full">
+                            <div class="w-full">
                                 <div id="error_contact_message"></div>
                                 <textarea class="form-control h-auto" id="contact_message" name="message" cols="30" rows="10"
                                     placeholder="Write your message here."><?php echo isset($_POST['message']) ? $message : ''; ?></textarea>
@@ -720,14 +720,14 @@
 
     <footer class="py-24 bg-white">
         <div class="w-11/12 mx-auto">
-            <div class="flex">
+            <div class="flex lg:flex-row flex-col space-y-6">
                 <div class="md:w-4/12">
                     <h3 class="footer-heading">About ILearning</h3>
                     <p class="text-base">An E-Learning platform rich of resources, We make learning easy and simple for
                         Everyone.</p>
                 </div>
 
-                <div class="md:w-3/12 ml-auto">
+                <div class="md:w-3/12 lg:ml-auto">
                     <h3 class="footer-heading">Links</h3>
                     <ul class="list-unstyled footer-links">
                         <li class="text-indigo-600 py-2 font-light"><a href="#home-section" class="nav-link">Home</a>
