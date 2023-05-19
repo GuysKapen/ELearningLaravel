@@ -61,7 +61,7 @@
                                 class="text-white">ILearning</a>
                         </div>
 
-                        <div class="mx-auto text-center hidden xl:visible">
+                        <div class="mx-auto text-center lg:block hidden">
                             <nav class="block position-relative text-right" role="navigation">
                                 <ul class="lg:block p-0 m-0 mx-auto">
                                     <li class="inline-block"><a href="#home-section"
@@ -106,9 +106,9 @@
                     style="background-image: url('images/hero_1.jpg'); background-position: 50% -25px; background-size: cover; height: 100vh"
                     data-stellar-background-ratio="0.5">
                     <div class="flex items-center h-full">
-                        <div class="w-full z-10 flex flex-col-reverse xl:flex-row items-center xl:px-24 md:px-8 px-4 space-x-16">
-                            <div class="xl:w-1/2 w-full">
-                                <h1 class="text-6xl text-white font-black hidden xl:visible">Online learning you can access anywhere
+                        <div class="w-full z-10 flex flex-col-reverse lg:flex-row items-center lg:px-24 md:px-8 px-4 space-x-16">
+                            <div class="lg:w-1/2 w-full">
+                                <h1 class="text-6xl text-white font-black hidden lg:block hidden">Online learning you can access anywhere
                                     easily</h1>
                                 <p class="text-gray-100 text-sm my-8">a Solution for easy and flexible online learning,
                                     you
@@ -126,7 +126,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="text-right xl:w-1/2 w-full">
+                            <div class="text-right lg:w-1/2 w-full">
                                 <img src="{{ asset('images/undraw_youtube_tutorial.svg') }}" alt="">
                             </div>
                         </div>
@@ -305,7 +305,7 @@
                 </div>
             </div>
 
-            <div class="flex xl:flex-row flex-col">
+            <div class="flex lg:flex-row flex-col">
 
                 <div class="md:w-6/12 lg:w-4/12 mb-8 px-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="border p-8">
@@ -355,11 +355,11 @@
                     <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Join With Us</h2>
                 </div>
             </div>
-            <div class="flex xl:flex-row flex-col items-center space-x-8 xl:px-24">
-                <div class="xl:w-6/12 w-full align-end pl-8" data-aos="fade-left" data-aos-delay="200">
+            <div class="flex lg:flex-row flex-col items-center space-x-8 lg:px-24">
+                <div class="lg:w-6/12 w-full align-end pl-8" data-aos="fade-left" data-aos-delay="200">
                     <img src="images/person_transparent.png" alt="Image" class="img-fluid">
                 </div>
-                <div class="xl:w-4/12 mt-8 xl:mt-0 w-full">
+                <div class="lg:w-4/12 mt-8 xl:mt-0 w-full">
                     <h3 class="text-2xl font-black text-indigo-600">Easy to join with us</h3>
                     <h2 class="text-4xl font-black mt-4 text-gray-800">Let's become an instructor</h2>
                     <p class="my-8 text-gray-400 text-sm">
@@ -393,7 +393,7 @@
                     <h2 class="text-black fw-900 font-black text-5xl font-mul mb-8">Why Choose Us</h2>
                 </div>
             </div>
-            <div class="flex xl:flex-row flex-col">
+            <div class="flex lg:flex-row flex-col">
                 <div class="lg:w-4/12 ml-auto align-start" data-aos="fade-up" data-aos-delay="100">
 
                     <div class="p-8 rounded bg-white shadow-full">

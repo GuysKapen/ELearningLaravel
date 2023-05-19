@@ -2471,6 +2471,12 @@ select{
 .pointer-events-none{
   pointer-events: none;
 }
+.visible{
+  visibility: visible;
+}
+.invisible{
+  visibility: hidden;
+}
 .fixed{
   position: fixed;
 }
@@ -3345,10 +3351,6 @@ select{
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
-.px-24{
-  padding-left: 6rem;
-  padding-right: 6rem;
-}
 .py-16{
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -3360,6 +3362,10 @@ select{
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+}
+.px-24{
+  padding-left: 6rem;
+  padding-right: 6rem;
 }
 .py-12{
   padding-top: 3rem;
@@ -4707,6 +4713,10 @@ span.rating-stars span {
 
 @media (min-width: 768px){
 
+  .md\:visible{
+    visibility: visible;
+  }
+
   .md\:col-span-2{
     grid-column: span 2 / span 2;
   }
@@ -4807,6 +4817,10 @@ span.rating-stars span {
 
 @media (min-width: 1024px){
 
+  .lg\:visible{
+    visibility: visible;
+  }
+
   .lg\:order-2{
     order: 2;
   }
@@ -4856,6 +4870,10 @@ span.rating-stars span {
     width: 50%;
   }
 
+  .lg\:w-1\/2{
+    width: 50%;
+  }
+
   .lg\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -4871,6 +4889,11 @@ span.rating-stars span {
   .lg\:px-8{
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:px-24{
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 }
 
@@ -4888,6 +4911,10 @@ span.rating-stars span {
     margin-top: 0px;
   }
 
+  .xl\:w-1\/2{
+    width: 50%;
+  }
+
   .xl\:w-6\/12{
     width: 50%;
   }
@@ -4898,10 +4925,6 @@ span.rating-stars span {
 
   .xl\:w-5\/12{
     width: 41.666667%;
-  }
-
-  .xl\:w-1\/2{
-    width: 50%;
   }
 
   .xl\:flex-row{
